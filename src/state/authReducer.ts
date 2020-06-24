@@ -1,7 +1,7 @@
 import api from '../api/Api'
 
 
-const storageName = 'useData'
+const storageName = 'userData'
 
 const IS_AUTHENTICATED = 'auth/IS_AUTHENTICATED'
 const IS_PENDING = 'auth/IS_PENDING'
@@ -9,8 +9,10 @@ const AUTHORIZATION = 'auth/AUTHORIZATION'
 
 
 const initialState = {
-    token: null,
-    userId: null,
+    refresh_token: null,
+    access_token: null,
+    status_client: false,
+    status_consultant: false,
     isAuth: false,
     pending: false
 }
@@ -56,17 +58,28 @@ const signIn = (payload: any) => {
     }
 }
 
-export const authFunction = (password: string, log: string) => async (dispatch: any, ) =>{
+export const authFunction = (email: string, password: string) => async (dispatch: any, ) =>{
     dispatch(pend(true))
-    const res = await api.signIn({username: log, password})
+    const res = await api.signIn({"email": email, "password": password})
+    const access_life = Date.now() + (res.data.time_access*1000)
+    const refresh_life = Date.now() + (res.data.time_refresh*1000)
+    console.log()
     dispatch(signIn({
-        token: res.data.refresh,
-        userId: res.data.access,
-        isAuth: true
+        refresh_token: res.data.refresh,
+        access_token: res.data.access,
+        status_client: res.data.status_client,
+        status_consultant: res.data.status_consultant,
+        isAuth: true,
+        access_life: access_life,
+        refresh_life: refresh_life
     }))
     localStorage.setItem(storageName, JSON.stringify({
-        userId: res.data.access,
-        token: res.data.refresh
+        access_token: res.data.access,
+        refresh_token: res.data.refresh,
+        status_client: res.data.status_client,
+        status_consultant: res.data.status_consultant,
+        access_life: access_life,
+        refresh_life: refresh_life
     }))
     dispatch(pend(false))
     return res.data
