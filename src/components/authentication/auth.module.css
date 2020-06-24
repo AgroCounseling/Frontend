@@ -1,0 +1,132 @@
+
+
+.formWrapper {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 20px;
+    height: 530px;
+
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+.welcomeText{
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+
+    color: #213336;
+}
+.registration{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin-top: 10px;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+
+    color: rgba(33, 51, 54, 0.5);
+}
+
+.wrapper{
+    padding: 10px 15px;
+}
+
+.form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5em;
+    grid-row-gap: 1em;
+    padding: 10px 25px;
+}
+.signInForm{
+    display: grid;
+    grid-gap: 1em;
+}
+.mainWrapper{
+    margin: 60px auto;
+    padding: 0 100px;
+    display: grid;
+    grid-gap: 1em;
+}
+.signInForm>label{
+    display: grid;
+}
+.footerSignIn{
+    text-align: center;
+    display: grid;
+    grid-gap: 1em;
+}
+.footerSignIn>a{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+
+    text-decoration: none;
+    color: rgba(33, 51, 54, 0.5);
+}
+.noAkk{
+    text-decoration-line: underline !important;
+}
+.rememberMe>input[type='checkbox']{
+    margin-right: 10px;
+}
+.rememberMe{
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    line-height: 16px;
+    /* identical to box height */
+
+
+    color: rgba(33, 51, 54, 0.5);
+}
+.choosePic{
+    margin: 15px auto 0 auto;
+    width: 60px;
+    height: 60px;
+}
+.choosePic>img{
+    width: 100%;
+
+}
+.registrationWrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 5em;
+    padding: 25px 25px;
+}
+.welcomeFlower{
+    height: 100%;
+}
+.socialNetworks{
+    display: flex;
+    justify-content: space-around;
+}
+.loginWith{
+    display: flex;
+    justify-content: space-between;
+}
+.enter{
+    font-size: 20px;
+    line-height: 21px;
+
+    color: #5C9B48;
+}
+.options{
+    color: red;
+    margin-top: 15px;
+}
+.diploma{
+    background: rgba(92, 155, 72, 0.5);
+    font-size: 18px;
+    line-height: 21px;
+    color: #FFFFFF;
+}
