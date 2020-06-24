@@ -1,0 +1,45 @@
+.arrows{
+    padding-bottom: 25px;
+}
+
+.cardsWrapper{
+    background: rgb(252,242,236);
+    padding: 80px 40px;
+
+
+}
+.cardsWrapper>span{
+    text-align: center;
+    justify-content: center;
+    display: grid;
+    grid-column-gap: 2em;
+    grid-row-gap: 4em;
+    grid-template-columns: repeat(auto-fit, 320px);
+}
+.pagination{
+    text-align: center;
+    padding: 60px 0 0 0;
+}
+
+.pagination>button{
+    border: none;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+.pagination>button>img{
+    padding: 10px;
+    margin: 0 auto;
+}
+.prev{
+    margin-right: 10px;
+    background: #DBDBDB;
+}
+.next{
+    margin-left: 10px;
+    background: #64A928;
+}
