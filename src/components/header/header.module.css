@@ -1,0 +1,54 @@
+.logo{
+    text-decoration: none;
+}
+
+.lastChildWrapper{
+    display: flex;
+    align-items: center;
+}
+
+.searchInput,.enter{
+    height: 30px;
+    background: #FAFBFC;
+    border: 2px solid #AA8B25;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+}
+.searchInput{
+    width: 210px;
+    padding-left: 5px;
+}
+.enter{
+    color: #000;
+    padding: 0 10px;
+    text-decoration: none;
+
+}
+.register{
+    margin: 0 15px 0  10px;
+    height: 30px;
+    background: #AA8B25;
+    border-radius: 10px;
+    color: #FFFFFF;
+    padding: 0 5px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.lang{
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 207.9%;
+
+    letter-spacing: 2px;
+
+    color: #4B4A4A;
+
+    opacity: 0.2;
+}
+.kg{
+    margin-left: 5px;
+}
