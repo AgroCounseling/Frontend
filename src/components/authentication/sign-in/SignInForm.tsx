@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import css from "../auth.module.css";
 import {Button, Input, Label} from "../styledElements";
 import {Link} from "react-router-dom";
@@ -8,17 +8,22 @@ import twitter from '../../../img/twitter.png'
 import {useDispatch} from "react-redux";
 import {authFunction} from "../../../state/authReducer";
 import {WithAuthRedirect} from "../../../hocs/AuthHoc";
+import { useFormik } from "formik"
+
 
 export const SignIn = WithAuthRedirect(() => {
     const dispatch = useDispatch()
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const submit = (e: any) => {
-        e.preventDefault()
-        dispatch(authFunction(email, password))
-    }
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: ''
+        },
+        onSubmit: (values:any) => {
+            dispatch(authFunction(values.email, values.password))
+        },
+    });
     return (
-        <form onSubmit={submit}>
+        <form onSubmit={formik.handleSubmit}>
             <div className={css.registration}>
                 Войдите, чтобы получить доступ к консультации
             </div>
@@ -26,11 +31,21 @@ export const SignIn = WithAuthRedirect(() => {
                 <div className={css.signInForm}>
                     <Label>
                         Email
-                        <Input value={email} onChange={(e)=>setEmail(e.target.value)} type="text"/>
+                        <Input
+                            name={'email'}
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
+                            type="text"
+                        />
                     </Label>
                     <Label>
                         Пароль
-                        <Input value={password} onChange={(e)=>setPassword(e.target.value)} type="password"/>
+                        <Input
+                            name={'password'}
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
+                            type="password"
+                        />
                     </Label>
                 </div>
                 <div>
