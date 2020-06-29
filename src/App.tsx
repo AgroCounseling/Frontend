@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect} from 'react'
 import './App.css'
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom"
-import {initialise} from "./state/appReducer";
+import {initialiseApp} from "./state/appReducer";
 import {connect} from "react-redux";
 import {GlobalStateType} from "./state/root-reducer";
-import {isPending} from "./state/selectors";
+import {isAuth, isPending} from "./state/selectors";
 import Header from "./components/header/Header";
 import AuthPage from "./components/authentication/AuthPage";
 import {RegisterFormConsultant} from "./components/authentication/sign-up/SignUpForms";
@@ -12,30 +12,28 @@ import {SignIn} from "./components/authentication/sign-in/SignInForm";
 import Preloader from "./components/preloader/Preloader";
 import NavBar from "./components/navbar/NavBar";
 import MainPage from "./components/mainPage/MainPage";
-
+import Admin from "./components/Admin/Admin";
 
 type OwnProps = {
     isPending: boolean
-    initialise: () => void
+    initialiseApp: () => void
+    isAuth: boolean
 }
 
 const App = (props:OwnProps) => {
-    const [pending, setPending] = useState(true)
+    const {initialiseApp} = props
     const allPromiseRejection = (promiseRejectionEvent: any) =>{
         alert(promiseRejectionEvent)
     }
     useEffect( () => {
-        props.initialise()
+        initialiseApp()
         window.addEventListener('unhandledrejection', allPromiseRejection)
         return () => {
             window.removeEventListener('unhandledrejection', allPromiseRejection)
         }
-    }, [props])
+    }, [initialiseApp])
 
-    setTimeout(()=>{
-        setPending(false)
-    },1500)
-    if(pending){
+    if(props.isPending){
         return <div className={'preloaderWrapper'}><Preloader /></div>
     }
     return (
@@ -58,9 +56,7 @@ const App = (props:OwnProps) => {
                         </AuthPage>
                     </Route>
                     <Route path={'/admin'}>
-                        <div style={{marginTop: '63px'}}>
-                            Admin
-                        </div>
+                        <Admin />
                     </Route>
                     <Redirect to={'/'}/>
                 </Switch>
@@ -71,6 +67,7 @@ const App = (props:OwnProps) => {
 
 export default connect((state: GlobalStateType) => {
     return {
-        isPending: isPending(state)
+        isPending: isPending(state),
+        isAuth: isAuth(state)
     }
-},{initialise})(App)
+},{initialiseApp})(App)

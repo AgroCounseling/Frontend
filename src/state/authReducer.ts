@@ -9,10 +9,7 @@ const AUTHORIZATION = 'auth/AUTHORIZATION'
 
 
 const initialState = {
-    refresh_token: null,
-    access_token: null,
-    status_client: false,
-    status_consultant: false,
+    status: true,
     isAuth: false,
     pending: false
 }
@@ -51,27 +48,21 @@ const pend = (isPending: boolean) => {
     }
 }
 
-const signIn = (payload: any) => {
+export const signIn = (payload: any) => {
     return {
         type: AUTHORIZATION,
         payload
     }
 }
 
-export const authFunction = (email: string, password: string) => async (dispatch: any, ) =>{
+export const authFunction = (email: string, password: string) => async (dispatch: any,) => {
     dispatch(pend(true))
     const res = await api.signIn({"email": email, "password": password})
-    const access_life = Date.now() + (res.data.time_access*1000)
-    const refresh_life = Date.now() + (res.data.time_refresh*1000)
-    console.log()
+    const access_life = Date.now() + (res.data.time_access * 1000)
+    const refresh_life = Date.now() + (res.data.time_refresh * 1000)
+
     dispatch(signIn({
-        refresh_token: res.data.refresh,
-        access_token: res.data.access,
-        status_client: res.data.status_client,
-        status_consultant: res.data.status_consultant,
-        isAuth: true,
-        access_life: access_life,
-        refresh_life: refresh_life
+        isAuth: true
     }))
     localStorage.setItem(storageName, JSON.stringify({
         access_token: res.data.access,
@@ -83,4 +74,38 @@ export const authFunction = (email: string, password: string) => async (dispatch
     }))
     dispatch(pend(false))
     return res.data
+}
+
+export const setDataRefresh = () => async (dispatch: any) => {
+    const res = await api.signInWithRefresh();
+    const access_life = Date.now() + (300 * 1000)
+    const userData = JSON.parse(<string>localStorage.getItem('userData'))
+    const {status_client, refresh_token, status_consultant, refresh_life} = userData;
+    localStorage.setItem('userData', JSON.stringify({
+        access_token: res.data.access,
+        refresh_token: refresh_token,
+        status_client: status_client,
+        status_consultant: status_consultant,
+        access_life: access_life,
+        refresh_life: refresh_life
+    }))
+    dispatch(signIn({
+        isAuth: true
+    }))
+}
+
+
+export const checkToken = (req: any) =>  async (dispatch: any) => {
+    let token = JSON.parse(<string>localStorage.getItem('userData'));
+    const now = Date.now()
+    if ( token && token.access_life > now) {
+        return  await req()
+    } else if ( token && token.refresh_life > now) {
+        console.log('refresh is bigger')
+        await dispatch(setDataRefresh())
+        return  await req()
+    } else {
+
+        return new Error('Some thing went wrong')
+    }
 }
