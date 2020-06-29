@@ -11,7 +11,7 @@ const ConsultantCard: React.FC<OwnProps> = (props) => {
                 <img
                     width={'100%'}
                     src="https://hips.hearstapps.com/hbz.h-cdn.co/assets/cm/14/52/1280x1280/5499b60e41311_-_hbz-megan-promo.jpg?resize=480:*"
-                    alt="picture"/>
+                    alt="#"/>
             </Ava>
             <Star>
                 4.4

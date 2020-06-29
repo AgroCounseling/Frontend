@@ -3,15 +3,14 @@ import styled from 'styled-components'
 
 export const AuthWrapper = styled.div`
     background: linear-gradient(to top, #BFC3CF , #ffffff );
-    min-height: 90vh;
+    height: 100vh;
+    position:relative;
 `
 
 export const Button = styled.button`
-    width: 100%;
-    
+    width: 100%;    
     background: #5C9B48;
     border-radius: 10px;
-    color: #fff;
     border: none;
     height: 38px;
     cursor: pointer;

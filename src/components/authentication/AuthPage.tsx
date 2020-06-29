@@ -13,7 +13,9 @@ const AuthPage = (props: any) => {
                     </div>
                     {props.children}
                 </div>
-                <img src={welcomeFlower} className={css.welcomeFlower} alt="Flower"/>
+                <div className={css.flowerWrapper}>
+                    <img src={welcomeFlower} className={css.welcomeFlower} alt="Flower"/>
+                </div>
             </div>
         </AuthWrapper>
     )

@@ -16,8 +16,7 @@ export const CardWrapper = styled.div`
         color: rgba(33, 51, 54, 0.8);
     }
     &>hr{
-        background: none;
-        border-top: none;
+        background: #C4C4C4;
         border: 1px solid #C4C4C4;
     }
     &>p{
