@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 
 export const AuthWrapper = styled.div`
-    background: linear-gradient(to top, #BFC3CF , #ffffff );
+    background: linear-gradient(to bottom, #BFC3CF , #ffffff );
     height: 100vh;
     position:relative;
 `
@@ -44,4 +44,40 @@ export const Label = styled.label`
     line-height: 21px;
 
     color: rgba(33, 51, 54, 0.8);
+`
+
+
+export const WelcomeTitle = styled.div`
+    font-style: normal;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 44px;
+    text-align: center;
+    padding-top: 200px;
+    color: rgba(33, 51, 54, 0.8);
+`
+
+export const Btns = styled.div`
+    text-align: center;
+    background: #B7BFD5;
+    border-radius: 10px;
+    width: 270px;
+    border: none;
+    
+    &>a{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 29px;
+        text-decoration: none;
+        color: #FFFFFF;
+        width: 100%;
+        
+    }
+    
+`
+export const BtnsWrapper = styled.div`
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-around;
 `

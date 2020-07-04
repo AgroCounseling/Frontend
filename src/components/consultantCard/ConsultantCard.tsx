@@ -10,14 +10,15 @@ const ConsultantCard: React.FC<OwnProps> = (props) => {
             <Ava>
                 <img
                     width={'100%'}
-                    src="https://hips.hearstapps.com/hbz.h-cdn.co/assets/cm/14/52/1280x1280/5499b60e41311_-_hbz-megan-promo.jpg?resize=480:*"
+                    height={'100%'}
+                    src="https://thumbs.dreamstime.com/b/young-man-agronom-checking-state-vegetables-tomatoes-tablet-greenhouse-men-agriculture-96553509.jpg"
                     alt="#"/>
             </Ava>
             <Star>
                 4.4
                 <img src={star} alt="star"/>
             </Star>
-            <h2>Megan Fox</h2>
+            <h2>Agronomov Agronom</h2>
 
             <Description>
                 BS In Mechanical Engineering @ <br/>

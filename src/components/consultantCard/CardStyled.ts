@@ -7,6 +7,12 @@ export const CardWrapper = styled.div`
     border-radius: 10px;
     position: relative;
     padding-top: 45px; 
+    transition: all 0.3s ease;
+    
+    &:hover{
+      transition: all 0.3s ease;  
+      box-shadow: 0 0 4px 0 rgba(0,0,0, 0.4);
+    }
     &>h2{
         font-style: normal;
         font-weight: bold;
@@ -75,7 +81,7 @@ export const Specialization = styled.span`
 export const ConnectButton = styled.button`
     margin-top: 15px;
     background: #64A928;
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 0 0 10px 10px;
     color: #FFFFFF;
     border: none;
     width: 100%;
@@ -83,6 +89,7 @@ export const ConnectButton = styled.button`
     font-weight: bold;
     font-size: 16px;
     line-height: 300.9%;
+    cursor: pointer;
 `
 
 export const Star = styled.div`
