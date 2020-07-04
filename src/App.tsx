@@ -13,6 +13,9 @@ import Preloader from "./components/preloader/Preloader";
 import NavBar from "./components/navbar/NavBar";
 import MainPage from "./components/mainPage/MainPage";
 import Admin from "./components/Admin/Admin";
+import Consultants from "./components/consultants/Consultants";
+import WelcomePage from "./components/authentication/WelcomePage";
+import {RegisterFormClient} from "./components/authentication/sign-up/SignUpcClient";
 
 type OwnProps = {
     isPending: boolean
@@ -50,13 +53,24 @@ const App = (props:OwnProps) => {
                             <SignIn/>
                         </AuthPage>
                     </Route>
+                    <Route exact path={'/sign-up'}>
+                        <WelcomePage />
+                    </Route>
                     <Route path={'/sign-up-consultant'}>
                         <AuthPage>
                             <RegisterFormConsultant />
                         </AuthPage>
                     </Route>
+                    <Route path={'/sign-up-client'}>
+                        <AuthPage>
+                            <RegisterFormClient />
+                        </AuthPage>
+                    </Route>
                     <Route path={'/admin'}>
                         <Admin />
+                    </Route>
+                    <Route path={'/consultants/:id'}>
+                        <Consultants />
                     </Route>
                     <Redirect to={'/'}/>
                 </Switch>

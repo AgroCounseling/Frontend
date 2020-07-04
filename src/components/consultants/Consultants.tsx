@@ -1,12 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import css from './cnsultant.module.css'
 import ConsultantCard from "../consultantCard/ConsultantCard";
-
+import api from '../../api/Api'
 
 type Props = {
 
 }
 const Consultants: React.FC<Props> = (props) => {
+
+    useEffect(()=>{
+        api.getConsultants(1).then((res:any) => console.log(res))
+    }, [])
     return (
         <div className={css.wrapper}>
             <div className={css.header}>
