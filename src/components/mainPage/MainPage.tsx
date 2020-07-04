@@ -9,6 +9,11 @@ import css from './mainPage.module.css'
 import ConsultantCard from "../consultantCard/ConsultantCard";
 import prev from '../../img/prev.png'
 import next from '../../img/next.png'
+import Carousel from "./Carousel";
+import grass from '../../img/culture.png'
+import culture from '../../img/culture-bg.png'
+import {Link} from "react-router-dom";
+
 
 const MainPage = () => {
     return (
