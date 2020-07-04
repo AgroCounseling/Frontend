@@ -5,7 +5,8 @@ const http = axios.create({
     baseURL: "http://134.122.76.224/api/"
 });
 
-let token = JSON.parse(<string>localStorage.getItem('userData'));
+// @ts-ignore
+let token = JSON.parse(localStorage.getItem('userData'));
 
 
 export default {
@@ -13,8 +14,14 @@ export default {
     signInWithRefresh: () => http.post('token/refresh/', {
         "refresh": token.refresh_token
     }),
-    signUp: (data: any) => http.post('signup/client', data),
-    getCategory: () => http.get('categories/')
+    signUpClient: (data: any) => http.post('signup/client', data),
+    signUpConsultant: (data: any) => http.post('signup/consultant', data, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    }),
+    getConsultants: (id: number) => http.get(`/specialty/${id}/consultants/`),
+    getCategory: () => http.get(`categories/`)
 }
 
 
