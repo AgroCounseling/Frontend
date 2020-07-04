@@ -14,6 +14,10 @@ export const CardWrapper = styled.div`
       box-shadow: 0 0 4px 0 rgba(0,0,0, 0.4);
     }
     &>h2{
+        white-space: nowrap;
+        overflow: hidden; /* Обрезаем все, что не помещается в область */
+        padding: 5px; /* Поля вокруг текста */
+        text-overflow: ellipsis; /* Добавляем многоточие */
         font-style: normal;
         font-weight: bold;
         font-size: 20px;
@@ -56,17 +60,21 @@ export const Ava = styled.div`
 `
 
 export const Description = styled.div`
-
+    height: 65px;
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
-    padding: 35px 0;
+    margin: 35px 0;
+    padding: 0 15px;
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 207.9%;
-    
     text-align: center;
-    
     color: #000000;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `
 
 export const Specialization = styled.span`

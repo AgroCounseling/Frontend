@@ -101,9 +101,9 @@ const List = (props: ListType) => {
                 </button>
                 <div className={css.cardsWrapper}>
                     <div>
-                        <ConsultantCard/>
-                        <ConsultantCard/>
-                        <ConsultantCard/>
+                        <ConsultantCard url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        <ConsultantCard url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        <ConsultantCard url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
                     </div>
                 </div>
                 <button className={css.next}>

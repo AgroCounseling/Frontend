@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import css from './cnsultant.module.css'
 import ConsultantCard from "../consultantCard/ConsultantCard";
 import api from '../../api/Api'
@@ -7,9 +7,12 @@ type Props = {
 
 }
 const Consultants: React.FC<Props> = (props) => {
-
+    const [consultants, setConsultants] = useState([])
     useEffect(()=>{
-        api.getConsultants(1).then((res:any) => console.log(res))
+        api.getConsultants(1).then((res:any) => {
+            console.log(res)
+            setConsultants(res.data)
+        })
     }, [])
     return (
         <div className={css.wrapper}>
@@ -27,14 +30,15 @@ const Consultants: React.FC<Props> = (props) => {
                 </select>
             </div>
             <div className={css.cardWrapper}>
-                <ConsultantCard/>
-                <ConsultantCard/>
-                <ConsultantCard/>
-                <ConsultantCard/>
-                <ConsultantCard/>
-                <ConsultantCard/>
-                <ConsultantCard/>
-                <ConsultantCard/>
+                {
+                    consultants.map((item:any) => <ConsultantCard
+                        description={item.description}
+                        name={item.user.first_name}
+                        last_name={item.user.last_name}
+                        url={item.user.photo}
+                        key={item.id}
+                    /> )
+                }
             </div>
         </div>
     )
