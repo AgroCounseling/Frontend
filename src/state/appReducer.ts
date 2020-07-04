@@ -36,7 +36,6 @@ export const initialiseApp = () => (dispatch: any) => {
     if (data && data.refresh_token) {
         if(data.refresh_life > Date.now()){
             dispatch(initialise())
-            dispatch(categories())
             dispatch(signIn({
                 isAuth: true
             }))

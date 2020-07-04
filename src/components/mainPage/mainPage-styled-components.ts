@@ -4,11 +4,9 @@ import styled from 'styled-components'
 export const MapsWrapper = styled.div`
     padding: 10px 40px;
     display: grid;
-    // align-items: center;
-    // justify-content: space-around;
     grid-template-columns: 2fr 1fr 2fr 1fr 2fr;
     align-items: baseline;
-    
+    background: rgba(194, 199, 208, 0.1);
     &>div{
         display: grid;
         text-align: center;
@@ -23,9 +21,34 @@ export const MapsWrapper = styled.div`
         
                 
         &>img{
-            
             margin: auto;
-            
         }
     }
+`
+
+export const DescriptionWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 10px 10%;
+`
+export const Title = styled.div`
+    font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+    margin: 0 0 15px 25px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 33px;
+    line-height: 40px;
+    color: #64A928;
+`
+
+export const Description = styled.div`
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 170%;
+    /* or 31px */
+    
+    
+    color: #848484;
 `
