@@ -1,14 +1,14 @@
 import React from 'react'
 import {HeaderWrapper, LogoWrapper} from "./HeaderStyles";
 import {Link} from "react-router-dom";
-import logo from '../../img/logo.png'
+import logo from '../../img/agro-logo.png'
 import css from './header.module.css'
 import {connect} from "react-redux";
 import {GlobalStateType} from "../../state/root-reducer";
 import {isAuth} from "../../state/selectors";
 import {signIn} from "../../state/authReducer";
 
-const Header = (props:any) =>{
+const Header = (props: any) => {
     const Logout = () => {
         localStorage.removeItem('userData')
         props.signIn({
@@ -17,17 +17,15 @@ const Header = (props:any) =>{
     }
     return (
         <HeaderWrapper>
-            <Link to={'/'} className={css.logo}>
-                <LogoWrapper>
-                    <img src={logo} height={'100%'} alt="LOGO"/>
-                    <span>
-                         AgroConsulting
-                    </span>
-                </LogoWrapper>
-            </Link>
-
-            <div>
-                <input className={css.searchInput} placeholder={'Консультанты, категории....'} type="text"/>
+            <div className={css.logoWrapper}>
+                <Link to={'/'} className={css.logo}>
+                    <LogoWrapper>
+                        <img src={logo} height={'100%'} alt="LOGO"/>
+                    </LogoWrapper>
+                </Link>
+                <div>
+                    <input className={css.searchInput} placeholder={'Консультанты, категории....'} type="text"/>
+                </div>
             </div>
             <div className={css.lastChildWrapper}>
                 {

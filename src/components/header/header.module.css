@@ -1,3 +1,6 @@
+.logoWrapper{
+    display: flex;
+}
 .logo{
     text-decoration: none;
 }
@@ -9,20 +12,25 @@
 
 .searchInput,.enter{
     height: 30px;
+    padding: 18px 0;
     background: #FAFBFC;
-    border: 2px solid #AA8B25;
+    border: 1.5px solid #AA8B25;
     box-sizing: border-box;
     border-radius: 10px;
     display: flex;
     align-items: center;
 }
 .searchInput{
+    margin-left: 70px;
     width: 210px;
     padding-left: 5px;
 }
+.searchInput:focus{
+    outline: none;
+}
 .enter{
     color: #000;
-    padding: 0 10px;
+    padding: 18px 10px;
     text-decoration: none;
 
 }
@@ -32,7 +40,7 @@
     background: #AA8B25;
     border-radius: 10px;
     color: #FFFFFF;
-    padding: 0 5px;
+    padding: 5px 5px;
     text-decoration: none;
     display: flex;
     align-items: center;
