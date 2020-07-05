@@ -13,11 +13,14 @@ export const CardWrapper = styled.div`
       transition: all 0.3s ease;  
       box-shadow: 0 0 4px 0 rgba(0,0,0, 0.4);
     }
-    &>h2{
+    &>a{
+        text-decoration: none;
+    }
+    &>a>h2{
         white-space: nowrap;
-        overflow: hidden; /* Обрезаем все, что не помещается в область */
-        padding: 5px; /* Поля вокруг текста */
-        text-overflow: ellipsis; /* Добавляем многоточие */
+        overflow: hidden;
+        padding: 5px;
+        text-overflow: ellipsis; 
         font-style: normal;
         font-weight: bold;
         font-size: 20px;
@@ -25,11 +28,11 @@ export const CardWrapper = styled.div`
         
         color: rgba(33, 51, 54, 0.8);
     }
-    &>hr{
+    &>a>hr{
         background: #C4C4C4;
         border: 1px solid #C4C4C4;
     }
-    &>p{
+    &>a>p{
         text-align: left;
         padding: 5px 10px;
         

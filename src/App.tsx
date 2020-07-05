@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import './App.css'
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom"
 import {initialiseApp} from "./state/appReducer";
@@ -16,6 +16,7 @@ import Admin from "./components/Admin/Admin";
 import Consultants from "./components/consultants/Consultants";
 import WelcomePage from "./components/authentication/WelcomePage";
 import {RegisterFormClient} from "./components/authentication/sign-up/SignUpcClient";
+import Footer from "./components/footer/Footer";
 
 type OwnProps = {
     isPending: boolean
@@ -25,6 +26,7 @@ type OwnProps = {
 
 const App = (props:OwnProps) => {
     const {initialiseApp} = props
+    const [pending, setPending] = useState(true)
     const allPromiseRejection = (promiseRejectionEvent: any) =>{
         alert(promiseRejectionEvent)
     }
@@ -35,8 +37,10 @@ const App = (props:OwnProps) => {
             window.removeEventListener('unhandledrejection', allPromiseRejection)
         }
     }, [initialiseApp])
-
-    if(props.isPending){
+    setTimeout(()=> {
+        setPending(false)
+    }, 1000)
+    if(pending){
         return <div className={'preloaderWrapper'}><Preloader /></div>
     }
     return (
@@ -74,6 +78,7 @@ const App = (props:OwnProps) => {
                     </Route>
                     <Redirect to={'/'}/>
                 </Switch>
+                <Footer />
             </Router>
         </div>
     )

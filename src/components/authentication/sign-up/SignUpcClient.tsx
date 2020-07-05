@@ -9,7 +9,7 @@ import twitter from "../../../img/twitter.png";
 import {WithAuthRedirect} from "../../../hocs/AuthHoc";
 import {useFormik} from "formik";
 import api from './../../../api/Api'
-import {useHistory, useLocation} from 'react-router-dom'
+import {useHistory} from 'react-router-dom'
 
 export const RegisterFormClient = WithAuthRedirect(() => {
     const [pic, setPic] = useState<any>({})
@@ -57,7 +57,7 @@ export const RegisterFormClient = WithAuthRedirect(() => {
             <div>
                 <label>
                     <div className={css.choosePic}>
-                        <input type="file" onChange={fileSelectHandler}/>
+                        <input type="file" required onChange={fileSelectHandler}/>
                         <img src={chooseIcon} alt="#"/>
                     </div>
                 </label>
@@ -65,6 +65,7 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                     <Label>
                         Имя
                         <Input
+                            required
                             name={'name'}
                             onChange={formik.handleChange}
                             value={formik.values.name}
@@ -73,6 +74,7 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                     <Label>
                         Фамилия
                         <Input
+                            required
                             name={'surname'}
                             onChange={formik.handleChange}
                             value={formik.values.surname}
@@ -81,6 +83,7 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                     <Label>
                         Email
                         <Input
+                            required
                             name={'email'}
                             onChange={formik.handleChange}
                             value={formik.values.email}
@@ -89,6 +92,7 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                     <Label>
                         Номер
                         <Input
+                            required
                             name={'number'}
                             onChange={formik.handleChange}
                             value={formik.values.number}
@@ -97,18 +101,20 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                     <Label>
                         Пароль
                         <Input
+                            required
                             name={'password'}
                             onChange={formik.handleChange}
                             value={formik.values.password}
-                            type="text"/>
+                            type="password"/>
                     </Label>
                     <Label>
                         Подтвердите пароль
                         <Input
+                            required
                             name={'password2'}
                             onChange={formik.handleChange}
                             value={formik.values.password2}
-                            type="text"/>
+                            type="password"/>
                     </Label>
                 </div>
                 <Registration btn={'Зарегистрироваться'}/>

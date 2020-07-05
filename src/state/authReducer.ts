@@ -106,6 +106,6 @@ export const checkToken = (req: any) =>  async (dispatch: any) => {
         return  await req()
     } else {
 
-        return new Error('Some thing went wrong')
+        return new Error('Something went wrong')
     }
 }

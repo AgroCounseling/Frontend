@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import {device} from '../../device-size/DeviceSize'
 
 export const NavBarWrapper = styled.div`
-    padding: 15px 25px;
+    padding: 15px 100px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -11,7 +10,7 @@ export const NavBarWrapper = styled.div`
 
 export const NavBarElement = styled.div`
     font-weight: bold;
-    font-size: 23px;
+    font-size: 16px;
     line-height: 207.9%;
     display: flex;
     align-items: center;
@@ -22,11 +21,7 @@ export const NavBarElement = styled.div`
         margin-top: 5px;
         margin-left: 1px;
     }
-    
-    @media ${device.laptop} { 
-        font-size: 20px;        
-    }
     @media (max-width: 880px ){ 
-        font-size: 16px;        
+        font-size: 14px;        
     }
 `

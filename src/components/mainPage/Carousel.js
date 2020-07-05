@@ -4,7 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import slide from "../../img/photoSlide.png";
 import slide2 from "../../img/slide-2.png";
 
-const MainCarousel = (props) => {
+const MainCarousel = () => {
     return (
         <Carousel
             autoPlay
@@ -13,6 +13,7 @@ const MainCarousel = (props) => {
             swipeable={true}
             showThumbs={false}
             dynamicHeight={false}
+            showStatus={false}
         >
             <div>
                 <img alt={'1'} src={slide}/>
