@@ -1,0 +1,21 @@
+.wrapper{
+    background: rgba(170, 139, 37, 0.7);
+    padding: 25px 35px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1em;
+}
+.wrapper>div{
+    display: grid;
+    grid-gap: 8px;
+}
+.wrapper>div>div{
+    cursor: pointer;
+}
+.last_footer>div{
+    display: flex;
+    align-items: center;
+}
+.last_footer>div>img{
+    margin-right: 10px;
+}
