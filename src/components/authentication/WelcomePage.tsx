@@ -1,5 +1,5 @@
 import React from 'react'
-import {AuthWrapper, Btns, BtnsWrapper, WelcomeTitle} from "./styledElements";
+import {AuthWrapper, BtnsWrapper, WelcomeTitle} from "./styledElements";
 import {Link} from "react-router-dom";
 import css from './auth.module.css'
 const WelcomePage = () => {

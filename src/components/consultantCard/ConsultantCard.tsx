@@ -8,6 +8,7 @@ type OwnProps = {
     name: string
     last_name: string
     description: string
+    star: number | string
 }
 
 const ConsultantCard: React.FC<OwnProps> = (props) => {
@@ -24,7 +25,7 @@ const ConsultantCard: React.FC<OwnProps> = (props) => {
                         alt="#"/>
                 </Ava>
                 <Star>
-                    4.4
+                    {props.star}
                     <img src={star} alt="star"/>
                 </Star>
                 <h2>{props.name} {props.last_name}</h2>
