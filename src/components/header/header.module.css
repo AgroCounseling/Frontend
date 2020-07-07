@@ -9,7 +9,11 @@
     display: flex;
     align-items: center;
 }
-
+.forum{
+    letter-spacing: 2px;
+    margin-right: 10px;
+    color: #4D5B5C;
+}
 .searchInput,.enter{
     height: 30px;
     padding: 18px 0;

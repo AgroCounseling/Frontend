@@ -17,6 +17,8 @@ import Consultants from "./components/consultants/Consultants";
 import WelcomePage from "./components/authentication/WelcomePage";
 import {RegisterFormClient} from "./components/authentication/sign-up/SignUpcClient";
 import Footer from "./components/footer/Footer";
+import Forum from "./components/forum/Forum";
+import Answer from "./components/answer/Answer";
 
 type OwnProps = {
     isPending: boolean
@@ -51,6 +53,7 @@ const App = (props:OwnProps) => {
                     <Route exact path={'/'}>
                         <NavBar/>
                         <MainPage/>
+                        <Footer />
                     </Route>
                     <Route exact path={'/sign-in'}>
                         <AuthPage>
@@ -72,13 +75,20 @@ const App = (props:OwnProps) => {
                     </Route>
                     <Route path={'/admin'}>
                         <Admin />
+                        <Footer />
                     </Route>
                     <Route path={'/consultants/:id'}>
                         <Consultants />
+                        <Footer />
+                    </Route>
+                    <Route path={'/forum'}>
+                        <Forum />
+                    </Route>
+                    <Route path={'/answer/:id'}>
+                        <Answer />
                     </Route>
                     <Redirect to={'/'}/>
                 </Switch>
-                <Footer />
             </Router>
         </div>
     )

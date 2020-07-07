@@ -28,6 +28,7 @@ const Header = (props: any) => {
                 </div>
             </div>
             <div className={css.lastChildWrapper}>
+                <Link to={'/forum'} className={css.forum}>Форум</Link>
                 {
                     props.isAuth
                         ? <>

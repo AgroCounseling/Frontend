@@ -21,8 +21,12 @@ export default {
         }
     }),
     getConsultants: (id: number) => http.get(`/specialty/${id}/consultants/`),
-    getCategory: () => http.get(`categories/`)
+    getCategory: () => http.get(`categories/`),
+    getForums: () => http.get(`forums/`),
+    getQuestion: (id:number|string) => http.get(`forums/${id}`),
+    getUser: (id:number|string) => http.get(`consultants/${id}`)
 }
+
 
 
 export const ApiToken = {}
