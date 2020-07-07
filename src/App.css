@@ -10,3 +10,7 @@
 .css-dxept9-ValueContainer{
     border-radius: 10px !important;
 }
+
+a:link{
+    text-decoration: none;
+}
