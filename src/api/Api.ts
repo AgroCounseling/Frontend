@@ -20,9 +20,9 @@ export default {
             "Content-Type": "multipart/form-data"
         }
     }),
-    getConsultants: (id: number) => http.get(`/specialty/${id}/consultants/`),
+    getConsultants: (id: number, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),
     getCategory: () => http.get(`categories/`),
-    getForums: () => http.get(`forums/`),
+    getForums: (page: number | string) => http.get(`forums/?page=${page}`),
     getQuestion: (id:number|string) => http.get(`forums/${id}`),
     getUser: (id:number|string) => http.get(`consultants/${id}`)
 }

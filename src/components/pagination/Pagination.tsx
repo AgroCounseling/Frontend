@@ -6,6 +6,7 @@ import ReactPaginate from "react-paginate";
 
 type Props = {
     pageCount: number
+    setPage: (page: number) => void
 }
 const Pagination: React.FC<Props> = (props) => {
 
@@ -25,6 +26,7 @@ const Pagination: React.FC<Props> = (props) => {
                 pageRangeDisplayed={5}
                 onPageChange={(selectedItem:{selected: number})=>{
                     console.log(selectedItem)
+                    props.setPage(selectedItem.selected + 1)
                 }}
                 containerClassName={css.pagination}
                 activeClassName={css.active}

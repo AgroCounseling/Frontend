@@ -5,8 +5,6 @@ import api from '../../api/Api'
 import {Header} from "../Styles";
 import Select from 'react-select'
 import Pagination from "../pagination/Pagination";
-import ReactPaginate from "react-paginate";
-import prev from '../../img/prev.png'
 type Props = {}
 
 
@@ -27,10 +25,13 @@ const colourStyles = {
 
 const Consultants: React.FC<Props> = (props) => {
     const [consultants, setConsultants] = useState([])
+    const [pagination, setPagination] = useState(1)
+    const [page, setPage] = useState(1)
     useEffect(() => {
-        api.getConsultants(1).then((res: any) => {
+        api.getConsultants(page).then((res: any) => {
             console.log(res)
-            setConsultants(res.data)
+            setPagination(Math.ceil(res.data.count / res.data.limit))
+            setConsultants(res.data.results)
         })
     }, [])
     return (
@@ -58,7 +59,7 @@ const Consultants: React.FC<Props> = (props) => {
                     />)
                 }
             </div>
-            <Pagination pageCount={1} />
+            <Pagination pageCount={pagination} setPage={setPage} />
         </div>
     )
 }

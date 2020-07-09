@@ -21,18 +21,22 @@ import Footer from "../footer/Footer";
 const Forum = () => {
     const [questions, setQuestions] = useState([])
     const [pending, setPending] = useState(true)
+    const [pagination, setPagination] = useState(0)
+    const [page, setPage] = useState(1)
     useEffect(() => {
-        api.getForums()
+        api.getForums(page)
             .then(
                 (res: any) => {
-                    setQuestions(res.data)
+                    console.log(res)
+                    setQuestions(res.data.results)
+                    setPagination(Math.ceil(res.data.count / res.data.limit))
                     setPending(false)
                 },
                 (error: any) => {
                     alert(error)
                 }
             )
-    }, [])
+    }, [page])
     if (pending) {
         return <Preloader/>
     }
@@ -49,13 +53,13 @@ const Forum = () => {
                     {
                         questions.map((item: any, index: number) => {
                             if (index === questions.length - 1) {
-                                return <Question key={item.id} id={item.id} title={item.description} last={true}/>
+                                return <Question comment_count={item.comment_count} key={item.id} id={item.id} title={item.description} last={true}/>
                             }
-                            return <Question key={item.id} id={item.id} title={item.description}/>
+                            return <Question comment_count={item.comment_count} key={item.id} id={item.id} title={item.description}/>
                         })
                     }
                 </QuestionWrappers>
-                <Pagination pageCount={1}/>
+                <Pagination setPage={setPage} pageCount={pagination}/>
             </Wrapper>
             <Footer/>
         </>
@@ -66,6 +70,7 @@ type QuestionProps = {
     last?: true
     title: string
     id: number
+    comment_count: number
 }
 
 const Question = (props: QuestionProps) => {
@@ -84,7 +89,7 @@ const Question = (props: QuestionProps) => {
                 </ImageWrapper>
                 <Answers>
                     <div>
-                        1
+                        {props.comment_count}
                     </div>
                     <p>
                         ответ
