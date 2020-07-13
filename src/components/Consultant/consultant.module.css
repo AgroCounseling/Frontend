@@ -1,0 +1,99 @@
+.wrapper{
+    position: relative;
+    height: 100%;
+}
+.feedBack{
+    position: absolute;
+    top: -200px;
+    bottom: 0;
+    left: 0;
+    width: 230px;
+    padding-top: 370px;
+    background: #FFFAEA;
+    z-index: -1;
+}
+.feedBack>span{
+    margin-top: 200px;
+}
+.user{
+    margin: 200px 15% 50px 15%;
+    min-height: 150px;
+    background: rgba(236, 191, 44, 0.8);
+    position: relative;
+}
+.imgWrapper{
+    position: absolute;
+    top: -100%;
+    left: -15%;
+    width: 250px;
+    height: 250px;
+}
+.imgWrapper>img{
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+}
+.person{
+    padding: 0 20px 0 150px;
+}
+.name{
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 207.9%;
+
+    color: rgba(33, 51, 54, 0.8);
+}
+.specialty{
+    font-weight: bold;
+    font-size: 20px;
+    color: #213336;
+}
+.textWrapper{
+    margin-left: 250px;
+}
+.education{
+    font-weight: 500;
+    font-size: 33px;
+    color: #ECBF2C;
+    margin-left: 55px;
+}
+.text{
+    margin: 20px;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 180%;
+    color: rgba(33, 51, 54, 0.8);
+}
+
+.answerWrapper{
+    padding: 0 10px;
+    margin: 15px 0;
+}
+.answerName{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 27px;
+
+    color: #213336;
+}
+.answer{
+    margin: 5px 2px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+
+    color: #213336;
+}
+.stars{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    color: #213336;
+    display: flex;
+    justify-content: space-between;
+}
+.nameWrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

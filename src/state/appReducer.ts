@@ -2,15 +2,28 @@ import {checkToken, signIn} from "./authReducer";
 import api from '../api/Api'
 
 const INITIALIZE_SUCCEED = "app/INITIALIZE_SUCCEED";
-
+const SET_CATEGORIES = "app/SET_CATEGORIES"
+const SET_SPECIALTIES = "app/SET_SPECIALTIES"
 
 const initialState = {
     initialise: true,
+    categories: [],
+    specialties: []
 }
 type InitialStateType = typeof initialState
 
 export const appReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
+        case SET_CATEGORIES:
+            return {
+                ...state,
+                categories: action.categories
+            }
+        case SET_SPECIALTIES:
+            return {
+                ...state,
+                specialties: action.data
+            }
         case INITIALIZE_SUCCEED:
             return {
                 ...state,
@@ -29,17 +42,42 @@ export const initialise = () => {
         type: INITIALIZE_SUCCEED
     }
 }
-
+export const setCategories = (categories:any) => {
+    return {
+        type: SET_CATEGORIES,
+        categories
+    }
+}
+export const getCategories = () => async (dispatch: any) => {
+    api.getCategory()
+        .then((res:any)=>{
+            dispatch(setCategories(res.data.results))
+        }, (error:any) => console.error(error))
+}
+export const setSpecialties = (data:any) => {
+    return {
+        type: SET_SPECIALTIES,
+        data
+    }
+}
+export const getSpecialties = () => async (dispatch: any) => {
+    api.getSpecialty()
+        .then((res:any)=>{
+            dispatch(setSpecialties(res.data.results))
+        }, (error:any)=>console.error(error))
+}
 
 export const initialiseApp = () => (dispatch: any) => {
+    dispatch(getCategories())
+    dispatch(getSpecialties())
     let data = JSON.parse(<string>localStorage.getItem('userData'));
     if (data && data.refresh_token) {
-        if(data.refresh_life > Date.now()){
+        if (data.refresh_life > Date.now()) {
             dispatch(initialise())
             dispatch(signIn({
                 isAuth: true
             }))
-        }else{
+        } else {
             localStorage.removeItem('userData')
             dispatch(signIn({
                 isAuth: false
@@ -48,9 +86,4 @@ export const initialiseApp = () => (dispatch: any) => {
     } else {
         dispatch(initialise())
     }
-}
-
-export const categories = () => async (dispatch: any) => {
-    let res = await dispatch(checkToken(api.getCategory))
-    console.log(res)
 }

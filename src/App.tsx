@@ -19,6 +19,7 @@ import {RegisterFormClient} from "./components/authentication/sign-up/SignUpcCli
 import Footer from "./components/footer/Footer";
 import Forum from "./components/forum/Forum";
 import Answer from "./components/answer/Answer";
+import Consultant from "./components/Consultant/Consultant";
 
 type OwnProps = {
     isPending: boolean
@@ -76,6 +77,9 @@ const App = (props:OwnProps) => {
                     <Route path={'/admin'}>
                         <Admin />
                         <Footer />
+                    </Route>
+                    <Route path={'/consultant/:id'}>
+                        <Consultant />
                     </Route>
                     <Route path={'/consultants/:id'}>
                         <Consultants />
