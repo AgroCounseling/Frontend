@@ -9,6 +9,7 @@ type OwnProps = {
     last_name: string
     description: string
     star: number | string
+    specialization: [{id: number, title: string}]
 }
 
 const ConsultantCard: React.FC<OwnProps> = (props) => {
@@ -41,8 +42,8 @@ const ConsultantCard: React.FC<OwnProps> = (props) => {
                         Специализация:
                     </Specialization>
                     <span>
-                    Культура, Органика, Инновации, Культура, Органика, Инновации
-                </span>
+                        {props.specialization.map((item:any) => item.title + ', ')}
+                    </span>
                 </p>
             </Link>
             <ConnectButton>

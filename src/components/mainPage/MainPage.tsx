@@ -12,24 +12,26 @@ import Carousel from "./Carousel";
 import grass from '../../img/culture.png'
 import culture from '../../img/culture-bg.png'
 import {Link} from "react-router-dom";
+import {GlobalStateType} from "../../state/root-reducer";
+import {getCategories} from "../../state/selectors";
+import {connect} from "react-redux";
 
 
-const MainPage = () => {
-
+type Props = {
+    categories: any
+}
+const MainPage: React.FC<Props> = (props) => {
+    const {categories} = props
     return (
         <div>
             <Carousel/>
             <RoadMap/>
-
             <div className={css.consultant}>
                 <div className={css.header}>
                     В какой сфере ищете консультацию?
                 </div>
                 <div className={css.linksWrapper}>
-                    <Links index={1} url={culture} title={'Культура'} />
-                    <Links index={2} url={culture} title={'Органика'} />
-                    <Links index={3} url={culture} title={'Технологии выращивания '} />
-                    <Links index={4} url={culture} title={'Профилактика '} />
+                    {categories.map((item:any)=> <Links key={item.id} index={item.id} title={item.title} url={item.image} />)}
                 </div>
             </div>
             <List index={1} url={grass} title={'Культура'} description={' Комендант Бишкека Алмаз Орозалиев в среду, 8 апреля, подписал приказ о разрешении на\n' +
@@ -52,7 +54,7 @@ type LinksProps = {
 const Links: React.FC<LinksProps> = (props) => {
     return (
         <Link to={`/consultants/${props.index}`} className={css.links}>
-            <img src={props.url} alt="#"/>
+            <img src={props.url ? props.url : culture} alt="#"/>
             <div>
                 <span>{props.title}</span>
             </div>
@@ -98,9 +100,9 @@ const List = (props: ListType) => {
                 </button>
                 <div className={css.cardsWrapper}>
                     <div>
-                        <ConsultantCard star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
-                        <ConsultantCard star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
-                        <ConsultantCard star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        <ConsultantCard specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        <ConsultantCard specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        <ConsultantCard specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
                     </div>
                 </div>
                 <button className={css.next}>
@@ -144,4 +146,9 @@ const RoadMap = () => {
     </MapsWrapper>
 }
 
-export default MainPage
+const mapStateToProps = (state: GlobalStateType) => {
+    return {
+        categories: getCategories(state)
+    }
+}
+export default connect(mapStateToProps, {})(MainPage)

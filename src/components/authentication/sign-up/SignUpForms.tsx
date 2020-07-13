@@ -9,7 +9,7 @@ import twitter from "../../../img/twitter.png";
 import Select from "react-select";
 import {WithAuthRedirect} from "../../../hocs/AuthHoc";
 import {useFormik} from "formik";
-import api from './../../../api/Api'
+// import api from './../../../api/Api'
 import add_pic from '../../../img/add_pic.png'
 
 const customStyles = {
