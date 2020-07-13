@@ -1,5 +1,10 @@
 import styled from 'styled-components'
 
+export const FilterWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`
 
 export const Input = styled.input`
     background: rgba(194, 199, 208, 0.4);
@@ -19,19 +24,22 @@ export const Button = styled.button`
     padding: 5px 50px;
     line-height: 207%;
     margin-left: 25px;
+    white-space: nowrap;
 `
 export const FormWrapper = styled.form`
   display: flex;
   align-items: center;
+  width: 100%;
 `
 export const QuestionWrappers = styled.div`
     margin: 25px 20px;
     border: 1px solid #98A1A3;
     border-radius: 8px;
 `
-export const FilterBy = styled.div`
-    display: inline-block;
-    margin: 15px 25px;
+export const FilterBy = styled.label`
+    display: flex;
+    align-items: center;
+    margin: 15px 0;
     font-weight: 500;
     font-size: 16px;
     line-height: 207.9%;
@@ -91,4 +99,9 @@ export const Answers = styled.div`
       padding: 0 3px;
       color: #4D5B5C;
     }
+`
+
+export const Search = styled.div`
+    display: flex;
+    justify-content: space-between;
 `

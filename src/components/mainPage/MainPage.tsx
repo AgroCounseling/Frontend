@@ -100,9 +100,9 @@ const List = (props: ListType) => {
                 </button>
                 <div className={css.cardsWrapper}>
                     <div>
-                        <ConsultantCard specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
-                        <ConsultantCard specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
-                        <ConsultantCard specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        <ConsultantCard id={'1'} specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        <ConsultantCard id={'1'} specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        <ConsultantCard id={'1'} specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
                     </div>
                 </div>
                 <button className={css.next}>

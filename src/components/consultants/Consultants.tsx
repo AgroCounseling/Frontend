@@ -9,7 +9,6 @@ import {GlobalStateType} from "../../state/root-reducer";
 import {connect} from "react-redux";
 import {getCategories, getSpecialties} from "../../state/selectors";
 import {useHistory, useParams} from 'react-router-dom'
-import {log} from "util";
 
 const colourStyles = {
     control: (styles: any) => ({
@@ -77,6 +76,7 @@ const Consultants: React.FC<Props> = (props) => {
             <div className={css.cardWrapper}>
                 {
                     consultants.map((item: any) => <ConsultantCard
+                        id={item.id}
                         star={item.middle_star}
                         description={item.description}
                         name={item.user.first_name}

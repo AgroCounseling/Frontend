@@ -22,9 +22,8 @@ const Answer: React.FC<Props> = (props) => {
         api.getQuestion(params.id)
             .then(
                 (res: any) => {
-                    console.log(res.data.comments)
                     setComments(res.data.comments)
-                    setQuestion(res.data.description)
+                    setQuestion(res.data.title)
                     setPending(false)
                 },
                 (error: any) => {
@@ -43,8 +42,10 @@ const Answer: React.FC<Props> = (props) => {
                 <div className={css.answers}>
                     {
                         comments.map((item: any) => {
-                            return <AnswerList text={item.description}
-                                               name={`${item.user.first_name} ${item.user.last_name}`}/>
+                            return <AnswerList
+                                key={item.id}
+                                text={item.description}
+                                name={`${item.user.first_name} ${item.user.last_name}`}/>
                         })
                     }
                 </div>

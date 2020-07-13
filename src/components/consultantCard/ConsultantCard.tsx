@@ -4,6 +4,7 @@ import star from '../../img/star.png'
 import {Link} from "react-router-dom";
 
 type OwnProps = {
+    id: string | number
     url: string | null
     name: string
     last_name: string
@@ -15,7 +16,7 @@ type OwnProps = {
 const ConsultantCard: React.FC<OwnProps> = (props) => {
     return (
         <CardWrapper>
-            <Link to={`/consultant/${1}`}>
+            <Link to={`/consultant/${props.id}`}>
                 <Ava>
                     <img
                         width={'100%'}
