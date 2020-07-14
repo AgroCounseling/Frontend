@@ -23,7 +23,7 @@ export default {
     getConsultants: (id: string, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),
     getCategory: () => http.get(`categories/`),
     getSpecialty: () => http.get(`specialty/`),
-    getForums: (page: number | string, text: string, filter: any) => http.get(`forums/?page=${page}&search=${text}`),
+    getForums: (page: number | string, text: string, filter: any) => http.get(`forums/?category=${filter ? filter.value : ''}&page=${page}&search=${text}`),
     getQuestion: (id: number | string) => http.get(`forums/${id}`),
     getUser: (id: number | string | undefined) => http.get(`consultants/${id}`)
 }
