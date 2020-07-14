@@ -50,12 +50,14 @@ const Forum: React.FC<Props> = (props) => {
             label: item.title
         }
     })
+
     const [questions, setQuestions] = useState([])
     const [pending, setPending] = useState(true)
     const [pagination, setPagination] = useState(0)
     const [page, setPage] = useState(1)
     const [text, setText] = useState('')
     const [filter, setFilter] = useState<{value: number, label: string}|null>(null)
+
     useEffect(() => {
         api.getForums(page, text, filter)
             .then(
