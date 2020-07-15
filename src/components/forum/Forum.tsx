@@ -35,8 +35,16 @@ const colourStyles = {
             border: 'none'
         }
     }),
+    dropdownIndicator: (styles:any) => ({
+        ...styles,
+        display: 'none'
+    }),
+    indicatorSeparator:(styles:any) => ({
+        ...styles,
+        display: 'none'
+    }),
     option: (styles: any) => {
-        return {...styles, display: 'block'}
+        return {...styles, marginLeft: '20px'}
     }
 };
 
@@ -59,7 +67,7 @@ const Forum: React.FC<Props> = (props) => {
     const [filter, setFilter] = useState<{value: number, label: string}|null>(null)
 
     useEffect(() => {
-        api.getForums(page, text, filter)
+        api.getForums(page, text)
             .then(
                 (res: any) => {
                     setQuestions(res.data.results)
@@ -86,6 +94,7 @@ const Forum: React.FC<Props> = (props) => {
                 }
             )
     }
+
     const removeAll = () => {
         setFilter(null)
         setText('')
