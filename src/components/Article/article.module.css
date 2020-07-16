@@ -1,0 +1,45 @@
+.articlesWrapper{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-gap: 1em;
+}
+.article{
+    padding: 15px 10px;
+    margin: 20px 40px 40px 20px;
+}
+.header{
+    display: flex;
+    align-items: baseline;
+}
+.category{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 26px;
+    margin-right: 20px;
+    color: #64A928;
+}
+.name{
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 32px;
+    margin-right: 20px;
+    color: #213336;
+}
+.title{
+    font-weight: 500;
+    font-size: 25px;
+    line-height: 35px;
+    color: rgba(33, 51, 54, 0.8);
+    margin-top: 15px;
+}
+
+.text{
+    font-size: 22px;
+    line-height: 35px;
+    margin-top: 35px;
+    color: rgba(33, 51, 54, 0.8);
+}
+.date{
+    color: #000000;
+}
