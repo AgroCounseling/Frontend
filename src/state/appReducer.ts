@@ -4,11 +4,12 @@ import api from '../api/Api'
 const INITIALIZE_SUCCEED = "app/INITIALIZE_SUCCEED";
 const SET_CATEGORIES = "app/SET_CATEGORIES"
 const SET_SPECIALTIES = "app/SET_SPECIALTIES"
-
+const SET_SLIDER = "app/SET_SLIDER"
 const initialState = {
     initialise: true,
     categories: [],
-    specialties: []
+    specialties: [],
+    slider: []
 }
 type InitialStateType = typeof initialState
 
@@ -18,6 +19,11 @@ export const appReducer = (state = initialState, action: any): InitialStateType 
             return {
                 ...state,
                 categories: action.categories
+            }
+        case SET_SLIDER:
+            return {
+                ...state,
+                slider: action.data
             }
         case SET_SPECIALTIES:
             return {
@@ -48,11 +54,21 @@ export const setCategories = (categories:any) => {
         categories
     }
 }
+const setSlider = (data:[{image:string,pub_date:string}]) => {
+    return {
+        type: SET_SLIDER,
+        data
+    }
+}
 export const getCategories = () => async (dispatch: any) => {
     api.getCategory()
         .then((res:any)=>{
             dispatch(setCategories(res.data.results))
         }, (error:any) => console.error(error))
+    api.getSlider()
+        .then((res:any)=> {
+            dispatch(setSlider(res.data.results))
+        })
 }
 export const setSpecialties = (data:any) => {
     return {
@@ -70,7 +86,7 @@ export const getSpecialties = () => async (dispatch: any) => {
 export const initialiseApp = () => (dispatch: any) => {
     dispatch(getCategories())
     dispatch(getSpecialties())
-    let data = JSON.parse(<string>localStorage.getItem('userData'));
+    let data = JSON.parse(<string>localStorage.getItem('userData'))
     if (data && data.refresh_token) {
         if (data.refresh_life > Date.now()) {
             dispatch(initialise())

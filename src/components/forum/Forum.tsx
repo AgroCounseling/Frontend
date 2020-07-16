@@ -67,7 +67,7 @@ const Forum: React.FC<Props> = (props) => {
     const [filter, setFilter] = useState<{value: number, label: string}|null>(null)
 
     useEffect(() => {
-        api.getForums(page, text)
+        api.getForums(page)
             .then(
                 (res: any) => {
                     setQuestions(res.data.results)
@@ -79,7 +79,6 @@ const Forum: React.FC<Props> = (props) => {
                 }
             )
     }, [page])
-
     const submit = (e: any) => {
         e.preventDefault()
         api.getForums(1, text, filter)

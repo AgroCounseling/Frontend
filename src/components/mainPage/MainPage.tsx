@@ -6,8 +6,8 @@ import arrow from '../../img/arrow-right.png'
 import {Description, DescriptionWrapper, MapsWrapper, Title} from "./mainPage-styled-components";
 import css from './mainPage.module.css'
 import ConsultantCard from "../consultantCard/ConsultantCard";
-import prev from '../../img/prev.png'
-import next from '../../img/next.png'
+// import prev from '../../img/prev.png'
+// import next from '../../img/next.png'
 import Carousel from "./Carousel";
 import grass from '../../img/culture.png'
 import culture from '../../img/culture-bg.png'
@@ -95,9 +95,9 @@ const List = (props: ListType) => {
                 }
             </DescriptionWrapper>
             <div className={css.listWrapper}>
-                <button className={css.prev}>
-                    <img src={prev} alt="prev"/>
-                </button>
+                {/*<button className={css.prev}>*/}
+                {/*    <img src={prev} alt="prev"/>*/}
+                {/*</button>*/}
                 <div className={css.cardsWrapper}>
                     <div>
                         <ConsultantCard id={'1'} specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
@@ -105,9 +105,9 @@ const List = (props: ListType) => {
                         <ConsultantCard id={'1'} specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
                     </div>
                 </div>
-                <button className={css.next}>
-                    <img src={next} alt="next"/>
-                </button>
+                {/*<button className={css.next}>*/}
+                {/*    <img src={next} alt="next"/>*/}
+                {/*</button>*/}
             </div>
         </div>
     )

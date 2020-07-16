@@ -20,6 +20,8 @@ import Footer from "./components/footer/Footer";
 import Forum from "./components/forum/Forum";
 import Answer from "./components/answer/Answer";
 import Consultant from "./components/Consultant/Consultant";
+import Articles from "./components/articles/Articles";
+import Article from "./components/Article/Article";
 
 type OwnProps = {
     isPending: boolean
@@ -90,6 +92,12 @@ const App = (props:OwnProps) => {
                     </Route>
                     <Route path={'/answer/:id'}>
                         <Answer />
+                    </Route>
+                    <Route path={'/articles'}>
+                        <Articles />
+                    </Route>
+                    <Route  path={'/article/:id'}>
+                        <Article />
                     </Route>
                     <Redirect to={'/'}/>
                 </Switch>
