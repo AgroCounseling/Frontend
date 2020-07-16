@@ -34,13 +34,9 @@ const Consultant: React.FC<Props> = (props) => {
         <div className={css.wrapper}>
             <div className={css.feedBack}>
                 <span>
-                    <Answer />
-                    <Answer />
-                    <Answer />
-                    <Answer />
-                    <Answer />
-                    <Answer />
-                    <Answer />
+                    {
+                        user.reviews.map((item:any) => <Answer name={item.name} answer={item.text} date={'16 мая'} stars={2.5} />)
+                    }
                 </span>
             </div>
             <div className={css.user}>
@@ -68,15 +64,20 @@ const Consultant: React.FC<Props> = (props) => {
     )
 }
 
-
-const Answer = () => {
+type AnswerProps = {
+    name: string
+    answer: string
+    stars: number
+    date: string
+}
+const Answer:React.FC<AnswerProps> = (props) => {
     return (
         <div className={css.answerWrapper}>
-            <div className={css.answerName}>Аноним Аноним</div>
-            <div className={css.answer}>“Вы хотите сгруппировать элементы, которые будут поддерживать фиксированные отношения” </div>
+            <div className={css.answerName}>{props.name}</div>
+            <div className={css.answer}>{props.answer}</div>
             <div className={css.stars}>
-                <Stars edit={true} color={'#ffd700'} size={24} value={2.5} />
-                <div>16 мая</div>
+                <Stars edit={true} color={'#ffd700'} size={24} value={props.stars} />
+                <div>{props.date}</div>
             </div>
         </div>
     )
