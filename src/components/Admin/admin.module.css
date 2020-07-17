@@ -1,0 +1,138 @@
+.userWrapper{
+    padding: 25px 8%;
+    display: flex;
+}
+.user{
+    display: grid;
+    grid-gap: 2em;
+    margin-right: 70px;
+}
+.user>button{
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 14px;
+    color: #000000;
+    background: #FFFFFF;
+    border: none;
+    padding: 10px 15px;
+    box-shadow: 0 2px 20px rgba(111, 111, 111, 0.15);
+    border-radius: 12px;
+    cursor: pointer;
+}
+.user>button:focus{
+    outline: none;
+}
+.user>span{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.user>span>img{
+    border-radius: 50%;
+    width: 100%;
+    /*height: 100%;*/
+}
+.nameWrapper{
+    margin: auto 0;
+}
+.name{
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 44px;
+    display: flex;
+    align-items: center;
+    color: rgba(33, 51, 54, 0.8);
+}
+.linksWrapper{
+    background: #F8F8F8;
+    display: flex;
+    justify-content: space-around;
+}
+.linksWrapper>a{
+    padding: 30px 130px 10px 130px;
+    font-weight: bold;
+    font-size: 34px;
+    line-height: 44px;
+    color: #CDCDCD;
+    margin: 20px 0 15px 0;
+}
+.active{
+    border-bottom: 3px solid #ECBF2C;
+    color: #ECBF2C !important;
+}
+/*////////////////////////////////////////////////////////////////////////////*/
+.chatWrapper{
+    display: grid;
+    grid-template-columns: 1.8fr 2.2fr;
+    grid-gap: 1em;
+    text-align: center;
+    margin-top: 30px;
+}
+.chatWrapper>div{
+    margin: 0 5%;
+}
+.searchWrapper>input{
+    width: -webkit-fill-available;
+    padding: 10px 0 10px 10px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    font-size: 18px;
+    line-height: 26px;
+    color: #707C97;
+    border: none;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.05), 0px 4px 10px rgba(0, 0, 0, 0.25), 0px 10px 55px rgba(0, 0, 0, 0.05);
+}
+.searchWrapper>input:focus{
+    outline: none;
+}
+.userList{
+    margin: 35px 0 15px 0;
+    height: 500px;
+    overflow-y: scroll;
+    padding: 0 10px;
+}
+
+
+
+
+/* Person ////////////////////////////////////////////////////////////////////////////////////*/
+.person{
+    margin: 20px 0;
+    display: grid;
+    grid-template-columns: 60px 1fr  1fr;
+    /*height: 55px;*/
+    background: #FFFFFF;
+    border-radius: 6px;
+    border: none;
+    box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.05), 0px 4px 10px rgba(0, 0, 0, 0.25), 0px 10px 55px rgba(0, 0, 0, 0.05);
+
+}
+.person>div{
+    text-align: start;
+    margin-left: 15px;
+    padding: 5px;
+    height: 40px;
+
+}
+.person>div>img{
+    border-radius: 50%;
+    height: 100%;
+}
+.personName{
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+    margin-top: 5px;
+    text-transform: capitalize;
+    color: #0D1C2E;
+}
+.peronTime{
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 19px;
+    text-transform: lowercase;
+    justify-self: center;
+    color: #707C97;
+}
