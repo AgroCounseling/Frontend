@@ -1,0 +1,31 @@
+.firstWrapper{
+    text-align: center;
+    margin-top: 50px;
+}
+
+.title{
+    margin: 25px 0;
+    font-weight: 500;
+    font-size: 27px;
+    line-height: 37px;
+    color: rgba(33, 51, 54, 0.8);
+}
+.secondWrapper{
+    background: #ECBF2C;
+}
+.block{
+    padding: 50px 14%;
+    display: grid;
+    grid-template-columns: 2fr 6fr;
+
+    grid-gap: 10em;
+    text-align: right;
+}
+.text{
+    margin: auto 0;
+    text-align: left;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 34px;
+    color: rgba(33, 51, 54, 0.8);
+}
