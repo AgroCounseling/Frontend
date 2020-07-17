@@ -77,3 +77,15 @@
 .date{
     color: #000000;
 }
+.search{
+    position: relative;
+}
+.submit{
+    width: 20px; /* Ширина кнопки */
+    height: 20px; /* Высота кнопки */
+    border: none; /* Убираем рамку */
+    background: url('../../img/loop.png') no-repeat 50% 50%;
+    position: absolute;
+    top: 10px;
+    right: 35px;
+}

@@ -93,6 +93,9 @@ const App = (props:OwnProps) => {
                     <Route path={'/answer/:id'}>
                         <Answer />
                     </Route>
+                    <Route path={'/articles/:id'}>
+                        <Articles />
+                    </Route>
                     <Route path={'/articles'}>
                         <Articles />
                     </Route>

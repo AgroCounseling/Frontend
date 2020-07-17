@@ -27,7 +27,7 @@ export default {
     getQuestion: (id: number | string) => http.get(`forums/${id}`),
     getUser: (id: number | string | undefined) => http.get(`consultants/${id}`),
     getSlider: () => http.get(`slider/`),
-    getArticles: (page:number ) => http.get(`articles/?page=${page}`),
+    getArticles: (search:string,page:number, category?:number) => http.get(`articles/?search=${search}&category=${category ? category : ''}&page=${page}`),
     getArticle: (id:number | string) => http.get(`articles/${id ? id : ''}`),
 }
 

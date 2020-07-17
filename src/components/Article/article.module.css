@@ -43,3 +43,31 @@
 .date{
     color: #000000;
 }
+.likes{
+    margin-top: 100px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.imgWrapper{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #4F5D5E;
+    box-sizing: border-box;
+    border-radius: 10px 0 0 10px;
+}
+.imgWrapper>img{
+    margin-right: 10px;
+}
+.count{
+    font-size: 23px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #4F5D5E;
+    border-left: none;
+    box-sizing: border-box;
+    border-radius: 0 10px 10px 0;
+}

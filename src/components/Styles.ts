@@ -36,7 +36,6 @@ export const ArticleSearch = styled.input`
     margin-top: 2px;
     width: 100%;
     padding:  10px 0 10px 20px;
-    
     background: #EFEFEF;
     border: none;
     font-size: 16px;

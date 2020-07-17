@@ -2,14 +2,15 @@ import React, {useEffect, useState} from 'react'
 import css from './articles.module.css'
 import api from '../../api/Api'
 import {AxiosResponse} from "axios";
-import Select from "react-select";
-import {Link, Route} from "react-router-dom";
+import Select, {InputActionTypes, InputProps} from "react-select";
+import {Link, useParams, useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {getCategories} from "../../state/selectors";
 import {GlobalStateType} from "../../state/root-reducer";
 import Pagination from "../pagination/Pagination";
 import {ArticleSearch} from "../Styles";
 import Footer from "../footer/Footer";
+import Preloader from "../preloader/Preloader";
 
 const selectStyle = {
     control: (styles: any) => ({
@@ -37,6 +38,7 @@ const selectStyle = {
 
 type Props = {}
 const Articles: React.FC<Props> = (props) => {
+    const params:any = useParams()
     const categories = useSelector((state:GlobalStateType)=> getCategories(state) )
     const categoriesList = categories.map((item: any) => {
         return {
@@ -44,28 +46,49 @@ const Articles: React.FC<Props> = (props) => {
             label: item.title
         }
     })
+
+    const [pending, setPending] = useState(true)
+
     const [articles, setArticles] = useState([])
     const [page, setPage] = useState(1)
     const [pagination, setPagination] = useState(0)
+    const [category, setCategory] = useState<any>(null)
+    const [search, setSearch] = useState('')
+
 
     useEffect(() => {
-        api.getArticles(page)
+        api.getArticles(search,page,params.id)
             .then((res: AxiosResponse) => {
                 console.log(res)
                 setArticles(res.data.results)
                 setPagination(Math.ceil(res.data.count / res.data.limit))
+                setPending(false)
             })
-    }, [page])
+    }, [page, params, search])
+    const categoryChange = (e:any) => {
+        setCategory(e)
+    }
+
+    useEffect(()=>{
+        let data = categoriesList.filter((item:any)=> item.value === +params.id ? item : null)
+        setCategory(data)
+    },[])
+
+    if(pending) {
+        return <Preloader />
+    }
     return (
         <div style={{overflowX: 'hidden'}}>
-            <div>
-                <ArticleSearch type={'text'} />
+            <div className={css.search}>
+                <ArticleSearch value={search} onChange={(e:any) => setSearch(e.target.value)} type={'text'} />
+                <input type="submit" placeholder={''} value={''} className={css.submit}/>
             </div>
             <div className={css.articlesWrapper}>
-                <ArticleNavBar category={categoriesList} />
+                <ArticleNavBar categoryVal={category} setCategory={categoryChange} category={categoriesList} />
                 <div>
                     {
                         articles.map((item:any) => <Article
+
                             key={item.id}
                             id={item.id}
                             description={item.text}
@@ -75,12 +98,6 @@ const Articles: React.FC<Props> = (props) => {
                             category={item.category}
                         />)
                     }
-                    {/*<Article id={1} category={'Инновация'} name={'Aнастасия Собор'} date={'сегодня в 12.45'}*/}
-                    {/*         title={'ОРГАНИЧЕСКОЕ ЗЕМЛЕДЕЛИЕ И ЗДОРОВЬЕ ПОЧВЕННОЙ ЭКОСИСТЕМЫ'}*/}
-                    {/*         description={'Сравниваются и обсуждаются разные по своему содержанию системы земледелия органическое и интенсивное. В\n' +*/}
-                    {/*         '                связи с этим, предложено понятие «почвенная экосистема», каксовременная альтернатива традиционному\n' +*/}
-                    {/*         '                пониманию почвы\n'}*/}
-                    {/*/>*/}
                     <Pagination setPage={setPage} pageCount={pagination}/>
                 </div>
             </div>
@@ -101,7 +118,7 @@ export const Article: React.FC<ArticleProps> = (props) => {
     const categories = useSelector((state:GlobalStateType)=> getCategories(state) )
     let category:any = categories.map((item:any) => props.category === item.id ? item.title : null)
     return (
-        <Link to={`article/${props.id}`}>
+        <Link to={`/article/${props.id}`}>
             <div className={css.article}>
                 <div className={css.header}>
                     <div className={css.category}>{category}</div>
@@ -122,8 +139,12 @@ export default Articles
 
 type ArticleNavBarProps = {
     category: any
+    categoryVal: any
+    setCategory: any
 }
 export const ArticleNavBar:React.FC<ArticleNavBarProps> = (props) => {
+    const history = useHistory()
+    console.log(history)
     return (
         <div className={css.navBar}>
             <div className={css.newPopular}>
@@ -131,7 +152,12 @@ export const ArticleNavBar:React.FC<ArticleNavBarProps> = (props) => {
                 <div>Популярные</div>
             </div>
             <div className={css.filterWrapper}>
-                <Select styles={selectStyle} placeholder={'Введите или выберите категорию'}
+                <Select value={props.categoryVal} onChange={(e:any)=>{
+                    history.push(`/articles/${e.value}`)
+                    props.setCategory(e)
+                }}
+                        styles={selectStyle}
+                        placeholder={'Введите или выберите категорию'}
                         options={props.category}/>
                 <Select styles={selectStyle} placeholder={'Введите или выберите категорию'}
                         options={[{value: 1, label: 'Hello World'}]}/>
