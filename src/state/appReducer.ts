@@ -1,4 +1,4 @@
-import {checkToken, signIn} from "./authReducer";
+import { signIn} from "./authReducer";
 import api from '../api/Api'
 
 const INITIALIZE_SUCCEED = "app/INITIALIZE_SUCCEED";
@@ -86,7 +86,7 @@ export const getSpecialties = () => async (dispatch: any) => {
 export const initialiseApp = () => (dispatch: any) => {
     dispatch(getCategories())
     dispatch(getSpecialties())
-    let data = JSON.parse(<string>localStorage.getItem('userData'))
+    let data = JSON.parse(localStorage.getItem('userData') as string)
     if (data && data.refresh_token) {
         if (data.refresh_life > Date.now()) {
             dispatch(initialise())

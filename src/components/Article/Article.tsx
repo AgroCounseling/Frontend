@@ -25,7 +25,7 @@ const ArticlePage = () => {
     })
 
     const [categoryVal, setCategoryVal] = useState<any>(null)
-    const [search, setSearch] = useState('')
+    // const [search, setSearch] = useState('')
     useEffect(() => {
         api.getArticle(params.id)
             .then((res: AxiosResponse) => {
@@ -34,7 +34,7 @@ const ArticlePage = () => {
                 setPending(false)
                 // setPagination(Math.ceil(res.data.count / res.data.limit))
             })
-    }, [])
+    }, [params.id])
     const categoryChange = (e:any) => {
         setCategoryVal(e)
     }

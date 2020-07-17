@@ -9,11 +9,11 @@ import {isAuth} from "../../state/selectors";
 import {signIn} from "../../state/authReducer";
 
 const Header = (props: any) => {
-    const Logout = () => {
-        localStorage.removeItem('userData')
-        props.signIn({
+    const Logout = async () => {
+        await props.signIn({
             isAuth: false
         })
+        localStorage.removeItem('userData')
     }
     return (
         <HeaderWrapper>

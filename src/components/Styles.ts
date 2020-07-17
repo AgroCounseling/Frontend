@@ -43,3 +43,9 @@ export const ArticleSearch = styled.input`
         outline: none;
     }
 `
+
+export const Yellow = styled.div`
+    background: #ECBF2C;
+    height: 80px;
+    box-shadow: 0 6px 16px rgba(176, 176, 176, 0.1);
+`

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import css from './articles.module.css'
 import api from '../../api/Api'
 import {AxiosResponse} from "axios";
-import Select, {InputActionTypes, InputProps} from "react-select";
+import Select from "react-select";
 import {Link, useParams, useHistory} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {getCategories} from "../../state/selectors";

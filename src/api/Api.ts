@@ -5,19 +5,37 @@ const http = axios.create({
     baseURL: "http://134.122.76.224/api/"
 });
 
-// @ts-ignore
-let token = JSON.parse(localStorage.getItem('userData'));
+const getToken = () => {
+    let data = JSON.parse(localStorage.getItem('userData') as string)
+    return data.access_token
+}
+const getRefreshToken = () => {
+    let data = JSON.parse(localStorage.getItem('userData') as string)
+    return data.refresh_token
+}
+
 
 
 export default {
     signIn: (data: any) => http.post('token/', data),
     signInWithRefresh: () => http.post('token/refresh/', {
-        "refresh": token.refresh_token
+        "refresh": getRefreshToken()
     }),
     signUpClient: (data: any) => http.post('signup/client', data),
     signUpConsultant: (data: any) => http.post('signup/consultant', data, {
         headers: {
             "Content-Type": "multipart/form-data"
+        }
+    }),
+
+    getProfile: () => http.get(`profile/`,{
+        headers: {
+            "Authorization": "Bearer " + getToken()
+        }
+    }),
+    setProfile: (name:string,data:any) => http.put(`profile/edit/${name}/`,data, {
+        headers: {
+            "Authorization": "Bearer " + getToken()
         }
     }),
     getConsultants: (id: string, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),

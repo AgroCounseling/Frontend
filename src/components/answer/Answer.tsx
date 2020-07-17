@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Header, MainButton, Wrapper} from "../Styles";
 import api from '../../api/Api'
-import {Route, useParams} from 'react-router-dom'
+import { useParams} from 'react-router-dom'
 import Preloader from "../preloader/Preloader";
 import noPicture from '../../img/noPicture.png'
 import css from './answer.module.css'
@@ -30,7 +30,7 @@ const Answer: React.FC<Props> = (props) => {
                     console.log(error)
                 }
             )
-    }, [])
+    }, [params.id])
 
     if (pending) {
         return <Preloader/>

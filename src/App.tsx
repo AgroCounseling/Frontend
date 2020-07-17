@@ -22,6 +22,7 @@ import Answer from "./components/answer/Answer";
 import Consultant from "./components/Consultant/Consultant";
 import Articles from "./components/articles/Articles";
 import Article from "./components/Article/Article";
+import Payment from "./components/payment/Payment";
 
 type OwnProps = {
     isPending: boolean
@@ -78,7 +79,6 @@ const App = (props:OwnProps) => {
                     </Route>
                     <Route path={'/admin'}>
                         <Admin />
-                        <Footer />
                     </Route>
                     <Route path={'/consultant/:id'}>
                         <Consultant />
@@ -101,6 +101,9 @@ const App = (props:OwnProps) => {
                     </Route>
                     <Route  path={'/article/:id'}>
                         <Article />
+                    </Route>
+                    <Route  path={'/payment'}>
+                        <Payment />
                     </Route>
                     <Redirect to={'/'}/>
                 </Switch>

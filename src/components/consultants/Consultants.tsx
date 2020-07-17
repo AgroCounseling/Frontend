@@ -48,8 +48,8 @@ const Consultants: React.FC<Props> = (props) => {
             setPagination(Math.ceil(res.data.count / res.data.limit))
             setConsultants(res.data.results)
         })
-        categories.forEach((item:any)=> params.id == item.value ? setSelect(item) : null)
-    }   , [params])
+        categories.forEach((item:any)=> +params.id === +item.value ? setSelect(item) : null)
+    }   , [params.id])
     const selectChange = (e:{value:number,title: string}) => {
         setSelect(e)
         history.push(`${e.value}`)

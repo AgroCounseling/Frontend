@@ -26,7 +26,7 @@ const Consultant: React.FC<Props> = (props) => {
                 setSpecialties(arr)
                 setPending(false)
             })
-    }, [])
+    }, [params.id, props.specialties])
     if(pending){
         return  <Preloader/>
     }
