@@ -71,7 +71,7 @@ const Article = (props:any)=> {
             <div className={css.article}>
                 <div className={css.header}>
                     <div className={css.category}>{category}</div>
-                    <div className={css.name}>Aнастасия Собор</div>
+                    <div className={css.name}>{props.name}</div>
                     <div className={css.date}>{props.date}</div>
                 </div>
                 <div className={css.title}>

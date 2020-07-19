@@ -38,8 +38,8 @@ const selectStyle = {
 
 type Props = {}
 const Articles: React.FC<Props> = (props) => {
-    const params:any = useParams()
-    const categories = useSelector((state:GlobalStateType)=> getCategories(state) )
+    const params: any = useParams()
+    const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const categoriesList = categories.map((item: any) => {
         return {
             value: item.id,
@@ -57,7 +57,7 @@ const Articles: React.FC<Props> = (props) => {
 
 
     useEffect(() => {
-        api.getArticles(search,page,params.id)
+        api.getArticles(search, page, params.id)
             .then((res: AxiosResponse) => {
                 console.log(res)
                 setArticles(res.data.results)
@@ -65,29 +65,29 @@ const Articles: React.FC<Props> = (props) => {
                 setPending(false)
             })
     }, [page, params, search])
-    const categoryChange = (e:any) => {
+    const categoryChange = (e: any) => {
         setCategory(e)
     }
 
-    useEffect(()=>{
-        let data = categoriesList.filter((item:any)=> item.value === +params.id ? item : null)
+    useEffect(() => {
+        let data = categoriesList.filter((item: any) => item.value === +params.id ? item : null)
         setCategory(data)
-    },[])
+    }, [])
 
-    if(pending) {
-        return <Preloader />
+    if (pending) {
+        return <Preloader/>
     }
     return (
         <div style={{overflowX: 'hidden'}}>
             <div className={css.search}>
-                <ArticleSearch value={search} onChange={(e:any) => setSearch(e.target.value)} type={'text'} />
+                <ArticleSearch value={search} onChange={(e: any) => setSearch(e.target.value)} type={'text'}/>
                 <input type="submit" placeholder={''} value={''} className={css.submit}/>
             </div>
             <div className={css.articlesWrapper}>
-                <ArticleNavBar categoryVal={category} setCategory={categoryChange} category={categoriesList} />
+                <ArticleNavBar categoryVal={category} setCategory={categoryChange} category={categoriesList}/>
                 <div>
                     {
-                        articles.map((item:any) => <Article
+                        articles.map((item: any) => <Article
 
                             key={item.id}
                             id={item.id}
@@ -101,7 +101,7 @@ const Articles: React.FC<Props> = (props) => {
                     <Pagination setPage={setPage} pageCount={pagination}/>
                 </div>
             </div>
-            <Footer />
+            <Footer/>
         </div>
     )
 }
@@ -115,8 +115,8 @@ type ArticleProps = {
     description: string
 }
 export const Article: React.FC<ArticleProps> = (props) => {
-    const categories = useSelector((state:GlobalStateType)=> getCategories(state) )
-    let category:any = categories.map((item:any) => props.category === item.id ? item.title : null)
+    const categories = useSelector((state: GlobalStateType) => getCategories(state))
+    let category: any = categories.map((item: any) => props.category === item.id ? item.title : null)
     return (
         <Link to={`/article/${props.id}`}>
             <div className={css.article}>
@@ -142,7 +142,7 @@ type ArticleNavBarProps = {
     categoryVal: any
     setCategory: any
 }
-export const ArticleNavBar:React.FC<ArticleNavBarProps> = (props) => {
+export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
     const history = useHistory()
     console.log(history)
     return (
@@ -152,17 +152,26 @@ export const ArticleNavBar:React.FC<ArticleNavBarProps> = (props) => {
                 <div>Популярные</div>
             </div>
             <div className={css.filterWrapper}>
-                <Select value={props.categoryVal} onChange={(e:any)=>{
-                    history.push(`/articles/${e.value}`)
-                    props.setCategory(e)
-                }}
-                        styles={selectStyle}
-                        placeholder={'Введите или выберите категорию'}
-                        options={props.category}/>
-                <Select styles={selectStyle} placeholder={'Введите или выберите категорию'}
-                        options={[{value: 1, label: 'Hello World'}]}/>
-                <Select styles={selectStyle} placeholder={'Введите или выберите категорию'}
-                        options={[{value: 1, label: 'Hello World'}]}/>
+                <div>
+                    <div className={css.filterCategory}>Категория</div>
+                    <Select value={props.categoryVal} onChange={(e: any) => {
+                        history.push(`/articles/${e.value}`)
+                        props.setCategory(e)
+                    }}
+                            styles={selectStyle}
+                            placeholder={'Введите или выберите категорию'}
+                            options={props.category}/>
+                </div>
+                <div>
+                    <div className={css.filterCategory}>Подкатегории</div>
+                    <Select styles={selectStyle} placeholder={'Введите или выберите категорию'}
+                            options={[{value: 1, label: 'Hello World'}]}/>
+                </div>
+                <div>
+                    <div className={css.filterCategory}>Виды</div>
+                    <Select styles={selectStyle} placeholder={'Введите или выберите категорию'}
+                            options={[{value: 1, label: 'Hello World'}]}/>
+                </div>
             </div>
         </div>
     )
