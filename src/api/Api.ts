@@ -40,12 +40,14 @@ export default {
     }),
     getConsultants: (id: string, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),
     getCategory: () => http.get(`categories/`),
+    getSubCategory: () => http.get(`subcategories/`),
     getSpecialty: () => http.get(`specialty/`),
     getForums: (page: number | string, text?: string, filter?: any) => http.get(`forums/?category=${filter ? filter.value : ''}&page=${page}&search=${text ? text : ''}`),
     getQuestion: (id: number | string) => http.get(`forums/${id}`),
     getUser: (id: number | string | undefined) => http.get(`consultants/${id}`),
     getSlider: () => http.get(`slider/`),
-    getArticles: (search:string,page:number, category?:number) => http.get(`articles/?search=${search}&category=${category ? category : ''}&page=${page}`),
+    getTypes: () => http.get(`types/`),
+    getArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
     getArticle: (id:number | string) => http.get(`articles/${id ? id : ''}`),
 }
 

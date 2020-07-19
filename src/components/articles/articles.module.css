@@ -1,5 +1,6 @@
-
-
+.wrapper{
+    overflow-x: hidden;
+}
 .articlesWrapper{
     display: grid;
     grid-template-columns: 300px 1fr;
@@ -77,17 +78,35 @@
 .date{
     color: #000000;
 }
+.likes{
+    margin-top: 100px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
 .search{
     position: relative;
 }
 .submit{
-    width: 20px; /* Ширина кнопки */
-    height: 20px; /* Высота кнопки */
-    border: none; /* Убираем рамку */
+    width: 20px;
+    height: 20px;
+    border: none;
     background: url('../../img/loop.png') no-repeat 50% 50%;
     position: absolute;
     top: 10px;
-    right: 35px;
+    right: 200px;
+}
+.submit2{
+    background: none;
+    height: 20px;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+.submit2:focus{
+    outline: none;
 }
 .filterCategory{
     font-weight: 500;
@@ -95,4 +114,25 @@
     line-height: 27px;
     margin: 30px 0  14px 10px;
     color: rgba(33, 51, 54, 0.8);
+}
+.imgWrapper{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #4F5D5E;
+    box-sizing: border-box;
+    border-radius: 10px 0 0 10px;
+}
+.imgWrapper>img{
+    margin-right: 10px;
+}
+.count{
+    font-size: 23px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #4F5D5E;
+    border-left: none;
+    box-sizing: border-box;
+    border-radius: 0 10px 10px 0;
 }

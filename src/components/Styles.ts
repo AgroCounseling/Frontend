@@ -32,8 +32,9 @@ export const MainButton  = styled.button`
     color: #FFFFFF;
 `
 
-export const ArticleSearch = styled.input`
+export const ArticleSearch = styled.div`
     margin-top: 2px;
+    height: 25px;
     width: 100%;
     padding:  10px 0 10px 20px;
     background: #EFEFEF;

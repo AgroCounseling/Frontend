@@ -21,7 +21,6 @@ import Forum from "./components/forum/Forum";
 import Answer from "./components/answer/Answer";
 import Consultant from "./components/Consultant/Consultant";
 import Articles from "./components/articles/Articles";
-import Article from "./components/Article/Article";
 import Payment from "./components/payment/Payment";
 
 type OwnProps = {
@@ -98,9 +97,6 @@ const App = (props:OwnProps) => {
                     </Route>
                     <Route path={'/articles'}>
                         <Articles />
-                    </Route>
-                    <Route  path={'/article/:id'}>
-                        <Article />
                     </Route>
                     <Route  path={'/payment'}>
                         <Payment />
