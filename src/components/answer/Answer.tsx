@@ -1,23 +1,27 @@
 import React, {useEffect, useState} from 'react'
 import {Header, MainButton, Wrapper} from "../Styles";
 import api from '../../api/Api'
-import { useParams} from 'react-router-dom'
+import {useHistory, useParams, useRouteMatch} from 'react-router-dom'
 import Preloader from "../preloader/Preloader";
 import noPicture from '../../img/noPicture.png'
 import css from './answer.module.css'
 import {GlobalStateType} from "../../state/root-reducer";
 import {isAuth} from "../../state/selectors";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import Footer from "../footer/Footer";
+import {checkToken} from "../../state/authReducer";
 
 type Props = {
     isAuth: boolean
 }
 const Answer: React.FC<Props> = (props) => {
+    const dispatch = useDispatch()
     const params: { id: string } = useParams()
     const [pending, setPending] = useState(true)
     const [question, setQuestion] = useState('')
-    const [comments, setComments] = useState([])
+    const [comments, setComments] = useState<any>([])
+    const [text, setText] = useState('')
+
     useEffect(() => {
         api.getQuestion(params.id)
             .then(
@@ -31,7 +35,20 @@ const Answer: React.FC<Props> = (props) => {
                 }
             )
     }, [params.id])
-
+    const sendQuestion = async () => {
+        return  dispatch(checkToken(()=>api.setAnswer({
+            forum: params.id,
+            description: text
+        })))
+    }
+    const sendText = () => {
+        setPending(true)
+        sendQuestion()
+            .then((res:any) => {
+                setComments([...comments, res.data])
+                setPending(false)
+            })
+    }
     if (pending) {
         return <Preloader/>
     }
@@ -51,7 +68,7 @@ const Answer: React.FC<Props> = (props) => {
                 </div>
                 {
                     props.isAuth
-                        ? <Comment/>
+                        ? <Comment onAdd={sendText} value={text} setValue={(e:any) => setText(e.target.value)} btn={'Отправить ответ'}/>
                         : <div>Вы не авторизованны</div>
                 }
             </Wrapper>
@@ -79,16 +96,21 @@ const AnswerList = (props: AnswerListProps) => {
     )
 }
 
-
-const Comment = () => {
+type CommentProps = {
+    btn: string
+    value: string
+    setValue: (e:any) => void
+    onAdd: () => void
+}
+export const Comment = (props:CommentProps) => {
     return (
         <div className={css.wrapper} style={{marginBottom: '100px'}}>
             <div className={css.imgWrapper}>
                 <img src={noPicture} alt="avatar"/>
             </div>
             <div>
-                <textarea className={css.placeholder} placeholder={'Введите ваш ответ............'}/>
-                <MainButton>Отправить ответ</MainButton>
+                <textarea value={props.value} onChange={props.setValue} className={css.placeholder} placeholder={'Введите ваш ответ............'}/>
+                <MainButton onClick={props.onAdd}>{props.btn}</MainButton>
             </div>
         </div>
     )

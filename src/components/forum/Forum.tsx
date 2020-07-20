@@ -122,7 +122,9 @@ const Forum: React.FC<Props> = (props) => {
                                placeholder={'Введите ваш вопрос.......'} type="text"/>
                         <Button>Искать</Button>
                     </FormWrapper>
-                    <Button>Задать вопрос</Button>
+                    <Link to={'/add-question'}>
+                        <Button>Задать вопрос</Button>
+                    </Link>
                 </Search>
                 <FilterWrapper>
                     <FilterBy>

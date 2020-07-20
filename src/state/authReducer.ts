@@ -101,8 +101,11 @@ export const checkToken = (req: any) =>  async (dispatch: any) => {
     } else if ( token && token.refresh_life > now) {
         await dispatch(setDataRefresh())
         return  await req()
-    } else {
-
+    } else if( token && token.refresh_life < now) {
+        dispatch(signIn({
+            isAuth: false
+        }))
+    } else{
         return new Error('Something went wrong')
     }
 }

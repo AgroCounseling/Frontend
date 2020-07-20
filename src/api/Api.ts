@@ -44,11 +44,21 @@ export default {
     getSpecialty: () => http.get(`specialty/`),
     getForums: (page: number | string, text?: string, filter?: any) => http.get(`forums/?category=${filter ? filter.value : ''}&page=${page}&search=${text ? text : ''}`),
     getQuestion: (id: number | string) => http.get(`forums/${id}`),
+    createQuestion: (data:any) => http.post(`forums/create`, data,{
+        headers: {
+            "Authorization": "Bearer " + getToken()
+        }
+    }),
     getUser: (id: number | string | undefined) => http.get(`consultants/${id}`),
     getSlider: () => http.get(`slider/`),
     getTypes: () => http.get(`types/`),
     getArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
     getArticle: (id:number | string) => http.get(`articles/${id ? id : ''}`),
+    setAnswer: (data:any) => http.post(`comments/create`, data, {
+        headers: {
+            "Authorization": "Bearer " + getToken()
+        }
+    })
 }
 
 
