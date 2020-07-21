@@ -105,7 +105,7 @@ const App = (props:OwnProps) => {
                     <Route  path={'/payment'}>
                         <Payment />
                     </Route>
-                    {/*<Redirect to={'/'}/>*/}
+                    <Redirect to={'/'}/>
                 </Switch>
             </Router>
         </div>

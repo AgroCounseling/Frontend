@@ -75,6 +75,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.ArticleText{
+    font-size: 22px;
+    line-height: 35px;
+    margin-top: 35px;
+    color: rgba(33, 51, 54, 0.8);
+    display: -webkit-box;
+    display: block;
+}
 .date{
     color: #000000;
 }
@@ -127,7 +135,7 @@
     margin-right: 10px;
 }
 .count{
-    font-size: 23px;
+    /*font-size: 23px;*/
     display: flex;
     align-items: center;
     padding: 10px;

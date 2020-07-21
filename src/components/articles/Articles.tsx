@@ -66,7 +66,7 @@ const Articles: React.FC<Props> = (props) => {
 
     useEffect(() => {
         api.getArticles(
-            search, page, params.id,
+            search, page, +params.id === 0 ? null : params.id,
             subCategory ? subCategory.value : null,
             types ? types.value : null
             )
@@ -172,7 +172,7 @@ const Articles: React.FC<Props> = (props) => {
                             <Pagination setPage={setPage} pageCount={pagination}/>
                         </div>
                     </Route>
-                    <Route path={`${path}/:id`}>
+                    <Route path={`${path}/:article`}>
                         <DetailArticle />
                     </Route>
                 </Switch>
@@ -195,7 +195,7 @@ const Article: React.FC<ArticleProps> = (props) => {
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     let category: any = categories.map((item: any) => props.category === item.id ? item.title : null)
     return (
-        <Link to={`${url}/${props.id}`}>
+        <Link to={`${url}/0/${props.id}`}>
             <div className={css.article}>
                 <div className={css.header}>
                     <div className={css.category}>{category}</div>
@@ -219,12 +219,12 @@ const DetailArticle = ()=> {
     let category:any = categories.map((item:any) => article.category === item.id ? item.title : null)
 
     useEffect(() => {
-        api.getArticle(params.id)
+        api.getArticle(params.article)
             .then((res: AxiosResponse) => {
                 setArticle(res.data)
                 setPending(false)
             })
-    }, [params.id])
+    }, [params.article])
 
     if(pending){
         return <div> <Preloader /></div>
@@ -239,7 +239,7 @@ const DetailArticle = ()=> {
             <div className={css.title}>
                 {article.title}
             </div>
-            <div className={css.text}>{article.text}</div>
+            <div className={css.ArticleText}>{article.text}</div>
             <div  className={css.likes}>
                 <div className={css.imgWrapper}>
                     <img src={like} alt="Like"/> Понравилась

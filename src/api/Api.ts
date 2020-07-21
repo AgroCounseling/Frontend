@@ -38,7 +38,7 @@ export default {
             "Authorization": "Bearer " + getToken()
         }
     }),
-    getConsultants: (id: string, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),
+    getConsultants: (id: string | number, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),
     getCategory: () => http.get(`categories/`),
     getSubCategory: () => http.get(`subcategories/`),
     getSpecialty: () => http.get(`specialty/`),

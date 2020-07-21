@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import choose from '../../img/chooseCategory.png'
 import find from '../../img/findConsultant.png'
 import contact from '../../img/contact.png'
@@ -6,25 +6,24 @@ import arrow from '../../img/arrow-right.png'
 import {Description, DescriptionWrapper, MapsWrapper, Title} from "./mainPage-styled-components";
 import css from './mainPage.module.css'
 import ConsultantCard from "../consultantCard/ConsultantCard";
-// import prev from '../../img/prev.png'
-// import next from '../../img/next.png'
 import Carousel from "./Carousel";
 import grass from '../../img/culture.png'
 import culture from '../../img/culture-bg.png'
 import {Link} from "react-router-dom";
 import {GlobalStateType} from "../../state/root-reducer";
-import {getCategories} from "../../state/selectors";
-import {connect} from "react-redux";
-
+import {getCategories, getSpecialties} from "../../state/selectors";
+import {connect, useSelector} from "react-redux";
+import api from '../../api/Api'
 
 type Props = {
-    categories: any
+    categories: any,
+    slider: any
 }
 const MainPage: React.FC<Props> = (props) => {
-    const {categories} = props
+    const {categories, slider} = props
     return (
         <div>
-            <Carousel/>
+            <Carousel slider={slider}/>
             <RoadMap/>
             <div className={css.consultant}>
                 <div className={css.header}>
@@ -34,14 +33,15 @@ const MainPage: React.FC<Props> = (props) => {
                     {categories.map((item:any)=> <Links key={item.id} index={item.id} title={item.title} url={item.image} />)}
                 </div>
             </div>
-            <List index={1} url={grass} title={'Культура'} description={' Комендант Бишкека Алмаз Орозалиев в среду, 8 апреля, подписал приказ о разрешении на\n' +
-            '                                    передвижение кыргызстанцев, занятых в весенне-полевых и сельскохозяйственных работах.\n' +
-            '                                    Поручено обеспечить свободное передвижение аграриев через блокпосты города с 7.00 до\n' +
-            '                                    20.00.'}/>
-            <List index={2} url={grass} title={'Технологии выращивания'} description={'Комендант Бишкека Алмаз Орозалиев в среду, 8 апреля, подписал приказ о разрешении на передвижение кыргызстанцев, занятых в весенне-полевых и сельскохозяйственных работах.\n' +
-            'Поручено обеспечить свободное передвижение аграриев через блокпосты города с 7.00 до 20.00.'}/>
-            <List index={3} url={grass} title={'Органика'} description={'Комендант Бишкека Алмаз Орозалиев в среду, 8 апреля, подписал приказ о разрешении на передвижение кыргызстанцев, занятых в весенне-полевых и сельскохозяйственных работах.\n' +
-            'Поручено обеспечить свободное передвижение аграриев через блокпосты города с 7.00 до 20.00.'}/>
+            {
+                categories.map((item:any, index:number)=> <List
+                    key={item.id}
+                    id={item.id}
+                    url={item.image}
+                    index={index}
+                    title={item.title}
+                    description={item.description} />)
+            }
         </div>
     )
 }
@@ -63,12 +63,21 @@ const Links: React.FC<LinksProps> = (props) => {
 }
 
 type ListType = {
+    id: number
     index: number
     url: string
     title: string
     description: string
 }
 const List = (props: ListType) => {
+    const specialties = useSelector((state:GlobalStateType) => getSpecialties(state))
+    const [consultants, setConsultants] = useState([])
+    useEffect(()=>{
+        api.getConsultants(props.id)
+            .then((res)=>{
+                setConsultants(res.data.results)
+            })
+    },[])
     return (
         <div>
             <DescriptionWrapper>
@@ -80,7 +89,7 @@ const List = (props: ListType) => {
                                 <Description>{props.description}</Description>
                             </div>
                             <div className={css.imageWrapper}>
-                                <img src={grass} alt="grass"/>
+                                <img src={props.url ? props.url : grass} alt="grass"/>
                             </div>
                         </>
                         : <>
@@ -95,19 +104,22 @@ const List = (props: ListType) => {
                 }
             </DescriptionWrapper>
             <div className={css.listWrapper}>
-                {/*<button className={css.prev}>*/}
-                {/*    <img src={prev} alt="prev"/>*/}
-                {/*</button>*/}
                 <div className={css.cardsWrapper}>
                     <div>
-                        <ConsultantCard id={'1'} specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
-                        <ConsultantCard id={'1'} specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
-                        <ConsultantCard id={'1'} specialization={[{id: 1, title:'Hello',}]} star={'4'} name={'Aman'} description={'skhfasfkahfksahj askfhasf sfih asfiashfias fasifas fafi as fiasfhf'} last_name={'Asylbekov'} url={'https://proforientator.ru/publications/articles/st27.10.2014_1.jpg'}/>
+                        {
+                            consultants.map((item:any, index) => index > 2 ? null : <ConsultantCard
+                                key={item.id}
+                                id={item.id}
+                                url={item.user.photo}
+                                name={item.user.first_name}
+                                last_name={item.user.last_name}
+                                description={item.description}
+                                star={item.middle_star}
+                                specialization={item.specialty.map((item:any) => specialties.find((i:any)=> item.category === i.id ? i.title : null))}
+                            />)
+                        }
                     </div>
                 </div>
-                {/*<button className={css.next}>*/}
-                {/*    <img src={next} alt="next"/>*/}
-                {/*</button>*/}
             </div>
         </div>
     )
@@ -148,7 +160,8 @@ const RoadMap = () => {
 
 const mapStateToProps = (state: GlobalStateType) => {
     return {
-        categories: getCategories(state)
+        categories: getCategories(state),
+        slider: state.app.slider
     }
 }
 export default connect(mapStateToProps, {})(MainPage)
