@@ -24,20 +24,18 @@ export default {
     signUpClient: (data: any) => http.post('signup/client', data),
     signUpConsultant: (data: any) => http.post('signup/consultant', data, {
         headers: {
-            "Content-Type": "multipart/form-data"
+            "Content-Type": "application/json"
         }
     }),
+    setCertificates: (data: any) => http.post('consultants/certificate/create', data),
 
     getProfile: () => http.get(`profile/`,{
         headers: {
-            "Authorization": "Bearer " + getToken()
+            "Authorization": "JWT " + getToken()
         }
     }),
-    setProfile: (name:string,data:any) => http.put(`profile/edit/${name}/`,data, {
-        headers: {
-            "Authorization": "Bearer " + getToken()
-        }
-    }),
+    setProfile: (name:string,data:any) => http.put(`profile/edit/${name}/`,data),
+    setProfilePhoto: (name:string, data:any)=> http.put(`profile/photo/edit/${name}/`, data),
     getConsultants: (id: string | number, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),
     getCategory: () => http.get(`categories/`),
     getSubCategory: () => http.get(`subcategories/`),
@@ -46,7 +44,7 @@ export default {
     getQuestion: (id: number | string) => http.get(`forums/${id}`),
     createQuestion: (data:any) => http.post(`forums/create`, data,{
         headers: {
-            "Authorization": "Bearer " + getToken()
+            "Authorization": "JWT " + getToken()
         }
     }),
     getUser: (id: number | string | undefined) => http.get(`consultants/${id}`),
@@ -56,7 +54,7 @@ export default {
     getArticle: (id:number | string) => http.get(`articles/${id ? id : ''}`),
     setAnswer: (data:any) => http.post(`comments/create`, data, {
         headers: {
-            "Authorization": "Bearer " + getToken()
+            "Authorization": "JWT " + getToken()
         }
     })
 }

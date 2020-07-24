@@ -87,12 +87,18 @@
 }
 .choosePic{
     margin: 15px auto 0 auto;
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
+    border: 1px solid #000000;
+    border-radius: 50%;
+    overflow: hidden;
 }
 .choosePic>img{
-    width: 100%;
+    margin: 0 auto;
+    width: auto;
+    height: 100%;
+    cursor: pointer;
 }
 .choosePic>input{
     display: none;

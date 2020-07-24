@@ -8,7 +8,6 @@ import {GlobalStateType} from "../../state/root-reducer";
 type OwnProps = {}
 const NavBar = (props: OwnProps) =>{
     const categories = useSelector((state: GlobalStateType)=> getCategories(state))
-    console.log(categories)
     return (
         <NavBarWrapper>
             {

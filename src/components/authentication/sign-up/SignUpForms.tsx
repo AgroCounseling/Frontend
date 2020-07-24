@@ -1,26 +1,30 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import css from "../auth.module.css";
 import chooseIcon from "../../../img/choose-icon.png";
 import {Button, Input, Label} from "../styledElements";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import google from "../../../img/google.png";
 import facebook from "../../../img/facebook.png";
 import twitter from "../../../img/twitter.png";
 import Select from "react-select";
 import {WithAuthRedirect} from "../../../hocs/AuthHoc";
 import {useFormik} from "formik";
-// import api from './../../../api/Api'
+import api from './../../../api/Api'
 import add_pic from '../../../img/add_pic.png'
+import {useSelector} from "react-redux";
+import {GlobalStateType} from "../../../state/root-reducer";
+import {getCategories, getSpecialties} from "../../../state/selectors";
+import {Simulate} from "react-dom/test-utils";
 
 const customStyles = {
-    container: (base:any, state:any) => ({
+    container: (base: any, state: any) => ({
         ...base,
         border: state.isFocused ? '2px solid rgba(194, 199, 208, 0.5)' : '2px solid rgba(194, 199, 208, 0.5)',
         borderRadius: '15px',
         transition:
             "border-color 0.2s ease, box-shadow 0.2s ease, padding 0.2s ease",
     }),
-    valueContainer: (base:any, state:any) => ({
+    valueContainer: (base: any, state: any) => ({
         ...base,
         background: "#FAFBFC"
     })
@@ -28,12 +32,28 @@ const customStyles = {
 
 
 export const RegisterFormConsultant = WithAuthRedirect(() => {
+    const categories = useSelector((state: GlobalStateType) => getSpecialties(state))
+    const history = useHistory()
     const [specialization, setSpecialization] = useState<any>(null)
-    const [pic, setPic] = useState<any>({})
-
-    const fileSelectHandler = (e:any) => {
-        setPic(e.target.files[0])
+    const [pic, setPic] = useState<any>([])
+    const [options, setOptions] = useState<any>([])
+    const [img, setImg] = useState('')
+    const [photo, setPhoto] = useState('')
+    console.log(pic)
+    const fileSelectHandler = (e: any) => {
+        const arr = Array.from(e.target.files)
+        setPic([...arr])
+        // setPic(e.target.files)
     }
+    useEffect(() => {
+        let res = categories.map((item: any) => {
+            return {
+                value: item.id,
+                label: item.title
+            }
+        })
+        setOptions(res)
+    }, [categories])
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -48,65 +68,70 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                 value: 0
             }
         },
-        onSubmit: async (values:any) => {
-            const picture = new FormData()
-            picture.append('image', pic)
-
-            const user = {
-                email: values.email,
-                password: values.password,
-                first_name: values.name,
-                last_name: values.surname,
-                phone: values.number,
-                photo: null
+        onSubmit: async (values: any) => {
+            const data = {
+                user: {
+                    email: values.email,
+                    password: values.password,
+                    first_name: values.name,
+                    last_name: values.surname,
+                    phone: values.number,
+                    photo: null
+                },
+                specialty: specialization.map((item: any) => ({
+                    "category": item.value
+                })),
+                certificates: [],
+                password1: values.password2,
+                description: '',
+                comment: values.comment,
             }
+            api.signUpConsultant(data)
+                .then( async (res) => {
+                    await pic.map((item: any) => {
+                        const certificates = new FormData()
+                        certificates.append('consultant', res.data.id)
+                        certificates.append('certificate_image', item)
 
-            const data = new FormData()
-            data.append('user', JSON.stringify(user))
-            data.append('specialty', JSON.stringify([{category: 1}]))
-            data.append('certificates', pic)
-            data.append('password1', values.password2)
-            data.append('description', "Some text")
-            data.append('comment', values.comment)
-
-
-
-            const client = new FormData()
-            client.append('email', 'asjdaajskfj@mail.ru')
-            client.append('password', 'Aman2000')
-            client.append('password1', 'Aman2000')
-            client.append('first_name', 'Amanbek')
-            client.append('last_name', 'Asylbekov')
-            client.append('photo', pic)
-            client.append('phone', '0708626798')
-
-            // @ts-ignore
-            for (let value of data.values()) {
-                console.log(value);
-            }
-            let a = await fetch('http://134.122.76.224/api/signup/client',{
-                method: 'POST',
-                body: client
-            })
-            console.log(a)
-            // let res = await api.signUpConsultant(data)
-            // console.log(res)
+                        // certificates.append('certificate_image', pic)
+                        api.setCertificates(certificates)
+                            .then((res) => {
+                                console.log(res)
+                            })
+                    })
+                    const ava = new FormData()
+                    ava.append('photo', photo)
+                    api.setProfilePhoto(res.data.user.first_name,ava)
+                        .then((res)=>{
+                            console.log(res)
+                        })
+                    history.push('sign-in')
+                }, (error: any) => {
+                    console.log(error)
+                })
         },
     })
-    const options = [
-        {label: "option 1", value: "1"},
-        {label: "option 2", value: "2"},
-        {label: "option 3", value: "3"}
-    ];
+
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={css.registration}>
                 Зарегистрируйтесь, чтобы получить доступ к консультации
             </div>
             <div>
-                <div className={css.choosePic}>
-                    <img src={chooseIcon} alt="#"/>
-                </div>
+                <label>
+                    <div className={css.choosePic}>
+                        <input onChange={(e: any) => {
+                            const reader = new FileReader();
+                            reader.readAsDataURL(e.target.files[0]);
+                            reader.onload = (e: any) => {
+                                const newUrl = e.target.result.split(',')
+                                setImg(newUrl[1])
+                            }
+                            setPhoto(e.target.files[0])
+                        }} type={'file'}/>
+                        <img src={img ? "data:image/jpg;base64," + img : chooseIcon} alt="#"/>
+                    </div>
+                </label>
                 <div className={css.form}>
                     <Label>
                         Имя
@@ -166,8 +191,8 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     </Label>
                     <Label>
                         Специальность
-
                         <Select
+                            isMulti
                             value={specialization}
                             onChange={(data: any) => {
                                 setSpecialization(data)
@@ -181,7 +206,8 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                         Диплом
                         <label className={css.file}>
                             <input type="file"
-                                onChange={fileSelectHandler}
+                                   multiple={true}
+                                   onChange={fileSelectHandler}
                             />
                             <div className={css.diploma}>
                                 <span>

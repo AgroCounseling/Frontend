@@ -192,10 +192,12 @@ type ArticleProps = {
 }
 const Article: React.FC<ArticleProps> = (props) => {
     const { url } = useRouteMatch();
+    const params:any = useParams()
+    console.log(params)
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     let category: any = categories.map((item: any) => props.category === item.id ? item.title : null)
     return (
-        <Link to={`${url}/0/${props.id}`}>
+        <Link to={`${url}/${params.id ? '' : "0/"}${props.id}`}>
             <div className={css.article}>
                 <div className={css.header}>
                     <div className={css.category}>{category}</div>
