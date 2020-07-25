@@ -28,10 +28,16 @@ const Admin = () => {
     }
     useEffect(()=>{
         initialise().then((r:any) => {
-            console.log(r.data.results[0])
-            setUser(r.data.results[0])
-            setName(r.data.results[0].first_name)
-            setLastName(r.data.results[0].last_name)
+            console.log(r.data.results)
+            if(data.status_client) {
+                setUser(r.data.results[0])
+                setName(r.data.results[0].first_name)
+                setLastName(r.data.results[0].last_name)
+            }else{
+                setUser(r.data.results[0].user)
+                setName(r.data.results[0].user.first_name)
+                setLastName(r.data.results[0].user.last_name)
+            }
             setPending(false)
         } )
     },[])
@@ -73,7 +79,7 @@ const Admin = () => {
             </div>
             <div className={css.linksWrapper}>
                 {
-                    !data.status_client ? null : <NavLink activeClassName={css.active} to={`${url}/articles`}>Статьи</NavLink>
+                    data.status_client ? null : <NavLink activeClassName={css.active} to={`${url}/articles`}>Статьи</NavLink>
                 }
                 <NavLink activeClassName={css.active} to={`${url}/chat`} >Чат</NavLink>
             </div>

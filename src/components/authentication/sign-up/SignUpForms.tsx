@@ -76,35 +76,62 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     first_name: values.name,
                     last_name: values.surname,
                     phone: values.number,
-                    photo: null
+                    photo: photo
                 },
                 specialty: specialization.map((item: any) => ({
                     "category": item.value
                 })),
-                certificates: [],
+                certificates: pic.map((item:any)=>({
+                    "certificate_image": item
+                })),
                 password1: values.password2,
                 description: '',
                 comment: values.comment,
             }
-            api.signUpConsultant(data)
-                .then( async (res) => {
-                    await pic.map((item: any) => {
-                        const certificates = new FormData()
-                        certificates.append('consultant', res.data.id)
-                        certificates.append('certificate_image', item)
-
-                        // certificates.append('certificate_image', pic)
-                        api.setCertificates(certificates)
-                            .then((res) => {
-                                console.log(res)
-                            })
-                    })
-                    const ava = new FormData()
-                    ava.append('photo', photo)
-                    api.setProfilePhoto(res.data.user.first_name,ava)
-                        .then((res)=>{
-                            console.log(res)
-                        })
+            const formData = new FormData()
+            for (let key in data) {
+                // @ts-ignore
+                if (typeof (data[key]) === 'object') {
+                    // @ts-ignore
+                    for (let subKey in data[key]) {
+                        // @ts-ignore
+                        console.log(data[key].length)
+                        // debugger
+                        // @ts-ignore
+                        if (data[key].length === undefined) {
+                            // @ts-ignore
+                            formData.append(`${key}.${subKey}`, data[key][subKey]);
+                        } else { // @ts-ignore
+                            if (typeof (data[key][subKey]) === 'object') {
+                                // @ts-ignore
+                                for (let subKey2 in data[key][subKey]) {
+                                    // @ts-ignore
+                                    formData.append(`${key}[${subKey}]${subKey2}`, data[key][subKey][subKey2]);
+                                }
+                            } else {
+                                // @ts-ignore
+                                formData.append(`${key}.${subKey}`, data[key][subKey]);
+                            }
+                        }
+                    }
+                } else {
+                    // @ts-ignore
+                    formData.append(key, data[key]);
+                }
+            }
+            api.signUpConsultant(formData)
+                .then(async (res) => {
+                    // await pic.map((item: any) => {
+                    //     const certificates = new FormData()
+                    //     certificates.append('consultant', res.data.id)
+                    //     certificates.append('certificate_image', item)
+                    //
+                    //     // certificates.append('certificate_image', pic)
+                    //     api.setCertificates(certificates)
+                    //         .then((res) => {
+                    //             console.log(res)
+                    //         })
+                    // })
                     history.push('sign-in')
                 }, (error: any) => {
                     console.log(error)
