@@ -27,7 +27,6 @@ export default {
             "Content-Type": "application/json"
         }
     }),
-    setCertificates: (data: any) => http.post('consultants/certificate/create', data),
 
     getProfile: () => http.get(`profile/`,{
         headers: {
@@ -35,7 +34,6 @@ export default {
         }
     }),
     setProfile: (name:string,data:any) => http.put(`profile/edit/${name}/`,data),
-    setProfilePhoto: (name:string, data:any)=> http.put(`profile/photo/edit/${name}/`, data),
     getConsultants: (id: string | number, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),
     getCategory: () => http.get(`categories/`),
     getSubCategory: () => http.get(`subcategories/`),

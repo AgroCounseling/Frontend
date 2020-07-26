@@ -13,6 +13,7 @@ import {useHistory} from 'react-router-dom'
 
 export const RegisterFormClient = WithAuthRedirect(() => {
     const [pic, setPic] = useState<any>({})
+    const [img, setImg] = useState<any>(null)
     const history = useHistory()
 
     const fileSelectHandler = (e:any) => {
@@ -57,8 +58,20 @@ export const RegisterFormClient = WithAuthRedirect(() => {
             <div>
                 <label>
                     <div className={css.choosePic}>
-                        <input type="file" required onChange={fileSelectHandler}/>
-                        <img src={chooseIcon} alt="#"/>
+                        <input type="file" onChange={(e:any)=>{
+                            const reader = new FileReader();
+                            if(e.target.files.length) {
+                                reader.readAsDataURL(e.target.files[0])
+                            }else{
+                                setImg('')
+                            }
+                            reader.onload = (e: any) => {
+                                const newUrl = e.target.result.split(',')
+                                setImg(newUrl[1])
+                            }
+                            fileSelectHandler(e)
+                        }}/>
+                        <img src={img ? "data:image/jpg;base64," + img : chooseIcon} alt="#"/>
                     </div>
                 </label>
                 <div className={css.form}>

@@ -13,8 +13,7 @@ import api from './../../../api/Api'
 import add_pic from '../../../img/add_pic.png'
 import {useSelector} from "react-redux";
 import {GlobalStateType} from "../../../state/root-reducer";
-import {getCategories, getSpecialties} from "../../../state/selectors";
-import {Simulate} from "react-dom/test-utils";
+import {getSpecialties} from "../../../state/selectors";
 
 const customStyles = {
     container: (base: any, state: any) => ({
@@ -121,17 +120,6 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
             }
             api.signUpConsultant(formData)
                 .then(async (res) => {
-                    // await pic.map((item: any) => {
-                    //     const certificates = new FormData()
-                    //     certificates.append('consultant', res.data.id)
-                    //     certificates.append('certificate_image', item)
-                    //
-                    //     // certificates.append('certificate_image', pic)
-                    //     api.setCertificates(certificates)
-                    //         .then((res) => {
-                    //             console.log(res)
-                    //         })
-                    // })
                     history.push('sign-in')
                 }, (error: any) => {
                     console.log(error)
@@ -149,7 +137,11 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     <div className={css.choosePic}>
                         <input onChange={(e: any) => {
                             const reader = new FileReader();
-                            reader.readAsDataURL(e.target.files[0]);
+                            if(e.target.files.length) {
+                                reader.readAsDataURL(e.target.files[0])
+                            }else{
+                                setImg('')
+                            }
                             reader.onload = (e: any) => {
                                 const newUrl = e.target.result.split(',')
                                 setImg(newUrl[1])

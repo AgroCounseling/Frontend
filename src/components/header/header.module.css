@@ -11,8 +11,9 @@
 }
 .forum{
     letter-spacing: 2px;
-    margin-right: 10px;
+    margin-right: 15px;
     color: #4D5B5C;
+    cursor: pointer;
 }
 .searchInput,.enter{
     height: 30px;
@@ -63,4 +64,11 @@
 }
 .kg{
     margin-left: 5px;
+}
+.uerWrapper{
+    height: 20px;
+    margin-right: 20px;
+}
+.uerWrapper>img{
+    height: 100%;
 }

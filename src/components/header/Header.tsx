@@ -7,6 +7,8 @@ import {connect} from "react-redux";
 import {GlobalStateType} from "../../state/root-reducer";
 import {isAuth} from "../../state/selectors";
 import {signIn} from "../../state/authReducer";
+import user from '../../img/user.png'
+
 
 const Header = (props: any) => {
     const Logout = async () => {
@@ -32,8 +34,10 @@ const Header = (props: any) => {
                 {
                     props.isAuth
                         ? <>
-                            <Link to={'/admin'}>Пофиль</Link>
-                            <button onClick={Logout}>Logout</button>
+                            <div onClick={Logout} className={css.forum}>Выйти</div>
+                            <Link to={'/admin'} className={css.uerWrapper}>
+                                <img src={user} alt="user"/>
+                            </Link>
                         </>
                         : <>
                             <Link to={'/sign-in'} className={css.enter}>Войти</Link>
