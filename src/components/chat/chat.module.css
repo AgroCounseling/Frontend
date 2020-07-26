@@ -1,0 +1,209 @@
+
+.chatWrapper{
+    display: grid;
+    grid-template-columns: 1.8fr 2.2fr;
+    grid-gap: 1em;
+    text-align: center;
+    margin-top: 30px;
+}
+.chatWrapper>div{
+    margin: 0 5%;
+}
+.searchWrapper{
+    padding: 0 10px;
+}
+.searchWrapper>input{
+    width: -webkit-fill-available;
+    padding: 10px 0 10px 10px;
+    background: #FFFFFF;
+    border-radius: 6px;
+    font-size: 18px;
+    line-height: 26px;
+    color: #707C97;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+}
+/*.searchWrapper>input:focus{*/
+/*    outline: none;*/
+/*}*/
+.userList{
+    margin: 35px 0 15px 0;
+    height: 500px;
+    overflow-y: scroll;
+    padding: 0 10px;
+}
+.userList::-webkit-scrollbar, .messages::-webkit-scrollbar {
+    width: 6px;
+    cursor: pointer;
+}
+.userList::-webkit-scrollbar-thumb, .messages::-webkit-scrollbar-thumb {
+    background: #B7BDCB;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+
+
+/* Person ////////////////////////////////////////////////////////////////////////////////////*/
+.personWrapper{
+    margin: 20px 0;
+    background: #FFFFFF;
+    border-radius: 6px;
+    border: none;
+    box-shadow:  0px 4px 10px rgba(0, 0, 0, 0.10);
+}
+.activeUser{
+    background: #ECBF2C;
+}
+.activeUser>.textWrapper>div{
+    color: #FFFFFF;
+}
+.activeUser>.person>.peronTime{
+    color: #FFFFFF;
+
+}
+.person{
+    display: grid;
+    grid-template-columns: 60px 1fr  1fr;
+    /*height: 55px;*/
+}
+.textWrapper{
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    padding: 0 10px 10px 10px;
+}
+.textWrapper>div{
+    text-align: left;
+    font-size: 16px;
+    line-height: 26px;
+    color: #707C97;
+    padding: 0 10px 0 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.count{
+    display: block !important;
+    padding:  0 !important;
+    text-align: center !important;
+    margin: auto 0 !important;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #FF3366;
+    box-shadow: 1px 1px 50px rgba(198, 27, 74, 0.15), 2px 2px 10px rgba(198, 27, 74, 0.1), 4px 4px 15px rgba(198, 27, 74, 0.05);;
+}
+.count>span{
+    font-weight: 500;
+    font-size: 13px;
+    text-transform: lowercase;
+    color: #FFFFFF;
+}
+.person>div{
+    text-align: start;
+    margin-left: 15px;
+    padding: 5px;
+    height: 40px;
+
+}
+.person>div>img{
+    border-radius: 50%;
+    height: 100%;
+}
+.personName{
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 22px;
+    margin-top: 5px;
+    text-transform: capitalize;
+    color: #0D1C2E;
+}
+.peronTime{
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 19px;
+    text-transform: lowercase;
+    justify-self: center;
+    color: #707C97;
+}
+
+
+
+
+/* Message Block ////////////////////////////////////////////////////////////////////////////////////*/
+.message__wrapper{
+    margin: 0 0 20px 0;
+    overflow: hidden;
+    /*height: 100%;*/
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+
+}
+.avaWrapper{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.avaWrapper>img{
+    width: 100%;
+}
+.chatHeader{
+    background: #FAFBFF;
+    border-radius: 6px 6px 0px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid rgba(112, 124, 151, 0.1);
+}
+.chatHeader>div{
+    display: flex;
+    align-items: center;
+    padding: 10px 25px;
+}
+.messages{
+    background: #FFFFFF;
+    height: 460px;
+    overflow-y: scroll;
+}
+.message__input{
+    width: 100%;
+    position: relative;
+}
+.message__input>input{
+    width: 100%;
+    border: none;
+    padding:  8px 0 5px 80px;
+    border-top: 2px solid rgba(112, 124, 151, 0.1);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 24px;
+    text-transform: capitalize;
+
+    color: rgba(112, 124, 151, 0.5);
+}
+.message__input>input:focus{
+    outline: none;
+}
+.send, .plus{
+    top: 5px;
+    cursor: pointer;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ECBF2C;
+    border-radius: 50%;
+    padding: 5px;
+
+}
+.send{
+    right: 15px;
+}
+.plus{
+    left: 15px;
+}
+.send>img, .plus>img{
+    width: 100%;
+    filter: invert(100%) sepia(1%) saturate(23%) hue-rotate(75deg) brightness(104%) contrast(100%);
+}

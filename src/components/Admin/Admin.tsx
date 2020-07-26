@@ -8,13 +8,14 @@ import {useDispatch} from "react-redux";
 import Preloader from "../preloader/Preloader";
 import noPic from '../../img/noPicture.png'
 import {useRouteMatch, Switch, Route, Redirect, NavLink} from 'react-router-dom';
+import Chat from "../chat/Chat";
 
 
 const Admin = () => {
-    const { path, url } = useRouteMatch();
+    const {path, url} = useRouteMatch();
     const dispatch = useDispatch()
     const initialise = async () => {
-        return  dispatch(checkToken(api.getProfile))
+        return dispatch(checkToken(api.getProfile))
     }
     const [user, setUser] = useState<any>(null)
     const [pending, setPending] = useState(true)
@@ -24,30 +25,31 @@ const Admin = () => {
     const data = JSON.parse(localStorage.getItem('userData') as string)
 
     async function setProfile() {
-        return  dispatch(checkToken(api.setProfile(name,{first_name: name, last_name: lastName})))
+        return dispatch(checkToken(api.setProfile(name, {first_name: name, last_name: lastName})))
     }
-    useEffect(()=>{
-        initialise().then((r:any) => {
+
+    useEffect(() => {
+        initialise().then((r: any) => {
             console.log(r.data.results)
-            if(data.status_client) {
+            if (data.status_client) {
                 setUser(r.data.results[0])
                 setName(r.data.results[0].first_name)
                 setLastName(r.data.results[0].last_name)
-            }else{
+            } else {
                 setUser(r.data.results[0].user)
                 setName(r.data.results[0].user.first_name)
                 setLastName(r.data.results[0].user.last_name)
             }
             setPending(false)
-        } )
-    },[])
+        })
+    }, [])
     const onEdit = () => setEditing(!editing)
-    if(pending){
-        return <Preloader />
+    if (pending) {
+        return <Preloader/>
     }
     return (
         <div className={css.wrapper}>
-            <Yellow />
+            <Yellow/>
             <div className={css.userWrapper}>
                 <div className={css.user}>
                     <span>
@@ -55,7 +57,7 @@ const Admin = () => {
                     </span>
                     {
                         editing
-                            ? <button onClick={()=>{
+                            ? <button onClick={() => {
                                 onEdit()
                             }}>Сохранить</button>
                             : <button onClick={onEdit}>Изменить данные</button>
@@ -65,8 +67,10 @@ const Admin = () => {
                     {
                         editing
                             ? <div>
-                                <input type="text" value={name} onChange={(e:ChangeEvent<HTMLInputElement>)=>setName(e.target.value)}/>
-                                <input type="text" value={lastName} onChange={(e:ChangeEvent<HTMLInputElement>)=>setLastName(e.target.value)}/>
+                                <input type="text" value={name}
+                                       onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}/>
+                                <input type="text" value={lastName}
+                                       onChange={(e: ChangeEvent<HTMLInputElement>) => setLastName(e.target.value)}/>
                             </div>
                             : <div className={css.name}>{name + ' ' + lastName}</div>
                     }
@@ -79,9 +83,10 @@ const Admin = () => {
             </div>
             <div className={css.linksWrapper}>
                 {
-                    data.status_client ? null : <NavLink activeClassName={css.active} to={`${url}/articles`}>Статьи</NavLink>
+                    data.status_client ? null :
+                        <NavLink activeClassName={css.active} to={`${url}/articles`}>Статьи</NavLink>
                 }
-                <NavLink activeClassName={css.active} to={`${url}/chat`} >Чат</NavLink>
+                <NavLink activeClassName={css.active} to={`${url}/chat`}>Чат</NavLink>
             </div>
             <Switch>
                 <Route exact path={`${path}/articles`}>
@@ -90,54 +95,10 @@ const Admin = () => {
                 <Route exact path={`${path}/chat`}>
                     <Chat/>
                 </Route>
-                <Redirect to={`${path}/chat`} />
+                <Redirect to={`${path}/chat`}/>
             </Switch>
         </div>
     )
 }
 export default WithNotAuthRedirect(Admin)
 
-const Chat = () => {
-    return (
-        <div className={css.chatWrapper}>
-            <div>
-                <div className={css.searchWrapper}>
-                    <input type="text" placeholder={'искать'} />
-                </div>
-                <div className={css.userList}>
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                </div>
-            </div>
-            <div>
-                chat
-            </div>
-        </div>
-    )
-}
-
-const User = () => {
-    return (
-        <div className={css.person}>
-            <div>
-                <img src={noPic} alt="#"/>
-            </div>
-            <div className={css.personName}>Аайза Аайза</div>
-            <div className={css.peronTime}>1 минута назад</div>
-        </div>
-    )
-}
