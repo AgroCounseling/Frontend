@@ -37,12 +37,14 @@
     margin-right: 10px;
     position: absolute;
     left: 20px;
-    top: 35%;
+    top: 50%;
+    transform: translate(0, -50%);
 }
 .next{
     margin-left: 10px;
     position: absolute;
-    top: 35%;
+    top: 50%;
+    transform: translate(0, -50%);
     right: 25px;
 }
 .consultant{
@@ -61,10 +63,16 @@
     text-align: center;
 }
 .linksWrapper{
+    position: relative;
     justify-content: center;
     display: grid;
     grid-gap: 2em;
     grid-template-columns: repeat(auto-fit, 450px);
+}
+.linksWrapper>button{
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 .links{
     position: relative;
