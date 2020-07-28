@@ -4,7 +4,7 @@ import api from '../../api/Api'
 import {AxiosResponse} from "axios";
 import Select from "react-select";
 import {Link, useParams, useHistory, Switch, Route, useRouteMatch} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getCategories} from "../../state/selectors";
 import {GlobalStateType} from "../../state/root-reducer";
 import Pagination from "../pagination/Pagination";
@@ -15,6 +15,7 @@ import like from "../../img/like.png";
 import {selectStyle} from "../../utils/SelectStyle";
 import Interweave from "interweave";
 import NoElement from "../../utils/NoElement";
+import {checkToken} from "../../state/authReducer";
 
 
 type Props = {}
@@ -164,7 +165,7 @@ const Articles: React.FC<Props> = (props) => {
                     <Route exact path={path}>
                         <div>
                             {
-                                articles.length ? articles.map((item: any) => <> <Article
+                                articles.length ? articles.map((item: any) => <Article
 
                                         key={item.id}
                                         id={item.id}
@@ -173,10 +174,14 @@ const Articles: React.FC<Props> = (props) => {
                                         date={item.pub_date}
                                         name={item.user.first_name + ' ' + item.user.last_name}
                                         category={item.category}
-                                    />
-                                        < Pagination setPage={setPage} pageCount={pagination}/>
-                                    </>)
+                                    />)
+
                                     :  <NoElement text={'Нет статей'} />
+                            }
+                            {
+                                articles.length
+                                    ? < Pagination setPage={setPage} pageCount={pagination}/>
+                                    : null
                             }
                         </div>
                     </Route>
@@ -223,10 +228,26 @@ const Article: React.FC<ArticleProps> = (props) => {
 
 const DetailArticle = () => {
     const params: any = useParams()
+    const dispatch = useDispatch()
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [article, setArticle] = useState<any>({})
     const [pending, setPending] = useState(true)
     let category: any = categories.map((item: any) => article.category === item.id ? item.title : null)
+    console.log(article)
+
+    const checkLike = async (data:any) => {
+        return  dispatch(checkToken(()=>api.putLike(article.id,data)))
+    }
+
+    const putLike = () => {
+        checkLike({
+            user: {
+                first_name: article.user.first_name,
+                last_name: article.user.last_name
+            },
+            vote: true
+        }).then((res)=> console.log(res))
+    }
 
     useEffect(() => {
         api.getArticle(params.article)
@@ -251,7 +272,7 @@ const DetailArticle = () => {
             </div>
             <div className={css.ArticleText}><Interweave content={article.text}/></div>
             <div className={css.likes}>
-                <div className={css.imgWrapper}>
+                <div onClick={putLike} className={css.imgWrapper}>
                     <img src={like} alt="Like"/> Понравилась
                 </div>
                 <div className={css.count}>
