@@ -3,13 +3,17 @@ import {Header, Wrapper} from "../Styles";
 import {Comment} from "../answer/Answer";
 import api from '../../api/Api'
 import {checkToken} from "../../state/authReducer";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import { useHistory } from 'react-router-dom';
+import {GlobalStateType} from "../../state/root-reducer";
+import {isAuth} from "../../state/selectors";
+import NotAuth from "../notAuthorized/NotAuth";
 
 const AddQuestion = () => {
     const [text, setText] = useState('')
     const dispatch = useDispatch()
     const history = useHistory()
+    const auth = useSelector((state:GlobalStateType)=> isAuth(state))
     const sendQuestion = async () => {
         return  dispatch(checkToken(()=>api.createQuestion({
             category: 1,
@@ -25,7 +29,12 @@ const AddQuestion = () => {
     return (
         <Wrapper>
             <Header>Форум</Header>
-            <Comment onAdd={sendText} btn={'Задать вопрос'} value={text} setValue={(e:any) => setText(e.target.value)} />
+            {
+                auth
+                    ? <Comment onAdd={sendText} btn={'Задать вопрос'} value={text}
+                               setValue={(e: any) => setText(e.target.value)}/>
+                    : <NotAuth />
+            }
         </Wrapper>
     )
 }

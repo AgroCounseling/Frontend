@@ -10,6 +10,7 @@ import {isAuth} from "../../state/selectors";
 import {connect, useDispatch} from "react-redux";
 import Footer from "../footer/Footer";
 import {checkToken} from "../../state/authReducer";
+import NotAuth from "../notAuthorized/NotAuth";
 
 type Props = {
     isAuth: boolean
@@ -69,7 +70,7 @@ const Answer: React.FC<Props> = (props) => {
                 {
                     props.isAuth
                         ? <Comment onAdd={sendText} value={text} setValue={(e:any) => setText(e.target.value)} btn={'Отправить ответ'}/>
-                        : <div>Вы не авторизованны</div>
+                        : <NotAuth />
                 }
             </Wrapper>
             <Footer/>

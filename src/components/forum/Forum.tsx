@@ -4,7 +4,6 @@ import {
     FormWrapper,
     Input,
     Button,
-    FilterBy,
     QuestionWrappers,
     AnswerWrapper,
     ImageWrapper,
@@ -18,46 +17,45 @@ import Preloader from "../preloader/Preloader";
 import Pagination from "../pagination/Pagination";
 import noPicture from '../../img/noPicture.png'
 import Footer from "../footer/Footer";
-import Select from "react-select";
 import {GlobalStateType} from "../../state/root-reducer";
 import {getCategories} from '../../state/selectors'
 import {connect} from "react-redux";
 
-const colourStyles = {
-    control: (styles: any) => ({
-        ...styles,
-        minWidth: '200px',
-        border: 'none',
-        marginLeft: '20px',
-        '&:focus': {
-            outline: 'none !important',
-            borderColor: 'none',
-            border: 'none'
-        }
-    }),
-    dropdownIndicator: (styles:any) => ({
-        ...styles,
-        display: 'none'
-    }),
-    indicatorSeparator:(styles:any) => ({
-        ...styles,
-        display: 'none'
-    }),
-    option: (styles: any) => {
-        return {...styles, marginLeft: '20px'}
-    }
-};
+// const colourStyles = {
+//     control: (styles: any) => ({
+//         ...styles,
+//         minWidth: '200px',
+//         border: 'none',
+//         marginLeft: '20px',
+//         '&:focus': {
+//             outline: 'none !important',
+//             borderColor: 'none',
+//             border: 'none'
+//         }
+//     }),
+//     dropdownIndicator: (styles:any) => ({
+//         ...styles,
+//         display: 'none'
+//     }),
+//     indicatorSeparator:(styles:any) => ({
+//         ...styles,
+//         display: 'none'
+//     }),
+//     option: (styles: any) => {
+//         return {...styles, marginLeft: '20px'}
+//     }
+// };
 
 type Props = {
     categories?: any
 }
 const Forum: React.FC<Props> = (props) => {
-    const categories = props.categories.map((item: any) => {
-        return {
-            value: item.id,
-            label: item.title
-        }
-    })
+    // const categories = props.categories.map((item: any) => {
+    //     return {
+    //         value: item.id,
+    //         label: item.title
+    //     }
+    // })
 
     const [questions, setQuestions] = useState([])
     const [pending, setPending] = useState(true)
@@ -127,10 +125,11 @@ const Forum: React.FC<Props> = (props) => {
                     </Link>
                 </Search>
                 <FilterWrapper>
-                    <FilterBy>
-                        Фильтровать по
-                        <Select value={filter} onChange={(e:any)=>setFilter(e)} options={categories}  placeholder={''} isSearchable={true} styles={colourStyles}/>
-                    </FilterBy>
+                    {/*<FilterBy>*/}
+                    {/*    Фильтровать по*/}
+                    {/*    <Select value={filter} onChange={(e:any)=>setFilter(e)} options={categories}  placeholder={''} isSearchable={true} styles={colourStyles}/>*/}
+                    {/*</FilterBy>*/}
+                    <span />
                     <div onClick={removeAll}>
                         Сбросить все
                     </div>
