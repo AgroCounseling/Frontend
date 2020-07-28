@@ -19,7 +19,7 @@
     height: 30px;
     padding: 18px 0;
     background: #FAFBFC;
-    border: 1.5px solid #AA8B25;
+    border: 1.5px solid #ECBF2C;
     box-sizing: border-box;
     border-radius: 10px;
     display: flex;
@@ -42,7 +42,7 @@
 .register{
     margin: 0 15px 0  10px;
     height: 30px;
-    background: #AA8B25;
+    background: #ECBF2C;
     border-radius: 10px;
     color: #FFFFFF;
     padding: 5px 5px;

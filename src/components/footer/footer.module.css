@@ -1,9 +1,7 @@
 .wrapper{
-    background: rgba(170, 139, 37, 0.7);
+    background: #ECBF2C;
     padding: 25px 35px;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-gap: 1em;
+
 }
 .wrapper>div{
     display: grid;

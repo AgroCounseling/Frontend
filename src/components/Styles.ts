@@ -19,7 +19,7 @@ export const Header = styled.div`
 `
 
 export const MainButton  = styled.button`
-    background: #AA8B25;
+    background: #ECBF2C;
     border-radius: 10px;
     font-size: 18px;
     line-height: 207.9%;
