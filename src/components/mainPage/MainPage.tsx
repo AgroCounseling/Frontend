@@ -147,7 +147,7 @@ const List = (props: ListType) => {
                         </>
                         : <>
                             <div className={css.imageWrapper}>
-                                <img src={grass} alt="grass"/>
+                                <img src={props.url ? props.url :grass} alt="grass"/>
                             </div>
                             <div>
                                 <Title>{props.title}</Title>

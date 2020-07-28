@@ -12,29 +12,9 @@ import {ArticleSearch} from "../Styles";
 import Footer from "../footer/Footer";
 import Preloader from "../preloader/Preloader";
 import like from "../../img/like.png";
+import {selectStyle} from "../../utils/SelectStyle";
+import Interweave from "interweave";
 
-const selectStyle = {
-    control: (styles: any) => ({
-        ...styles,
-        // minWidth: '200px',
-        border: 'none',
-        borderRadius: '10px',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        background: 'rgba(194, 199, 208, 0.4)',
-        fontSize: '13px'
-    }),
-    option: (styles: any) => {
-        return {
-            ...styles,
-            fontSize: '13px',
-            height: '20px',
-            margin: 0,
-            padding: '0 5px',
-        }
-    }
-};
 
 
 type Props = {}
@@ -59,23 +39,23 @@ const Articles: React.FC<Props> = (props) => {
     const [subCategoriesList, setSubCategoriesList] = useState<any>([])
     const [subCategories, setSubCategories] = useState<any>(null)
     const [subCategory, setSubCategory] = useState<any>(null)
-    const [typesList, setTypesList] = useState([])
+    // const [typesList, setTypesList] = useState([])
     const [types, setTypes] = useState<any>(null)
-    const [type, setType] = useState(null)
-    const [subType, setSubType] = useState(null)
+    const [type, setType] = useState<any>(null)
+    // const [subType, setSubType] = useState(null)
 
     useEffect(() => {
         api.getArticles(
             search, page, +params.id === 0 ? null : params.id,
             subCategory ? subCategory.value : null,
-            types ? types.value : null
+            type ? type.value : null
             )
             .then((res: AxiosResponse) => {
                 setArticles(res.data.results)
                 setPagination(Math.ceil(res.data.count / res.data.limit))
                 setPending(false)
             })
-    }, [page, params, search, subCategory, types])
+    }, [page, params, search, subCategory, type])
 
     useEffect(()=>{
         if(subCategory !== null) {
@@ -87,7 +67,7 @@ const Articles: React.FC<Props> = (props) => {
                         label: item.title,
                         category: item.subcategory
                     }))
-                    setTypesList(newArr)
+                    // setTypesList(newArr)
                     const arr = newArr.filter((item: any) => +subCategory.value === +item.category ? item : null)
                     setTypes(arr)
                 })
@@ -124,7 +104,7 @@ const Articles: React.FC<Props> = (props) => {
     const typeChange = (e: any) => {
         history.push(url)
         setType(e)
-        setSubType(null)
+        // setSubType(null)
     }
     const onSearch = (e: any) => {
         history.push(url)
@@ -207,7 +187,7 @@ const Article: React.FC<ArticleProps> = (props) => {
                 <div className={css.title}>
                     {props.title}
                 </div>
-                <div className={css.text}>{props.description}</div>
+                <div className={css.text}><Interweave content={props.description} /></div>
             </div>
         </Link>
     )
@@ -241,7 +221,7 @@ const DetailArticle = ()=> {
             <div className={css.title}>
                 {article.title}
             </div>
-            <div className={css.ArticleText}>{article.text}</div>
+            <div className={css.ArticleText}> <Interweave content={article.text} /></div>
             <div  className={css.likes}>
                 <div className={css.imgWrapper}>
                     <img src={like} alt="Like"/> Понравилась
