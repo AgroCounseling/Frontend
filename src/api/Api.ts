@@ -49,6 +49,8 @@ export default {
     getSlider: () => http.get(`slider/`),
     getTypes: () => http.get(`types/`),
     getArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
+    getPopularArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`popular-articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
+    getNewArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`new-articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
     getArticle: (id:number | string) => http.get(`articles/${id ? id : ''}`),
     createArticle: (data:any) => http.post(`articles/create`, data, {
         headers: {

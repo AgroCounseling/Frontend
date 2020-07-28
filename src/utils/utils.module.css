@@ -1,0 +1,9 @@
+.noElement__wrapper{
+    text-align: center;
+    margin-top: 20px;
+}
+.noElement__wrapper>span{
+    color: rgba(13, 28, 46, 0.46);
+    font-size: 30px;
+    text-transform: lowercase;
+}

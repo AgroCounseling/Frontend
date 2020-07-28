@@ -14,14 +14,14 @@ import Preloader from "../preloader/Preloader";
 import like from "../../img/like.png";
 import {selectStyle} from "../../utils/SelectStyle";
 import Interweave from "interweave";
-
+import NoElement from "../../utils/NoElement";
 
 
 type Props = {}
 const Articles: React.FC<Props> = (props) => {
     const params: any = useParams()
     const history = useHistory()
-    const { path, url } = useRouteMatch();
+    const {path, url} = useRouteMatch();
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const categoriesList = categories.map((item: any) => {
         return {
@@ -49,7 +49,7 @@ const Articles: React.FC<Props> = (props) => {
             search, page, +params.id === 0 ? null : params.id,
             subCategory ? subCategory.value : null,
             type ? type.value : null
-            )
+        )
             .then((res: AxiosResponse) => {
                 setArticles(res.data.results)
                 setPagination(Math.ceil(res.data.count / res.data.limit))
@@ -57,8 +57,32 @@ const Articles: React.FC<Props> = (props) => {
             })
     }, [page, params, search, subCategory, type])
 
-    useEffect(()=>{
-        if(subCategory !== null) {
+    const getNew = () => {
+        api.getNewArticles(
+            search, page, +params.id === 0 ? null : params.id,
+            subCategory ? subCategory.value : null,
+            type ? type.value : null
+        )
+            .then((res: AxiosResponse) => {
+                setArticles(res.data.results)
+                setPagination(Math.ceil(res.data.count / res.data.limit))
+                setPending(false)
+            })
+    }
+    const getPopular = () => {
+        api.getPopularArticles(
+            search, page, +params.id === 0 ? null : params.id,
+            subCategory ? subCategory.value : null,
+            type ? type.value : null
+        )
+            .then((res: AxiosResponse) => {
+                setArticles(res.data.results)
+                setPagination(Math.ceil(res.data.count / res.data.limit))
+                setPending(false)
+            })
+    }
+    useEffect(() => {
+        if (subCategory !== null) {
             api.getTypes()
                 .then((res) => {
                     console.log(res)
@@ -74,24 +98,24 @@ const Articles: React.FC<Props> = (props) => {
         }
     }, [subCategory])
 
-    useEffect(()=>{
-        const arr = subCategoriesList.filter((item:any) => +params.id === item.category ? item : null)
+    useEffect(() => {
+        const arr = subCategoriesList.filter((item: any) => +params.id === item.category ? item : null)
         setSubCategories(arr)
     }, [params])
-    useEffect(()=>{
+    useEffect(() => {
         api.getSubCategory()
-            .then((res:AxiosResponse) => {
+            .then((res: AxiosResponse) => {
                 console.log(res.data.results)
-                let newArr = res.data.results.map((item:any)=>({
+                let newArr = res.data.results.map((item: any) => ({
                     value: item.id,
                     label: item.title,
                     category: item.category
                 }))
                 setSubCategoriesList(newArr)
-                const arr = newArr.filter((item:any) => +params.id === item.category ? item : null)
+                const arr = newArr.filter((item: any) => +params.id === item.category ? item : null)
                 setSubCategories(arr)
             })
-    },[])
+    }, [])
     const categoryChange = (e: any) => {
         setCategory(e)
         setSubCategory(null)
@@ -121,9 +145,11 @@ const Articles: React.FC<Props> = (props) => {
     }
     return (
         <div className={css.wrapper}>
-            <Search value={search} setValue={onSearch} />
+            <Search value={search} setValue={onSearch}/>
             <div className={css.articlesWrapper}>
                 <ArticleNavBar
+                    getPopular={getPopular}
+                    getNew={getNew}
                     typesOption={types}
                     types={type}
                     setTypes={typeChange}
@@ -138,22 +164,24 @@ const Articles: React.FC<Props> = (props) => {
                     <Route exact path={path}>
                         <div>
                             {
-                                articles.map((item: any) => <Article
+                                articles.length ? articles.map((item: any) => <> <Article
 
-                                    key={item.id}
-                                    id={item.id}
-                                    description={item.text}
-                                    title={item.title}
-                                    date={item.pub_date}
-                                    name={item.user.first_name + ' ' + item.user.last_name}
-                                    category={item.category}
-                                />)
+                                        key={item.id}
+                                        id={item.id}
+                                        description={item.text}
+                                        title={item.title}
+                                        date={item.pub_date}
+                                        name={item.user.first_name + ' ' + item.user.last_name}
+                                        category={item.category}
+                                    />
+                                        < Pagination setPage={setPage} pageCount={pagination}/>
+                                    </>)
+                                    :  <NoElement text={'Нет статей'} />
                             }
-                            <Pagination setPage={setPage} pageCount={pagination}/>
                         </div>
                     </Route>
                     <Route path={`${path}/:article`}>
-                        <DetailArticle />
+                        <DetailArticle/>
                     </Route>
                 </Switch>
             </div>
@@ -171,8 +199,8 @@ type ArticleProps = {
     description: string
 }
 const Article: React.FC<ArticleProps> = (props) => {
-    const { url } = useRouteMatch();
-    const params:any = useParams()
+    const {url} = useRouteMatch();
+    const params: any = useParams()
     console.log(params)
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     let category: any = categories.map((item: any) => props.category === item.id ? item.title : null)
@@ -187,18 +215,18 @@ const Article: React.FC<ArticleProps> = (props) => {
                 <div className={css.title}>
                     {props.title}
                 </div>
-                <div className={css.text}><Interweave content={props.description} /></div>
+                <div className={css.text}><Interweave content={props.description}/></div>
             </div>
         </Link>
     )
 }
 
-const DetailArticle = ()=> {
-    const params:any = useParams()
+const DetailArticle = () => {
+    const params: any = useParams()
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [article, setArticle] = useState<any>({})
     const [pending, setPending] = useState(true)
-    let category:any = categories.map((item:any) => article.category === item.id ? item.title : null)
+    let category: any = categories.map((item: any) => article.category === item.id ? item.title : null)
 
     useEffect(() => {
         api.getArticle(params.article)
@@ -208,8 +236,8 @@ const DetailArticle = ()=> {
             })
     }, [params.article])
 
-    if(pending){
-        return <div> <Preloader /></div>
+    if (pending) {
+        return <div><Preloader/></div>
     }
     return (
         <div className={css.article}>
@@ -221,8 +249,8 @@ const DetailArticle = ()=> {
             <div className={css.title}>
                 {article.title}
             </div>
-            <div className={css.ArticleText}> <Interweave content={article.text} /></div>
-            <div  className={css.likes}>
+            <div className={css.ArticleText}><Interweave content={article.text}/></div>
+            <div className={css.likes}>
                 <div className={css.imgWrapper}>
                     <img src={like} alt="Like"/> Понравилась
                 </div>
@@ -239,11 +267,13 @@ type ArticleNavBarProps = {
     categoryVal: any
     setCategory: any
     subCategory: any
-    setSubCategory: (e:any) => void
+    setSubCategory: (e: any) => void
     subCategories: [{}]
     types: any
-    setTypes: (e:any) => void
+    setTypes: (e: any) => void
     typesOption: [{}]
+    getNew: () => void
+    getPopular: () => void
 }
 
 export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
@@ -251,8 +281,8 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
     return (
         <div className={css.navBar}>
             <div className={css.newPopular}>
-                <div>Новое</div>
-                <div>Популярные</div>
+                <div onClick={props.getNew}>Новое</div>
+                <div onClick={props.getPopular}>Популярные</div>
             </div>
             <div className={css.filterWrapper}>
                 <div>
@@ -296,7 +326,7 @@ type SearchProps = {
     value: string
     setValue: any
 }
-export const Search:React.FC<SearchProps> = (props) => {
+export const Search: React.FC<SearchProps> = (props) => {
     return (
         <div className={css.search}>
             <label>
