@@ -50,6 +50,11 @@ export default {
     getTypes: () => http.get(`types/`),
     getArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
     getArticle: (id:number | string) => http.get(`articles/${id ? id : ''}`),
+    createArticle: (data:any) => http.post(`articles/create`, data, {
+        headers: {
+            "Authorization": "JWT " + getToken()
+        }
+    }),
     setAnswer: (data:any) => http.post(`comments/create`, data, {
         headers: {
             "Authorization": "JWT " + getToken()

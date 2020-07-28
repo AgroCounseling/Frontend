@@ -1,0 +1,41 @@
+.wrapper{
+    padding: 20px 6%;
+}
+.categories{
+    display: flex;
+    justify-content: space-between;
+}
+.categories>div{
+    width: 100%;
+    margin: 0 30px;
+}
+.title{
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 27px;
+    margin: 30px 0  14px 0;
+    color: rgba(33, 51, 54, 0.8);
+}
+.text_wrapper{
+    padding: 60px 30px;
+}
+.title__input{
+    font-size: 18px;
+    line-height: 207.9%;
+    padding-left: 10px;
+    color: rgba(77, 92, 94, 0.6);
+    border: none;
+    width: 99%;
+    background: rgba(191, 195, 207, 0.5);
+    border-radius: 15px;
+}
+.editor{
+    border-radius: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    min-height: 200px;
+    padding: 0 10px;
+}
+.btnWrapper{
+    padding: 0 30px 60px 0;
+    float: right;
+}

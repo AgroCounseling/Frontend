@@ -9,6 +9,7 @@ import Preloader from "../preloader/Preloader";
 import noPic from '../../img/noPicture.png'
 import {useRouteMatch, Switch, Route, Redirect, NavLink} from 'react-router-dom';
 import Chat from "../chat/Chat";
+import AddArticle from "../addArticle/AddArticle";
 
 
 const Admin = () => {
@@ -76,7 +77,7 @@ const Admin = () => {
                     }
                     <div>
                         {
-                            data.status_client ? null : 'Consultant'
+                            data.status_client ? null : <div className={css.consultant}>Консультант | {'Test'}</div>
                         }
                     </div>
                 </div>
@@ -90,7 +91,7 @@ const Admin = () => {
             </div>
             <Switch>
                 <Route exact path={`${path}/articles`}>
-                    <h3>Articles</h3>
+                    <AddArticle last_name={lastName} name={name} />
                 </Route>
                 <Route exact path={`${path}/chat`}>
                     <Chat/>
