@@ -59,6 +59,7 @@ const Articles: React.FC<Props> = (props) => {
     }, [page, params, search, subCategory, type])
 
     const getNew = () => {
+        // history.push(url)
         api.getNewArticles(
             search, page, +params.id === 0 ? null : params.id,
             subCategory ? subCategory.value : null,
@@ -67,7 +68,6 @@ const Articles: React.FC<Props> = (props) => {
             .then((res: AxiosResponse) => {
                 setArticles(res.data.results)
                 setPagination(Math.ceil(res.data.count / res.data.limit))
-                setPending(false)
             })
     }
     const getPopular = () => {
@@ -79,7 +79,6 @@ const Articles: React.FC<Props> = (props) => {
             .then((res: AxiosResponse) => {
                 setArticles(res.data.results)
                 setPagination(Math.ceil(res.data.count / res.data.limit))
-                setPending(false)
             })
     }
     useEffect(() => {
@@ -206,7 +205,7 @@ type ArticleProps = {
 const Article: React.FC<ArticleProps> = (props) => {
     const {url} = useRouteMatch();
     const params: any = useParams()
-    console.log(params)
+
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     let category: any = categories.map((item: any) => props.category === item.id ? item.title : null)
     return (
