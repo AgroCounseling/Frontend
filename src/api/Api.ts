@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 const http = axios.create({
-    baseURL: "http://134.122.76.224/api/"
+    baseURL: "http://134.122.76.224/ru/api/"
 });
 
 const getToken = () => {
@@ -38,6 +38,7 @@ export default {
     getCategory: () => http.get(`categories/`),
     getSubCategory: () => http.get(`subcategories/`),
     getSpecialty: () => http.get(`specialty/`),
+    getConsultantsList: (page:number = 1) => http.get(`consultants/?page=${page}`),
     getForums: (page: number | string, text?: string, filter?: any) => http.get(`forums/?category=${filter ? filter.value : ''}&page=${page}&search=${text ? text : ''}`),
     getQuestion: (id: number | string) => http.get(`forums/${id}`),
     createQuestion: (data:any) => http.post(`forums/create`, data,{

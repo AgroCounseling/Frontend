@@ -43,7 +43,7 @@ const ConsultantCard: React.FC<OwnProps> = (props) => {
                         Специализация:
                     </Specialization>
                     <span>
-                        {props.specialization.map((item: any) => item.title + ', ')}
+                        {props.specialization.map((item: any) => item ? item.title + ', ' : null)}
                     </span>
                 </p>
             </Link>

@@ -33,7 +33,7 @@ type Props = {
 const Consultants: React.FC<Props> = (props) => {
     const history = useHistory();
     const params: {id:string} = useParams()
-    const categories = props.categories.map((item:any)=> {
+    const categories = props.specialties.map((item:any)=> {
         return {
             value: item.id,
             label: item.title
@@ -43,23 +43,47 @@ const Consultants: React.FC<Props> = (props) => {
     const [pagination, setPagination] = useState(1)
     const [page, setPage] = useState(1)
     const [select, setSelect] = useState<any>(null)
+
     useEffect(()=>{
-        api.getConsultants(params.id, page).then((res: any) => {
-            setPagination(Math.ceil(res.data.count / res.data.limit))
-            setConsultants(res.data.results)
-        })
+        if(params.id){
+            api.getConsultants(params.id, page).then((res: any) => {
+                setPagination(Math.ceil(res.data.count / res.data.limit))
+                setConsultants(res.data.results)
+            })
+        }else{
+            api.getConsultantsList(page)
+                .then((res: any) => {
+                    setPagination(Math.ceil(res.data.count / res.data.limit))
+                    setConsultants(res.data.results)
+                })
+        }
         categories.forEach((item:any)=> +params.id === +item.value ? setSelect(item) : null)
-    }   , [params.id])
+    }   , [params.id, page])
+
     const selectChange = (e:{value:number,title: string}) => {
         setSelect(e)
+        setPage(1)
         history.push(`${e.value}`)
     }
-    useEffect(() => {
-        api.getConsultants(params.id, page).then((res: any) => {
-            setPagination(Math.ceil(res.data.count / res.data.limit))
-            setConsultants(res.data.results)
-        })
-    }, [])
+    // useEffect(() => {
+    //     if(params.id){
+    //         api.getConsultants(params.id, page).then((res: any) => {
+    //             setPagination(Math.ceil(res.data.count / res.data.limit))
+    //             setConsultants(res.data.results)
+    //         })
+    //     }else{
+    //         api.getConsultantsList(page)
+    //             .then((res: any) => {
+    //                 setPagination(Math.ceil(res.data.count / res.data.limit))
+    //                 setConsultants(res.data.results)
+    //             })
+    //     }
+    // }, [page])
+
+    const clean = () => {
+        history.push('/consultants/')
+        setSelect(null)
+    }
     return (
         <div className={css.wrapper}>
             <Header>
@@ -67,7 +91,7 @@ const Consultants: React.FC<Props> = (props) => {
             </Header>
             <div className={css.filters}>
                 <div className={css.filter_by}>Фильтрация по</div>
-                <div className={css.remove_all}>Сбросить всё</div>
+                <div onClick={clean} className={css.remove_all}>Сбросить всё</div>
             </div>
             <div className={css.categories}>
                 <div className={css.category}>Категория</div>
