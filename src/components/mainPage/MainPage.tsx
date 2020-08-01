@@ -20,9 +20,10 @@ import next from '../../img/next.png'
 type Props = {
     categories: any,
     slider: any
+    specialties: any
 }
 const MainPage: React.FC<Props> = (props) => {
-    const {categories, slider} = props
+    const {categories, slider, specialties} = props
     const [categoriesArray, setCategoriesArray] = useState<any>([])
     const [current, setCurrent] = useState(0)
 
@@ -56,8 +57,8 @@ const MainPage: React.FC<Props> = (props) => {
         }
     }
     useEffect(()=>{
-        colSplit(categories, 4)
-    }, [categories])
+        colSplit(specialties, 4)
+    }, [specialties])
     return (
         <div>
             <Carousel slider={slider}/>
@@ -214,7 +215,8 @@ const RoadMap = () => {
 const mapStateToProps = (state: GlobalStateType) => {
     return {
         categories: getCategories(state),
-        slider: state.app.slider
+        slider: state.app.slider,
+        specialties: getSpecialties(state)
     }
 }
 export default connect(mapStateToProps, {})(MainPage)

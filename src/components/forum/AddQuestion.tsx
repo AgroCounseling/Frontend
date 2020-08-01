@@ -31,7 +31,7 @@ const AddQuestion = () => {
             <Header>Форум</Header>
             {
                 auth
-                    ? <Comment onAdd={sendText} btn={'Задать вопрос'} value={text}
+                    ? <Comment placeholder={'Введите ваш вопрос............'} onAdd={sendText} btn={'Задать вопрос'} value={text}
                                setValue={(e: any) => setText(e.target.value)}/>
                     : <NotAuth />
             }

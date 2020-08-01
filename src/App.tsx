@@ -87,6 +87,10 @@ const App = (props:OwnProps) => {
                         <Consultants />
                         <Footer />
                     </Route>
+                    <Route path={'/consultants'}>
+                        <Consultants />
+                        <Footer />
+                    </Route>
                     <Route path={'/forum'}>
                         <Forum />
                     </Route>

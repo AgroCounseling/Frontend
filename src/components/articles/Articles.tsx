@@ -231,6 +231,7 @@ const DetailArticle = () => {
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [article, setArticle] = useState<any>({})
     const [pending, setPending] = useState(true)
+    const [vote, setVote] = useState(0)
     let category: any = categories.map((item: any) => article.category === item.id ? item.title : null)
     console.log(article)
 
@@ -245,13 +246,17 @@ const DetailArticle = () => {
                 last_name: article.user.last_name
             },
             vote: true
-        }).then((res)=> console.log(res))
+        }).then((res)=> {
+            setVote(vote+1)
+            console.log(res)
+        })
     }
 
     useEffect(() => {
         api.getArticle(params.article)
             .then((res: AxiosResponse) => {
                 setArticle(res.data)
+                setVote(res.data.votes)
                 setPending(false)
             })
     }, [params.article])
@@ -275,7 +280,7 @@ const DetailArticle = () => {
                     <img src={like} alt="Like"/> Понравилась
                 </div>
                 <div className={css.count}>
-                    {article.votes}
+                    {vote}
                 </div>
             </div>
         </div>

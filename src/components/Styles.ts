@@ -12,7 +12,7 @@ export const Header = styled.div`
     font-style: normal;
     font-weight: bold;
     font-size: 33px;
-    line-height: 27px;
+    line-height: 33px;
     color: ${(props)=> props.color ? props.color  : '#64A928'};
     
     border-bottom: 2px solid #4D5C5E; 

@@ -48,6 +48,7 @@ const Answer: React.FC<Props> = (props) => {
             .then((res:any) => {
                 setComments([...comments, res.data])
                 setPending(false)
+                setText('')
             })
     }
     if (pending) {
@@ -69,7 +70,7 @@ const Answer: React.FC<Props> = (props) => {
                 </div>
                 {
                     props.isAuth
-                        ? <Comment onAdd={sendText} value={text} setValue={(e:any) => setText(e.target.value)} btn={'Отправить ответ'}/>
+                        ? <Comment placeholder={'Введите ваш ответ............'} onAdd={sendText} value={text} setValue={(e:any) => setText(e.target.value)} btn={'Отправить ответ'}/>
                         : <NotAuth />
                 }
             </Wrapper>
@@ -102,6 +103,7 @@ type CommentProps = {
     value: string
     setValue: (e:any) => void
     onAdd: () => void
+    placeholder: string
 }
 export const Comment = (props:CommentProps) => {
     return (
@@ -110,7 +112,7 @@ export const Comment = (props:CommentProps) => {
                 <img src={noPicture} alt="avatar"/>
             </div>
             <div>
-                <textarea value={props.value} onChange={props.setValue} className={css.placeholder} placeholder={'Введите ваш ответ............'}/>
+                <textarea value={props.value} onChange={props.setValue} className={css.placeholder} placeholder={props.placeholder}/>
                 <MainButton onClick={props.onAdd}>{props.btn}</MainButton>
             </div>
         </div>
