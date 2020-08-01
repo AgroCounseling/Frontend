@@ -35,6 +35,7 @@ export const CardWrapper = styled.div`
     &>a>p{
         text-align: left;
         padding: 5px 10px;
+        height: 105px;
         
         &>span{
         font-style: italic;
@@ -101,6 +102,9 @@ export const ConnectButton = styled.button`
     font-size: 16px;
     line-height: 300.9%;
     cursor: pointer;
+    position:absolute;
+    left: 0;
+    bottom: 0;
 `
 
 export const Star = styled.div`

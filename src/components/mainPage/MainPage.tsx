@@ -88,7 +88,7 @@ const MainPage: React.FC<Props> = (props) => {
                 </div>
             </div>
             {
-                categories.map((item: any, index: number) => <List
+                specialties.map((item: any, index: number) => <List
                     key={item.id}
                     id={item.id}
                     url={item.icon_image}

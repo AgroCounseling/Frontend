@@ -255,6 +255,7 @@ const DetailArticle = () => {
     useEffect(() => {
         api.getArticle(params.article)
             .then((res: AxiosResponse) => {
+                console.log(res)
                 setArticle(res.data)
                 setVote(res.data.votes)
                 setPending(false)
@@ -274,7 +275,17 @@ const DetailArticle = () => {
             <div className={css.title}>
                 {article.title}
             </div>
-            <div className={css.ArticleText}><Interweave content={article.text}/></div>
+            <div className={css.ArticleText}>
+                <Interweave content={article.text}/>
+                {
+                    article.additions.map((item:any) => {
+                        return <div key={item.id}>
+                            <div className={css.title}>{item.subtitle}</div>
+                            <Interweave content={item.subtext} />
+                         </div>
+                    })
+                }
+            </div>
             <div className={css.likes}>
                 <div onClick={putLike} className={css.imgWrapper}>
                     <img src={like} alt="Like"/> Понравилась
