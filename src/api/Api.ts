@@ -33,7 +33,11 @@ export default {
             "Authorization": "JWT " + getToken()
         }
     }),
-    setProfile: (name:string,data:any) => http.put(`profile/edit/${name}/`,data),
+    setProfile: (name:string,data:any) => http.put(`profile/edit/${name}/`,data , {
+        headers: {
+            "Authorization": "JWT " + getToken()
+        }
+    }),
     getConsultants: (id: string | number, page: number | string = 1) => http.get(`specialty/${id}/consultants/?page=${page}`),
     getCategory: () => http.get(`categories/`),
     getSubCategory: () => http.get(`subcategories/`),
