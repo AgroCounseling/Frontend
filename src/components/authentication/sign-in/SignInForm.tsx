@@ -4,13 +4,18 @@ import {Button, Input, Label} from "../styledElements";
 import {Link} from "react-router-dom";
 import google from '../../../img/google.png'
 import facebook from '../../../img/facebook.png'
-import twitter from '../../../img/twitter.png'
 import {useDispatch} from "react-redux";
-import {authFunction} from "../../../state/authReducer";
+import {authFunction, googleAuth} from "../../../state/authReducer";
 import {WithAuthRedirect} from "../../../hocs/AuthHoc";
-import { useFormik } from "formik"
+import {useFormik} from "formik"
+import GoogleLogin from "react-google-login";
+import FacebookLogin from 'react-facebook-login';
 
-
+const data = {
+    grant_type: "convert_token",
+    client_id: "qJ7cVMs5DPgP9Otg0NEXnQJO3STDnNOc4Xsdc7BU",
+    client_secret: "u2d6EdZaXJdI6sEj8N6C8SecOy7xhDsDx1ttoNGA5Xsi72yYuYDzwyxXoxKpwzPxEpmaUs9I5gfAcU85ISzt2eCmDDbRqBT7WGPN4w8mooTvmcMyrBzQESIhM135unJb",
+}
 export const SignIn = WithAuthRedirect(() => {
     const dispatch = useDispatch()
     const formik = useFormik({
@@ -18,10 +23,28 @@ export const SignIn = WithAuthRedirect(() => {
             email: '',
             password: ''
         },
-        onSubmit: (values:any) => {
+        onSubmit: (values: any) => {
             dispatch(authFunction(values.email, values.password))
         },
     });
+
+    const responseGoogle = (response: any) => {
+        const newDate = {
+            ...data,
+            backend: "google-oauth2",
+            token: response.wc.access_token
+        }
+        dispatch(googleAuth(newDate))
+    }
+    const responseFacebook = (response: any) => {
+        console.log(response);
+        const newDate = {
+            ...data,
+            facebook: "google-oauth2",
+            token: response.accessToken
+        }
+        dispatch(googleAuth(newDate))
+    }
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={css.registration}>
@@ -58,9 +81,31 @@ export const SignIn = WithAuthRedirect(() => {
                 <div className={css.footerSignIn}>
                     <Link to={'/forgot'}>Забыли пароль?</Link>
                     <div className={css.socialNetworks}>
-                        <Link to={'#'}><img src={google} alt="G"/></Link>
-                        <Link to={'#'}><img src={facebook} alt="F"/></Link>
-                        <Link to={'#'}><img src={twitter} alt="T"/></Link>
+                        <GoogleLogin
+                            clientId="675832405065-vkf55huhutjrhearfn5a3agomvk6g0a1.apps.googleusercontent.com"
+                            buttonText=""
+                            onSuccess={responseGoogle}
+                            onFailure={responseGoogle}
+                            cookiePolicy={'single_host_origin'}
+                            render={renderProps => (
+                                <span className={css.links}>
+                                    <img onClick={renderProps.onClick} src={google} alt="G"/>
+                                </span>
+                            )}
+                        />
+                        <label>
+                            <FacebookLogin
+                                appId="325647148571013"
+                                autoLoad={false}
+                                // fields="name,email,picture"
+                                // onClick={componentClicked}
+                                callback={responseFacebook}
+                                buttonStyle={{
+                                    display: 'none'
+                                }}
+                            />
+                            <span className={css.links}><img src={facebook} alt="F"/></span>
+                        </label>
                     </div>
                     <Link className={css.noAkk} to={'/sign-up-consultant'}>Еще нет аккаунта? </Link>
                 </div>

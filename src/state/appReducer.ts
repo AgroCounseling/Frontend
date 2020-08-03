@@ -88,7 +88,7 @@ export const initialiseApp = () => (dispatch: any) => {
     dispatch(getSpecialties())
     let data = JSON.parse(localStorage.getItem('userData') as string)
     if (data && data.refresh_token) {
-        if (data.refresh_life > Date.now()) {
+        if (data.refresh_life > Date.now() || data.google) {
             dispatch(initialise())
             dispatch(signIn({
                 isAuth: true

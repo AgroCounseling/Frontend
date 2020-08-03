@@ -24,6 +24,7 @@ const Payment = () => {
                     </span>
                     <div className={css.text}>
                         Свяжитесь по номеру
+                        0550 225 310
                     </div>
                 </div>
                 <div className={css.block}>

@@ -7,6 +7,7 @@ import insta from '../../img/black-insta.png'
 import facebook from '../../img/black-facebook.png'
 import logo from '../../img/footer-logo.png'
 import agro from '../../img/AgroConsulting.png'
+import {Link} from "react-router-dom";
 
 
 
@@ -17,9 +18,9 @@ const Footer = () => {
                 <div>
                     <span className={css.title}>УСЛУГИ</span>
                 </div>
-                <div>Как получить консультанцию?</div>
-                    <div>Форум</div>
-                    <div>Задайте свой вопрос</div>
+                <Link style={{color: "#000000"}} to={'/payment'}>Как получить консультанцию?</Link>
+                <Link style={{color: "#000000"}} to={'/forum'}>Форум</Link>
+                <Link style={{color: "#000000"}} to={'/add-question'}>Задайте свой вопрос</Link>
             </div>
             <div>
                 <div className={css.logoWrapper}>

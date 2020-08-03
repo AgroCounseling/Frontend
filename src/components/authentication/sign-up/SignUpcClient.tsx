@@ -11,6 +11,27 @@ import {useFormik} from "formik";
 import api from './../../../api/Api'
 import {useHistory} from 'react-router-dom'
 
+
+
+const validate:any = (values:any, props:any) => {
+    const errors:any = {};
+
+    if (!values.email) {
+        errors.email = 'Required';
+    }
+    if (!values.name) {
+        errors.name = 'Required';
+    }
+    if (!values.surname) {
+        errors.surname = 'Required';
+    }
+    if (!values.number) {
+        errors.number = 'Required';
+    }
+
+    return errors;
+};
+
 export const RegisterFormClient = WithAuthRedirect(() => {
     const [pic, setPic] = useState<any>({})
     const [img, setImg] = useState<any>(null)
@@ -28,6 +49,7 @@ export const RegisterFormClient = WithAuthRedirect(() => {
             password2: '',
             number: '',
         },
+        validate,
         onSubmit: async (values:any) => {
             const client = new FormData()
             client.append('email', values.email)

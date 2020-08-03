@@ -17,11 +17,11 @@ const NavBar = (props: OwnProps) =>{
                     </NavBarElement>
                 </Link> )
             }
-            <Link to={'articles'}>
-            <NavBarElement>
-                все статьи
-            </NavBarElement>
-            </Link>
+            {/*<Link to={'articles'}>*/}
+            {/*<NavBarElement>*/}
+            {/*    все статьи*/}
+            {/*</NavBarElement>*/}
+            {/*</Link>*/}
         </NavBarWrapper>
     )
 }
