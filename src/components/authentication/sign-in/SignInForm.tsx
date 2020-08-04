@@ -29,6 +29,7 @@ export const SignIn = WithAuthRedirect(() => {
     });
 
     const responseGoogle = (response: any) => {
+        console.log(response)
         const newDate = {
             ...data,
             backend: "google-oauth2",
@@ -82,6 +83,7 @@ export const SignIn = WithAuthRedirect(() => {
                     <Link to={'/forgot'}>Забыли пароль?</Link>
                     <div className={css.socialNetworks}>
                         <GoogleLogin
+                            autoLoad={false}
                             clientId="675832405065-vkf55huhutjrhearfn5a3agomvk6g0a1.apps.googleusercontent.com"
                             buttonText=""
                             onSuccess={responseGoogle}

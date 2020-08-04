@@ -61,6 +61,7 @@ export default {
     getUser: (id: number | string | undefined) => http.get(`consultants/${id}`),
     getSlider: () => http.get(`slider/`),
     getTypes: () => http.get(`types/`),
+    getSubTypes: () => http.get(`subtypes/`),
     getArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
     getPopularArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`popular-articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
     getNewArticles: (search:string,page:number, category?:number, subcategory?: number,types?: string, subType?: string) => http.get(`new-articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),

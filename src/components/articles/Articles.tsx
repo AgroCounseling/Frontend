@@ -5,7 +5,7 @@ import {AxiosResponse} from "axios";
 import Select from "react-select";
 import {Link, useParams, useHistory, Switch, Route, useRouteMatch} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {getCategories} from "../../state/selectors";
+import {getCategories, isAuth} from "../../state/selectors";
 import {GlobalStateType} from "../../state/root-reducer";
 import Pagination from "../pagination/Pagination";
 import {ArticleSearch} from "../Styles";
@@ -40,23 +40,23 @@ const Articles: React.FC<Props> = (props) => {
     const [subCategoriesList, setSubCategoriesList] = useState<any>([])
     const [subCategories, setSubCategories] = useState<any>(null)
     const [subCategory, setSubCategory] = useState<any>(null)
-    // const [typesList, setTypesList] = useState([])
+    const [typesList, setTypesList] = useState<any>([])
     const [types, setTypes] = useState<any>(null)
     const [type, setType] = useState<any>(null)
-    // const [subType, setSubType] = useState(null)
+    const [subType, setSubType] = useState<any>(null)
 
     useEffect(() => {
         api.getArticles(
             search, page, +params.id === 0 ? null : params.id,
             subCategory ? subCategory.value : null,
-            type ? type.value : null
+            type ? type.value : null, subType ? subType.value : null
         )
             .then((res: AxiosResponse) => {
                 setArticles(res.data.results)
                 setPagination(Math.ceil(res.data.count / res.data.limit))
                 setPending(false)
             })
-    }, [page, params, search, subCategory, type])
+    }, [page, params, search, subCategory, type, subType])
 
     const getNew = () => {
         // history.push(url)
@@ -99,6 +99,23 @@ const Articles: React.FC<Props> = (props) => {
     }, [subCategory])
 
     useEffect(() => {
+        if (type !== null) {
+            api.getSubTypes()
+                .then((res) => {
+                    console.log(res)
+                    let newArr = res.data.results.map((item: any) => ({
+                        value: item.id,
+                        label: item.title,
+                        category: item.subcategory
+                    }))
+                    // setTypesList(newArr)
+                    const arr = newArr.filter((item: any) => +type.value === +item.category ? item : null)
+                    setTypesList(arr)
+                })
+        }
+    }, [type])
+
+    useEffect(() => {
         const arr = subCategoriesList.filter((item: any) => +params.id === item.category ? item : null)
         setSubCategories(arr)
     }, [params])
@@ -116,6 +133,7 @@ const Articles: React.FC<Props> = (props) => {
                 setSubCategories(arr)
             })
     }, [])
+
     const categoryChange = (e: any) => {
         setCategory(e)
         setSubCategory(null)
@@ -128,6 +146,11 @@ const Articles: React.FC<Props> = (props) => {
     const typeChange = (e: any) => {
         history.push(url)
         setType(e)
+        setSubType(null)
+    }
+    const subTypeChange = (e: any) => {
+        history.push(url)
+        setSubType(e)
         // setSubType(null)
     }
     const onSearch = (e: any) => {
@@ -152,6 +175,9 @@ const Articles: React.FC<Props> = (props) => {
                     getNew={getNew}
                     typesOption={types}
                     types={type}
+                    subTypes={subType}
+                    subTypesOption={typesList}
+                    setSubTypes={subTypeChange}
                     setTypes={typeChange}
                     subCategory={subCategory}
                     setSubCategory={subCategoryChange}
@@ -228,28 +254,50 @@ const Article: React.FC<ArticleProps> = (props) => {
 const DetailArticle = () => {
     const params: any = useParams()
     const dispatch = useDispatch()
+    const history = useHistory()
+    const auth = useSelector((state:GlobalStateType) => isAuth(state))
+
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [article, setArticle] = useState<any>({})
     const [pending, setPending] = useState(true)
     const [vote, setVote] = useState(0)
+    const [voted, setVoted] = useState(false)
     let category: any = categories.map((item: any) => article.category === item.id ? item.title : null)
-    console.log(article)
 
     const checkLike = async (data:any) => {
         return  dispatch(checkToken(()=>api.putLike(article.id,data)))
     }
 
     const putLike = () => {
-        checkLike({
-            user: {
-                first_name: article.user.first_name,
-                last_name: article.user.last_name
-            },
-            vote: true
-        }).then((res)=> {
-            setVote(vote+1)
-            console.log(res)
-        })
+        if(auth) {
+            if(voted){
+                checkLike({
+                    user: {
+                        first_name: article.user.first_name,
+                        last_name: article.user.last_name
+                    },
+                    vote: true
+                }).then((res) => {
+                    setVote(vote + 1)
+                    setVoted(true)
+                    console.log(res)
+                })
+            }else {
+                checkLike({
+                    user: {
+                        first_name: article.user.first_name,
+                        last_name: article.user.last_name
+                    },
+                    vote: true
+                }).then((res) => {
+                    setVote(vote + 1)
+                    setVoted(true)
+                    console.log(res)
+                })
+            }
+        }else{
+            history.push('/sign-in')
+        }
     }
 
     useEffect(() => {
@@ -287,10 +335,10 @@ const DetailArticle = () => {
                 }
             </div>
             <div className={css.likes}>
-                <div onClick={putLike} className={css.imgWrapper}>
+                <div onClick={putLike} className={ voted ?  css.imgWrapper + ' ' + css.blueBorder1 : css.imgWrapper}>
                     <img src={like} alt="Like"/> Понравилась
                 </div>
-                <div className={css.count}>
+                <div className={voted ? css.count  + ' ' + css.blueBorder2 : css.count }>
                     {vote}
                 </div>
             </div>
@@ -308,6 +356,9 @@ type ArticleNavBarProps = {
     types: any
     setTypes: (e: any) => void
     typesOption: [{}]
+    subTypes: any
+    setSubTypes: (e: any) => void
+    subTypesOption: [{}]
     getNew: () => void
     getPopular: () => void
 }
@@ -328,14 +379,14 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                         props.setCategory(e)
                     }}
                             styles={selectStyle}
-                            placeholder={'Введите или выберите категорию'}
+                            placeholder={'выберите категорию'}
                             options={props.category}/>
                 </div>
                 <div>
                     <div className={css.filterCategory}>Подкатегории</div>
                     <Select
                         styles={selectStyle}
-                        placeholder={'Введите или выберите категорию'}
+                        placeholder={'выберите подкатегорию'}
                         options={props.subCategories}
                         value={props.subCategory}
                         onChange={props.setSubCategory}
@@ -345,10 +396,20 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                     <div className={css.filterCategory}>Виды</div>
                     <Select
                         styles={selectStyle}
-                        placeholder={'Введите или выберите категорию'}
+                        placeholder={'выберите вид'}
                         options={props.typesOption}
                         value={props.types}
                         onChange={props.setTypes}
+                    />
+                </div>
+                <div>
+                    <div className={css.filterCategory}>Подвиды</div>
+                    <Select
+                        styles={selectStyle}
+                        placeholder={'выберите подвид'}
+                        options={props.subTypesOption}
+                        value={props.subTypes}
+                        onChange={props.setSubTypes}
                     />
                 </div>
             </div>

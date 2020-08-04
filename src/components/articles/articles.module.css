@@ -124,6 +124,7 @@
     color: rgba(33, 51, 54, 0.8);
 }
 .imgWrapper{
+    height: 50px;
     display: flex;
     align-items: center;
     padding: 10px;
@@ -135,6 +136,7 @@
     margin-right: 10px;
 }
 .count{
+    height: 50px;
     /*font-size: 23px;*/
     display: flex;
     align-items: center;
@@ -143,4 +145,14 @@
     border-left: none;
     box-sizing: border-box;
     border-radius: 0 10px 10px 0;
+}
+
+.blueBorder1{
+    border: 2px solid #0a66b7 !important;
+    color: #0a66b7;
+}
+.blueBorder2{
+    border: 2px solid #0a66b7 !important;
+    border-left: none !important;
+    color: #0a66b7;
 }
