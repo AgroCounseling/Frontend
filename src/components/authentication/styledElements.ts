@@ -21,6 +21,21 @@ export const Button = styled.button`
     line-height: 21px;
     
     color: #FFFFFF;
+    
+    
+    ${(props: any) =>
+    props.disabled ? `
+            background: #979797;
+            cursor: not-allowed !important;
+        ` : `
+        background: #5C9B48;
+        `
+};
+    
+    :focus{
+        outline: none;
+    }
+
 `
 
 export const Input = styled.input`

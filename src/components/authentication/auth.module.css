@@ -178,3 +178,17 @@
     border: none;
     padding: 15px 0;
 }
+.errorText{
+    color: red;
+    font-size: 14px;
+    margin:  -3px 0 0 10px;
+}
+.error{
+    border-color: red !important;
+    margin: 0 0 4px 5px !important;
+}
+.success {
+    border-color: rgb(25, 200, 25) !important;
+    margin: 0 0 4px 5px !important;
+
+}

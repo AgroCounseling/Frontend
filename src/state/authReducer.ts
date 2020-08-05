@@ -56,9 +56,9 @@ export const signIn = (payload: any) => {
     }
 }
 
-export const authFunction = (email: string, password: string) => async (dispatch: any,) => {
+export const authFunction = (email: string, password: string) => (dispatch: any,) => {
     dispatch(pend(true))
-    api.signIn({"email": email, "password": password})
+    let a = api.signIn({"email": email, "password": password})
         .then((res)=>{
             const access_life = Date.now() + (res.data.time_access * 1000)
             const refresh_life = Date.now() + (res.data.time_refresh * 1000)
@@ -71,8 +71,13 @@ export const authFunction = (email: string, password: string) => async (dispatch
                 refresh_life: refresh_life
             }))
             dispatch(signIn({isAuth: true}))
+            return true
+        }, (error:any) =>{
+            // console.log(error)
+            return false
         })
     dispatch(pend(false))
+    return a
 }
 
 export const googleAuth = (data:any) => async (dispatch:any) => {
