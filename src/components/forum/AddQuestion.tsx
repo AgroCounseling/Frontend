@@ -4,7 +4,7 @@ import {Comment} from "../answer/Answer";
 import api from '../../api/Api'
 import {checkToken} from "../../state/authReducer";
 import {useDispatch, useSelector} from "react-redux";
-import { useHistory } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import {GlobalStateType} from "../../state/root-reducer";
 import {isAuth} from "../../state/selectors";
 import NotAuth from "../notAuthorized/NotAuth";
@@ -13,31 +13,34 @@ const AddQuestion = () => {
     const [text, setText] = useState('')
     const dispatch = useDispatch()
     const history = useHistory()
-    const auth = useSelector((state:GlobalStateType)=> isAuth(state))
+    const auth = useSelector((state: GlobalStateType) => isAuth(state))
     const sendQuestion = async () => {
-        return  dispatch(checkToken(()=>api.createQuestion({
+        return dispatch(checkToken(() => api.createQuestion({
             category: 1,
             title: text
         })))
     }
     const sendText = () => {
         sendQuestion()
-            .then((res:any) => {
+            .then((res: any) => {
                 history.push('/forum')
             })
     }
     return (
         <Wrapper>
-            <Header>Форум</Header>
+            <Header>
+                <Link to={`/forum`} style={{color:'#64A928'}}>Форум</Link>
+            </Header>
             {
                 auth
-                    ? <Comment placeholder={'Введите ваш вопрос............'} onAdd={sendText} btn={'Задать вопрос'} value={text}
+                    ? <Comment placeholder={'Введите ваш вопрос............'} onAdd={sendText} btn={'Задать вопрос'}
+                               value={text}
                                setValue={(e: any) => setText(e.target.value)}/>
-                    : <NotAuth />
+                    : <NotAuth/>
             }
         </Wrapper>
     )
 }
 
 
-export default  AddQuestion
+export default AddQuestion

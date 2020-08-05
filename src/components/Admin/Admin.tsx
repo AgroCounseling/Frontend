@@ -29,8 +29,8 @@ const Admin = () => {
     const [editing, setEditing] = useState(false)
     const [name, setName] = useState('')
     const [lastName, setLastName] = useState('')
-    const [img, setImg] = useState<string|null>(null)
-    const [pic, setPic] = useState<string|null>(null)
+    const [img, setImg] = useState<string | null>(null)
+    const [pic, setPic] = useState<string | null>(null)
     const [options, setOptions] = useState<any>(null)
     const [specialty, setSpecialty] = useState<any>(null)
     const [all, setAll] = useState<any>(null)
@@ -39,21 +39,21 @@ const Admin = () => {
     const data = JSON.parse(localStorage.getItem('userData') as string)
 
     const setProfile = async () => {
-        const dat:any = {
+        const dat: any = {
             user: {
                 first_name: name,
                 last_name: lastName,
                 phone: user.phone,
             },
-            specialty: specialty.map((item:any) => ({category: item.value})),
+            specialty: specialty.map((item: any) => ({category: item.value})),
             title: '',
             description: description
         }
-        if(pic){
+        if (pic) {
             dat.user.photo = pic
         }
         const formData = await new FormData()
-        for (let key in  dat) {
+        for (let key in dat) {
             // @ts-ignore
             if (typeof (dat[key]) === 'object') {
                 // @ts-ignore
@@ -88,24 +88,27 @@ const Admin = () => {
         newUser.append('first_name', name)
         newUser.append('last_name', lastName)
         newUser.append('phone', user.phone)
-        if(pic){
+        if (pic) {
             newUser.append('photo', pic)
         }
-        if(data.status_consultant){
-            return dispatch(checkToken(()=>api.setProfile(user.first_name, formData)))
+        if (data.status_consultant) {
+            return dispatch(checkToken(() => api.setProfile(user.first_name, formData)))
         }
-        if(data.status_client){
-            return dispatch(checkToken(()=>api.setProfile(user.first_name, newUser)))
+        if (data.status_client) {
+            return dispatch(checkToken(() => api.setProfile(user.first_name, newUser)))
         }
     }
 
-    const submit = (e:any) => {
+    const submit = (e: any) => {
         e.preventDefault()
         setProfile()
-            .then((res)=>{
+            .then((res) => {
                 console.log(res)
                 onEdit()
             })
+    }
+    const cancel = () => {
+        onEdit()
     }
 
     useEffect(() => {
@@ -118,9 +121,9 @@ const Admin = () => {
         setOptions(res)
     }, [specialties])
 
-    useEffect(()=>{
-        let arr:any = []
-        all?.map((item:any) => arr.push(...options.filter((i:any) => +item.category === +i.value ? i : null)))
+    useEffect(() => {
+        let arr: any = []
+        all?.map((item: any) => arr.push(...options.filter((i: any) => +item.category === +i.value ? i : null)))
         setSpecialty(arr)
     }, [options, all])
 
@@ -156,14 +159,15 @@ const Admin = () => {
                         <div className={css.userWrapper}>
                             <div className={css.user}>
                             <span>
-                                <img src={ img ? "data:image/jpg;base64," + img : user.photo ? user.photo : noPic} alt="ava"/>
+                                <img src={img ? "data:image/jpg;base64," + img : user.photo ? user.photo : noPic}
+                                     alt="ava"/>
                             </span>
                                 <label>
-                                    <input onChange={(e:any)=>{
+                                    <input onChange={(e: any) => {
                                         const reader = new FileReader();
-                                        if(e.target.files.length) {
+                                        if (e.target.files.length) {
                                             reader.readAsDataURL(e.target.files[0])
-                                        }else{
+                                        } else {
                                             setImg('')
                                         }
                                         reader.onload = (e: any) => {
@@ -171,14 +175,14 @@ const Admin = () => {
                                             setImg(newUrl[1])
                                         }
                                         setPic(e.target.files[0])
-                                    }} type={'file'} className={css.file} />
+                                    }} type={'file'} className={css.file}/>
                                     <span className={css.changePhoto}>Изменить фото</span>
                                 </label>
                             </div>
                             <div className={css.nameWrapper + ' ' + css.nameWrapper1}>
                                 <div className={css.fio}>
-                                    <input type="text" value={name} onChange={(e:any) => setName(e.target.value)}/>
-                                    <input type="text" value={lastName} onChange={(e:any) => setLastName(e.target.value)}/>
+                                    <input type="text" value={name} onChange={(e: any) => setName(e.target.value)}/>
+                                    <input type="text" value={lastName} onChange={(e: any) => setLastName(e.target.value)}/>
                                 </div>
                                 <div>
                                     {
@@ -190,7 +194,7 @@ const Admin = () => {
                                                     placeholder={'Специальность'}
                                                     options={options}
                                                     isMulti
-                                                    styles={selectStyle} />
+                                                    styles={selectStyle}/>
                                             </div>
                                     }
                                 </div>
@@ -200,10 +204,15 @@ const Admin = () => {
                             {
                                 data.status_client ? null : <>
                                     <div className={css.name}>Образование</div>
-                                    <textarea value={description} onChange={(e:any) => setDescription(e.target.value)} />
+                                    <textarea value={description} onChange={(e: any) => setDescription(e.target.value)}/>
                                 </>
                             }
-                            <MainButton>Сохранить изменения</MainButton>
+                        </div>
+                        <div>
+                            <div className={css.btnWrapper}>
+                                <MainButton className={css.cancel} onClick={cancel}>Отмена</MainButton>
+                                <MainButton type={'submit'}>Сохранить изменения</MainButton>
+                            </div>
                         </div>
                     </form>
                     : <>
@@ -220,7 +229,8 @@ const Admin = () => {
                                     {
                                         data.status_client ? null :
                                             <div className={css.consultant}>Консультант | {
-                                                specialty.map((item:any)=> <span key={item.value}> {item.label + ', '} </span> )
+                                                specialty.map((item: any) => <span
+                                                    key={item.value}> {item.label + ', '} </span>)
                                             }</div>
                                     }
                                 </div>
