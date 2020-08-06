@@ -38,6 +38,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
     const [options, setOptions] = useState<any>([])
     const [img, setImg] = useState('')
     const [photo, setPhoto] = useState('')
+    const [error, setError] = useState<any>(null)
     console.log(pic)
     const fileSelectHandler = (e: any) => {
         const arr = Array.from(e.target.files)
@@ -122,7 +123,8 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                 .then(async (res) => {
                     history.push('sign-in')
                 }, (error: any) => {
-                    console.log(error)
+                    setError(error.response.data.user.email[0])
+                    console.log(error.response.data)
                 })
         },
     })
@@ -238,6 +240,9 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                         </label>
                     </Label>
                 </div>
+                <div className={css.errorSignUp}>{
+                    error ? error : null
+                }</div>
                 <Registration btn={'Зарегистрироваться'}/>
             </div>
         </form>

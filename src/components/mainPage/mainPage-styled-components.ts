@@ -2,13 +2,15 @@ import styled from 'styled-components'
 
 
 export const MapsWrapper = styled.div`
-    padding: 10px 40px;
+    padding: 40px 40px 25px 40px;
     display: grid;
     grid-template-columns: 2fr 1fr 2fr 1fr 2fr;
     align-items: baseline;
     background: rgba(194, 199, 208, 0.1);
     &>div{
-        display: grid;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
         
         font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
@@ -16,12 +18,13 @@ export const MapsWrapper = styled.div`
         font-weight: bold;
         font-size: 16px;
         line-height: 207.9%;
-        
         color: rgba(33, 51, 54, 0.8);
         
-                
-        &>img{
-            margin: auto;
+        &>span{
+            margin: 15px auto 0 auto;
+            //display: flex;
+            //justify-content: center;
+            //align-items: center;
         }
     }
 `

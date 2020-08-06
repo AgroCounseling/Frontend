@@ -1,5 +1,4 @@
 import api from '../api/Api'
-import axios from "axios";
 
 
 const storageName = 'userData'

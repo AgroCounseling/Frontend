@@ -190,5 +190,9 @@
 .success {
     border-color: rgb(25, 200, 25) !important;
     margin: 0 0 4px 5px !important;
-
+}
+.errorSignUp{
+    color: red;
+    font-size: 16px;
+    text-align: center;
 }
