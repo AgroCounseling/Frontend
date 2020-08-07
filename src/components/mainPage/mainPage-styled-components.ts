@@ -22,9 +22,6 @@ export const MapsWrapper = styled.div`
         
         &>span{
             margin: 15px auto 0 auto;
-            //display: flex;
-            //justify-content: center;
-            //align-items: center;
         }
     }
 `

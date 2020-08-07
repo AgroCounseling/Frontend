@@ -23,7 +23,7 @@ type Props = {
     specialties: any
 }
 const MainPage: React.FC<Props> = (props) => {
-    const {categories, slider, specialties} = props
+    const { slider, specialties} = props
     const [categoriesArray, setCategoriesArray] = useState<any>([])
     const [current, setCurrent] = useState(0)
 
