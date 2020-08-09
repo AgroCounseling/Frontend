@@ -40,12 +40,12 @@ const Header = (props: any) => {
                             </Link>
                         </>
                         : <>
-                            <Link to={'/sign-in'} className={css.enter}>Войти</Link>
+                            <Link to={'/sign-in/1'} className={css.enter}>Войти</Link>
                             <Link to={'/sign-up'} className={css.register}>Зарегистрироваться</Link>
                         </>
                 }
                 <div className={css.lang}>
-                    <span>РУ</span>
+                    <span>РУ</span>A
                     <span className={css.kg}>КР</span>
                 </div>
             </div>

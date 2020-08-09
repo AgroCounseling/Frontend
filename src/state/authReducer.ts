@@ -81,7 +81,7 @@ export const authFunction = (email: string, password: string) => (dispatch: any,
 
 export const googleAuth = (data:any) => async (dispatch:any) => {
     dispatch(pend(true))
-    api.googleAuth(data)
+    let a = api.googleAuth(data)
         .then((res)=>{
             console.log(res)
             const access_life = Date.now() + (res.data.expires_in * 1000)
@@ -95,8 +95,12 @@ export const googleAuth = (data:any) => async (dispatch:any) => {
                 google: true
             }))
             dispatch(signIn({isAuth: true}))
+            return true
+        }, (error:any) => {
+            return false
         })
     dispatch(pend(false))
+    return a
 }
 
 export const setDataRefresh = () => async (dispatch: any) => {

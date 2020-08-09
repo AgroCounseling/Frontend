@@ -59,6 +59,11 @@ const App = (props:OwnProps) => {
                         <MainPage/>
                         <Footer />
                     </Route>
+                    <Route exact path={'/sign-in/:id'}>
+                        <AuthPage>
+                            <SignIn/>
+                        </AuthPage>
+                    </Route>
                     <Route exact path={'/sign-in'}>
                         <AuthPage>
                             <SignIn/>
