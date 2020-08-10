@@ -1,29 +1,30 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import choose from '../../img/chooseCategory.png'
 import find from '../../img/findConsultant.png'
 import contact from '../../img/contact.png'
 import arrow from '../../img/arrow-right.png'
-import {Description, DescriptionWrapper, MapsWrapper, Title} from "./mainPage-styled-components";
+import { Description, DescriptionWrapper, MapsWrapper, Title } from "./mainPage-styled-components";
 import css from './mainPage.module.css'
 import ConsultantCard from "../consultantCard/ConsultantCard";
 import Carousel from "./Carousel";
 import grass from '../../img/culture.png'
 import culture from '../../img/culture-bg.png'
-import {Link} from "react-router-dom";
-import {GlobalStateType} from "../../state/root-reducer";
-import {getCategories, getSpecialties} from "../../state/selectors";
-import {connect, useSelector} from "react-redux";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { GlobalStateType } from "../../state/root-reducer";
+import { getCategories, getSpecialties } from "../../state/selectors";
+import { connect, useSelector } from "react-redux";
 import api from '../../api/Api'
 import prev from '../../img/prev.png'
 import next from '../../img/next.png'
-
 type Props = {
     categories: any,
     slider: any
     specialties: any
 }
 const MainPage: React.FC<Props> = (props) => {
-    const { slider, specialties} = props
+    const { t } = useTranslation();
+    const { slider, specialties } = props
     const [categoriesArray, setCategoriesArray] = useState<any>([])
     const [current, setCurrent] = useState(0)
 
@@ -62,15 +63,15 @@ const MainPage: React.FC<Props> = (props) => {
     }, [specialties])
     return (
         <div>
-            <Carousel slider={slider}/>
-            <RoadMap/>
+            <Carousel slider={slider} />
+            <RoadMap />
             <div className={css.consultant}>
                 <div className={css.header}>
-                    В какой сфере ищете консультацию?
+                    {t('carouselText')}
                 </div>
                 <div className={css.linksWrapper}>
                     <div onClick={onPrev} className={css.prev}>
-                        <img src={prev} alt="prev"/>
+                        <img src={prev} alt="prev" />
                     </div>
                     {
                         categoriesArray.length
@@ -84,7 +85,7 @@ const MainPage: React.FC<Props> = (props) => {
                         // />)
                     }
                     <div onClick={onNext} className={css.next}>
-                        <img src={next} alt="next"/>
+                        <img src={next} alt="next" />
                     </div>
                 </div>
             </div>
@@ -95,7 +96,7 @@ const MainPage: React.FC<Props> = (props) => {
                     url={item.icon_image}
                     index={index}
                     title={item.title}
-                    description={item.description}/>)
+                    description={item.description} />)
             }
         </div>
     )
@@ -109,7 +110,7 @@ type LinksProps = {
 const Links: React.FC<LinksProps> = (props) => {
     return (
         <Link to={`/consultants/${props.index}`} className={css.links}>
-            <img src={props.url ? props.url : culture} alt="#"/>
+            <img src={props.url ? props.url : culture} alt="#" />
             <div>
                 <span>{props.title}</span>
             </div>
@@ -144,12 +145,12 @@ const List = (props: ListType) => {
                                 <Description>{props.description}</Description>
                             </div>
                             <div className={css.imageWrapper}>
-                                <img src={props.url ? props.url : grass} alt="grass"/>
+                                <img src={props.url ? props.url : grass} alt="grass" />
                             </div>
                         </>
                         : <>
                             <div className={css.imageWrapper}>
-                                <img src={props.url ? props.url : grass} alt="grass"/>
+                                <img src={props.url ? props.url : grass} alt="grass" />
                             </div>
                             <div>
                                 <Title>{props.title}</Title>
@@ -182,42 +183,43 @@ const List = (props: ListType) => {
 
 
 const RoadMap = () => {
+    const { t } = useTranslation();
+
     return <MapsWrapper>
         <div className={css.roadImgWrapper}>
             <div className={css.roadImg}>
-                <img src={choose} alt="Choose"/>
+                <img src={choose} alt="Choose" />
             </div>
             <span>
-                Выберите категорию
+                {t('selectCategory')}
             </span>
         </div>
         <div>
             <div className={css.roadImg}>
-                <img src={arrow} className={css.arrows} alt="#"/>
+                <img src={arrow} className={css.arrows} alt="#" />
             </div>
             <span> </span>
         </div>
         <div className={css.roadImgWrapper}>
             <div className={css.roadImg}>
-                <img src={find} alt="find"/>
+                <img src={find} alt="find" />
             </div>
             <span>
-                Найдите подходящего консультанта
+                {t('suitable')}
             </span>
         </div>
         <div>
             <div className={css.roadImg}>
-                <img src={arrow} className={css.arrows} alt="#"/>
+                <img src={arrow} className={css.arrows} alt="#" />
             </div>
             <span> </span>
         </div>
         <div className={css.roadImgWrapper}>
             <div className={css.roadImg}>
-                <img src={contact} alt="Contact"/>
+                <img src={contact} alt="Contact" />
             </div>
             <span>
-                Свяжитесь с экспертом и <br/>
-                получите доступ к консультации
+                {t("expertText")}
             </span>
         </div>
     </MapsWrapper>

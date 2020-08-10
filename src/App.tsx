@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import './App.css'
-import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom"
-import {initialiseApp} from "./state/appReducer";
-import {connect} from "react-redux";
-import {GlobalStateType} from "./state/root-reducer";
-import {isAuth, isPending} from "./state/selectors";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom"
+import { initialiseApp } from "./state/appReducer";
+import { connect } from "react-redux";
+import { GlobalStateType } from "./state/root-reducer";
+import { isAuth, isPending } from "./state/selectors";
 import Header from "./components/header/Header";
 import AuthPage from "./components/authentication/AuthPage";
-import {RegisterFormConsultant} from "./components/authentication/sign-up/SignUpForms";
-import {SignIn} from "./components/authentication/sign-in/SignInForm";
+import { RegisterFormConsultant } from "./components/authentication/sign-up/SignUpForms";
+import { SignIn } from "./components/authentication/sign-in/SignInForm";
 import Preloader from "./components/preloader/Preloader";
 import NavBar from "./components/navbar/NavBar";
 import MainPage from "./components/mainPage/MainPage";
 import Admin from "./components/Admin/Admin";
 import Consultants from "./components/consultants/Consultants";
 import WelcomePage from "./components/authentication/WelcomePage";
-import {RegisterFormClient} from "./components/authentication/sign-up/SignUpcClient";
+import { RegisterFormClient } from "./components/authentication/sign-up/SignUpcClient";
 import Footer from "./components/footer/Footer";
 import Forum from "./components/forum/Forum";
 import Answer from "./components/answer/Answer";
@@ -30,43 +30,43 @@ type OwnProps = {
     isAuth: boolean
 }
 
-const App = (props:OwnProps) => {
-    const {initialiseApp} = props
+const App = (props: OwnProps) => {
+    const { initialiseApp } = props
     const [pending, setPending] = useState(true)
-    const allPromiseRejection = (promiseRejectionEvent: any) =>{
+    const allPromiseRejection = (promiseRejectionEvent: any) => {
         alert(promiseRejectionEvent)
     }
-    useEffect( () => {
+    useEffect(() => {
         initialiseApp()
         window.addEventListener('unhandledrejection', allPromiseRejection)
         return () => {
             window.removeEventListener('unhandledrejection', allPromiseRejection)
         }
     }, [initialiseApp])
-    setTimeout(()=> {
+    setTimeout(() => {
         setPending(false)
     }, 1000)
-    if(pending){
+    if (pending) {
         return <div className={'preloaderWrapper'}><Preloader /></div>
     }
     return (
         <div className="App">
             <Router>
-                <Header/>
+                <Header />
                 <Switch>
                     <Route exact path={'/'}>
-                        <NavBar/>
-                        <MainPage/>
+                        <NavBar />
+                        <MainPage />
                         <Footer />
                     </Route>
                     <Route exact path={'/sign-in/:id'}>
                         <AuthPage>
-                            <SignIn/>
+                            <SignIn />
                         </AuthPage>
                     </Route>
                     <Route exact path={'/sign-in'}>
                         <AuthPage>
-                            <SignIn/>
+                            <SignIn />
                         </AuthPage>
                     </Route>
                     <Route exact path={'/sign-up'}>
@@ -111,10 +111,10 @@ const App = (props:OwnProps) => {
                     <Route path={'/articles'}>
                         <Articles />
                     </Route>
-                    <Route  path={'/payment'}>
+                    <Route path={'/payment'}>
                         <Payment />
                     </Route>
-                    <Redirect to={'/'}/>
+                    <Redirect to={'/'} />
                 </Switch>
             </Router>
         </div>
@@ -126,4 +126,4 @@ export default connect((state: GlobalStateType) => {
         isPending: isPending(state),
         isAuth: isAuth(state)
     }
-},{initialiseApp})(App)
+}, { initialiseApp })(App)
