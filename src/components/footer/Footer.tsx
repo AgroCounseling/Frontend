@@ -1,17 +1,24 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import css from './footer.module.css'
 import phone from '../../img/footer-phone.png'
 import location from '../../img/footer-location.png'
-import twitter from '../../img/black-twitter.png'
-import insta from '../../img/black-insta.png'
-import facebook from '../../img/black-facebook.png'
+// import twitter from '../../img/black-twitter.png'
+// import insta from '../../img/black-insta.png'
+// import facebook from '../../img/black-facebook.png'
 import logo from '../../img/footer-logo.png'
 import agro from '../../img/AgroConsulting.png'
 import {Link} from "react-router-dom";
-
-
+import api from '../../api/Api'
 
 const Footer = () => {
+    const [data, setData] = useState<any>(null)
+    useEffect(()=>{
+        api.getContact()
+            .then((res)=>{
+                console.log(res.data.results[0])
+                setData(res.data.results[0])
+            })
+    }, [])
     return (
         <div className={css.wrapper}>
             <div>
@@ -25,10 +32,10 @@ const Footer = () => {
             <div>
                 <div className={css.logoWrapper}>
                     <div>
-                    <img src={logo}  alt="AgroConsulting"/>
+                        <img src={logo} alt="AgroConsulting"/>
                     </div>
                     <div>
-                    <img src={agro}  alt="AgroConsulting"/>
+                        <img src={agro} alt="AgroConsulting"/>
                     </div>
                 </div>
                 <div className={css.centerText}>
@@ -42,17 +49,19 @@ const Footer = () => {
                 </div>
                 <div>
                     <img src={phone} alt="phone"/>
-                    0550 225 310
+                    <a href={`tel:${data?.phone}`}>
+                        {data?.phone}
+                    </a>
                 </div>
                 <div>
                     <img src={location} alt="loc"/>
-                    265 просп. Чуй, Бишкек
+                    {data?.address}
                 </div>
-                <div>
-                    <img src={twitter} alt="twitter"/>
-                    <img src={insta} alt="instagram"/>
-                    <img src={facebook} alt="facebook"/>
-                </div>
+                {/*<div>*/}
+                {/*    <img src={twitter} alt="twitter"/>*/}
+                {/*    <img src={insta} alt="instagram"/>*/}
+                {/*    <img src={facebook} alt="facebook"/>*/}
+                {/*</div>*/}
             </div>
 
         </div>

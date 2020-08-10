@@ -29,3 +29,6 @@
     line-height: 34px;
     color: rgba(33, 51, 54, 0.8);
 }
+.text>a{
+    color: rgba(33, 51, 54, 0.8);
+}

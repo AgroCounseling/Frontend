@@ -1,11 +1,20 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import payment from '../../img/online-payment.png'
 import css from './payment.module.css'
 import phone from '../../img/phone.png'
 import card from '../../img/credit-card.png'
 import mail from '../../img/email.png'
+import api from "../../api/Api";
 
 const Payment = () => {
+    const [data, setData] = useState<any>(null)
+    useEffect(()=>{
+        api.getContact()
+            .then((res)=>{
+                console.log(res.data.results[0])
+                setData(res.data.results[0])
+            })
+    }, [])
     return (
         <div className={css.wrapper}>
             <div className={css.firstWrapper}>
@@ -23,8 +32,10 @@ const Payment = () => {
                         <img src={phone} alt="phone"/>
                     </span>
                     <div className={css.text}>
-                        Свяжитесь по номеру
-                        0550 225 310
+                        Свяжитесь по номеру <br/>
+                        <a href={`tel:${data?.phone}`}>
+                            {data?.phone}
+                        </a>
                     </div>
                 </div>
                 <div className={css.block}>

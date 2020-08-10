@@ -18,6 +18,9 @@
     display: flex;
     align-items: center;
 }
+.last_footer>div>a{
+    color: black;
+}
 .last_footer>div>img{
     margin-right: 10px;
 }

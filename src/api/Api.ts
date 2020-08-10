@@ -85,7 +85,8 @@ export default {
         headers: {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
-    })
+    }),
+    getContact: () => http.get(`contact-info/`)
 }
 
 
