@@ -1,7 +1,18 @@
 .arrows{
     padding-bottom: 25px;
 }
-
+.roadImgWrapper{
+}
+.roadImg{
+    height: 150px !important;
+    display: flex;
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+}
+.roadImg>img{
+    max-height: 100%;
+}
 .cardsWrapper{
     padding: 80px 40px;
     display: block;

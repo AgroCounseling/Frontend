@@ -23,7 +23,7 @@ type Props = {
     specialties: any
 }
 const MainPage: React.FC<Props> = (props) => {
-    const {categories, slider, specialties} = props
+    const { slider, specialties} = props
     const [categoriesArray, setCategoriesArray] = useState<any>([])
     const [current, setCurrent] = useState(0)
 
@@ -34,29 +34,30 @@ const MainPage: React.FC<Props> = (props) => {
             res[i] = [];
         }
         let index = 0;
-        for (let j = 0; j < count; j++){
-            for (index; index < c + (j*c); index++) {
+        for (let j = 0; j < count; j++) {
+            for (index; index < c + (j * c); index++) {
                 res[j].push(arr[index]);
             }
         }
         setCategoriesArray(res)
         return res
     }
+
     const onNext = () => {
-        if(current+1 === categoriesArray.length){
+        if (current + 1 === categoriesArray.length) {
             setCurrent(0)
-        }else{
-            setCurrent(current+1)
+        } else {
+            setCurrent(current + 1)
         }
     }
     const onPrev = () => {
-        if(current === 0){
-            setCurrent(categoriesArray.length-1)
-        }else{
-            setCurrent(current-1)
+        if (current === 0) {
+            setCurrent(categoriesArray.length - 1)
+        } else {
+            setCurrent(current - 1)
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         colSplit(specialties, 4)
     }, [specialties])
     return (
@@ -75,8 +76,8 @@ const MainPage: React.FC<Props> = (props) => {
                         categoriesArray.length
                             ? categoriesArray[current].map((item: any) => item ? <Links
                                 key={item.id} index={item.id} title={item.title} url={item.image}
-                                /> : null
-                                )
+                            /> : null
+                            )
                             : null
                         // categories.map((item: any) => <Links
                         //     key={item.id} index={item.id} title={item.title} url={item.image}
@@ -148,7 +149,7 @@ const List = (props: ListType) => {
                         </>
                         : <>
                             <div className={css.imageWrapper}>
-                                <img src={props.url ? props.url :grass} alt="grass"/>
+                                <img src={props.url ? props.url : grass} alt="grass"/>
                             </div>
                             <div>
                                 <Title>{props.title}</Title>
@@ -182,28 +183,38 @@ const List = (props: ListType) => {
 
 const RoadMap = () => {
     return <MapsWrapper>
-        <div>
-            <img src={choose} alt="Choose"/>
+        <div className={css.roadImgWrapper}>
+            <div className={css.roadImg}>
+                <img src={choose} alt="Choose"/>
+            </div>
             <span>
                 Выберите категорию
             </span>
         </div>
         <div>
-            <img src={arrow} className={css.arrows} alt="#"/>
+            <div className={css.roadImg}>
+                <img src={arrow} className={css.arrows} alt="#"/>
+            </div>
             <span> </span>
         </div>
-        <div>
-            <img src={find} alt="find"/>
+        <div className={css.roadImgWrapper}>
+            <div className={css.roadImg}>
+                <img src={find} alt="find"/>
+            </div>
             <span>
                 Найдите подходящего консультанта
             </span>
         </div>
         <div>
-            <img src={arrow} className={css.arrows} alt="#"/>
+            <div className={css.roadImg}>
+                <img src={arrow} className={css.arrows} alt="#"/>
+            </div>
             <span> </span>
         </div>
-        <div>
-            <img src={contact} alt="Contact"/>
+        <div className={css.roadImgWrapper}>
+            <div className={css.roadImg}>
+                <img src={contact} alt="Contact"/>
+            </div>
             <span>
                 Свяжитесь с экспертом и <br/>
                 получите доступ к консультации

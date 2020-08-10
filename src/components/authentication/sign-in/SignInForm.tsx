@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import css from "../auth.module.css";
 import {Button, Input, Label} from "../styledElements";
-import {Link} from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import google from '../../../img/google.png'
 import facebook from '../../../img/facebook.png'
 import {useDispatch} from "react-redux";
 import {authFunction, googleAuth} from "../../../state/authReducer";
 import {WithAuthRedirect} from "../../../hocs/AuthHoc";
-import {Field, Form, Formik, useFormik} from "formik"
+import {Form, Formik, useFormik} from "formik"
 import GoogleLogin from "react-google-login";
 import FacebookLogin from 'react-facebook-login';
 import * as Yup from 'yup'
@@ -30,24 +30,32 @@ const data = {
 
 export const SignIn = WithAuthRedirect(() => {
     const dispatch = useDispatch()
+    const history = useHistory()
+    const params = useParams()
     const [error, setError] = useState<any>(false)
-    const responseGoogle = (response: any) => {
-        // console.log(response)
+    const responseGoogle = async (response: any) => {
         const newDate = {
             ...data,
             backend: "google-oauth2",
             token: response.wc.access_token
         }
-        dispatch(googleAuth(newDate))
+        let res = await dispatch(googleAuth(newDate))
+        // @ts-ignore
+        if(res && !params.id){
+            history.goBack()
+        }
     }
-    const responseFacebook = (response: any) => {
-        // console.log(response);
+    const responseFacebook = async (response: any) => {
         const newDate = {
             ...data,
             facebook: "google-oauth2",
             token: response.accessToken
         }
-        dispatch(googleAuth(newDate))
+        let res = await dispatch(googleAuth(newDate))
+        // @ts-ignore
+        if(res && !params.id){
+            history.goBack()
+        }
     }
     return (
         <Formik
@@ -59,6 +67,10 @@ export const SignIn = WithAuthRedirect(() => {
             onSubmit={async (values, {setSubmitting}) => {
                 setSubmitting(true);
                 let res = await dispatch(authFunction(values.email, values.password))
+                 // @ts-ignore
+                if(res && !params.id){
+                    history.goBack()
+                }
                 setError(!res)
             }}
         >
@@ -96,7 +108,7 @@ export const SignIn = WithAuthRedirect(() => {
                                             setError(false)
                                         }}
                                         className={
-                                            hasChanged ? errors.email ? css.error : css.success : ('')
+                                            touched.email ? errors.email ? css.error : css.success : ('')
                                         }
                                         type="text"
                                     />
@@ -113,7 +125,7 @@ export const SignIn = WithAuthRedirect(() => {
                                             setError(false)
                                         }}
                                         className={
-                                            hasChanged ? errors.password ? css.error : css.success : ('')
+                                            touched.password ? errors.password ? css.error : css.success : ('')
                                         }
                                         type="password"
                                     />
@@ -180,7 +192,6 @@ export const Sign = WithAuthRedirect(() => {
     });
 
     const responseGoogle = (response: any) => {
-        console.log(response)
         const newDate = {
             ...data,
             backend: "google-oauth2",
@@ -189,7 +200,6 @@ export const Sign = WithAuthRedirect(() => {
         dispatch(googleAuth(newDate))
     }
     const responseFacebook = (response: any) => {
-        console.log(response);
         const newDate = {
             ...data,
             facebook: "google-oauth2",

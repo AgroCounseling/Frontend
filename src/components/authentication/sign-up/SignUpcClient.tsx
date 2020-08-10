@@ -28,13 +28,13 @@ const validate:any = (values:any, props:any) => {
     if (!values.number) {
         errors.number = 'Required';
     }
-
     return errors;
 };
 
 export const RegisterFormClient = WithAuthRedirect(() => {
-    const [pic, setPic] = useState<any>({})
+    const [pic, setPic] = useState<any>(null)
     const [img, setImg] = useState<any>(null)
+    const [error, setError] = useState<any>(null)
     const history = useHistory()
 
     const fileSelectHandler = (e:any) => {
@@ -57,7 +57,9 @@ export const RegisterFormClient = WithAuthRedirect(() => {
             client.append('password1', values.password2)
             client.append('first_name', values.name)
             client.append('last_name', values.surname)
-            client.append('photo', pic)
+            if(pic) {
+                client.append('photo', pic)
+            }
             client.append('phone', values.number)
 
             api.signUpClient(client)
@@ -67,8 +69,9 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                         return history.push('/sign-in')
                     },
                     (error:any)=> {
-                        alert('Что то пошло не так, Попробуйте позже!!!')
-                        console.log(error)
+                        // alert('Что то пошло не так, Попробуйте позже!!!')
+                        console.log(error.response.data.email[0])
+                        setError(error.response.data.email[0])
                     })
         },
     })
@@ -120,7 +123,10 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                         <Input
                             required
                             name={'email'}
-                            onChange={formik.handleChange}
+                            onChange={(e)=>{
+                                setError(null)
+                                formik.handleChange(e)
+                            }}
                             value={formik.values.email}
                             type="text"/>
                     </Label>
@@ -152,6 +158,9 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                             type="password"/>
                     </Label>
                 </div>
+                <div className={css.errorSignUp}>{
+                    error ? error : null
+                }</div>
                 <Registration btn={'Зарегистрироваться'}/>
             </div>
         </form>

@@ -6,9 +6,15 @@ import css from './consultant.module.css'
 import api from '../../api/Api'
 import noPicture from '../../img/noPicture.png'
 import Stars from './Stars'
+<<<<<<< HEAD
 import { GlobalStateType } from "../../state/root-reducer";
 import { getSpecialties } from "../../state/selectors";
 import { connect } from "react-redux";
+=======
+import {GlobalStateType} from "../../state/root-reducer";
+import {getSpecialties} from "../../state/selectors";
+import {connect} from "react-redux";
+>>>>>>> fbd1e4df4d1ebfed5bc4a9f030ef29cc331a91a7
 
 type Props = {
     specialties: any
@@ -21,6 +27,10 @@ const Consultant: React.FC<Props> = (props) => {
     useEffect(() => {
         api.getUser(params.id)
             .then((res: any) => {
+<<<<<<< HEAD
+=======
+                console.log(res)
+>>>>>>> fbd1e4df4d1ebfed5bc4a9f030ef29cc331a91a7
                 setUser(res.data)
                 let arr = res.data.specialty.map((item: any) => props.specialties.find((i: any) => item.category === i.id ? i.title : null))
                 setSpecialties(arr)
@@ -28,6 +38,7 @@ const Consultant: React.FC<Props> = (props) => {
             })
     }, [params.id, props.specialties])
     if (pending) {
+<<<<<<< HEAD
         return <Preloader />
     }
     return (
@@ -42,12 +53,48 @@ const Consultant: React.FC<Props> = (props) => {
             <div className={css.user}>
                 <div className={css.imgWrapper}>
                     <img src={noPicture} alt="NoPicture" />
+=======
+        return <Preloader/>
+    }
+    return (
+        <>
+            <div className={css.wrapper}>
+                <div className={css.feedBack}>
+                    <span>
+                        {
+                            user.reviews.map((item: any) => <Answer key={item.id} name={item.name} answer={item.text} date={'16 мая'}
+                                                                    stars={2.5}/>)
+                        }
+                        {/*<Answer name={'test name'} answer={'sdfsdf sdgsdg asgsdg'} date={'16 мая'} stars={2.5}/>*/}
+                        {/*<Answer name={'test name'} answer={'sdfsdf sdgsdg asgsdg'} date={'16 мая'} stars={2.5}/>*/}
+                        {/*<Answer name={'test name'} answer={'sdfsdf sdgsdg asgsdg'} date={'16 мая'} stars={2.5}/>*/}
+                        {/*<Answer name={'test name'} answer={'sdfsdf sdgsdg asgsdg'} date={'16 мая'} stars={2.5}/>*/}
+                        {/*<Answer name={'test name'} answer={'sdfsdf sdgsdg asgsdg'} date={'16 мая'} stars={2.5}/>*/}
+                    </span>
+>>>>>>> fbd1e4df4d1ebfed5bc4a9f030ef29cc331a91a7
                 </div>
-                <div className={css.person}>
-                    <div className={css.nameWrapper}>
-                        <div className={css.name}>{user.user.first_name}  {user.user.last_name}</div>
-                        <Stars color={'red'} edit={false} size={44} value={3.5} />
+                <div>
+                    <div className={css.user}>
+                        <div className={css.imgWrapper}>
+                            <img src={noPicture} alt="NoPicture"/>
+                        </div>
+                        <div className={css.userInfo}>
+                            <div className={css.person}>
+                                <div className={css.nameWrapper}>
+                                    <div className={css.name}>{user.user.first_name} {user.user.last_name}</div>
+                                </div>
+                                <div className={css.specialty}>Cпециальность: {
+                                    specialties.map((item: any) => <span key={item.id}> {item.title}, </span>)
+                                }</div>
+                            </div>
+                            <Stars color={'red'} edit={false} size={44} value={3.5}/>
+                        </div>
                     </div>
+                    <div>
+                        <div className={css.education}>Образование</div>
+                        <div className={css.text}>{user.description}</div>
+                    </div>
+<<<<<<< HEAD
                     <div className={css.specialty}>Cпециальность: {
                         specialties.map((item: any) => <span key={item.id}> {item.title}, </span>)
                     }</div>
@@ -61,6 +108,12 @@ const Consultant: React.FC<Props> = (props) => {
                 <Footer />
             </div>
         </div>
+=======
+                </div>
+            </div>
+            <Footer/>
+        </>
+>>>>>>> fbd1e4df4d1ebfed5bc4a9f030ef29cc331a91a7
     )
 }
 
@@ -76,7 +129,7 @@ const Answer: React.FC<AnswerProps> = (props) => {
             <div className={css.answerName}>{props.name}</div>
             <div className={css.answer}>{props.answer}</div>
             <div className={css.stars}>
-                <Stars edit={true} color={'#ffd700'} size={24} value={props.stars} />
+                <Stars edit={true} color={'#ffd700'} size={24} value={props.stars}/>
                 <div>{props.date}</div>
             </div>
         </div>

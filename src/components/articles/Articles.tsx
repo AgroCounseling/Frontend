@@ -30,7 +30,6 @@ const Articles: React.FC<Props> = (props) => {
             label: item.title
         }
     })
-
     const [pending, setPending] = useState(true)
     const [articles, setArticles] = useState([])
     const [page, setPage] = useState(1)
@@ -137,11 +136,14 @@ const Articles: React.FC<Props> = (props) => {
     const categoryChange = (e: any) => {
         setCategory(e)
         setSubCategory(null)
+        setType(null)
+        setSubType(null)
     }
     const subCategoryChange = (e: any) => {
         history.push(url)
         setSubCategory(e)
         setType(null)
+        setSubType(null)
     }
     const typeChange = (e: any) => {
         history.push(url)
@@ -151,7 +153,6 @@ const Articles: React.FC<Props> = (props) => {
     const subTypeChange = (e: any) => {
         history.push(url)
         setSubType(e)
-        // setSubType(null)
     }
     const onSearch = (e: any) => {
         history.push(url)
@@ -263,7 +264,17 @@ const DetailArticle = () => {
     const [vote, setVote] = useState(0)
     const [voted, setVoted] = useState(false)
     let category: any = categories.map((item: any) => article.category === item.id ? item.title : null)
+    useEffect(()=>{
+        if(auth) {
+            api.getVotesUser(params.article)
+                .then((res) => {
+                    if (res.data[0]) {
+                        setVoted(res.data[0].vote)
+                    }
 
+                })
+        }
+    }, [])
     const checkLike = async (data:any) => {
         return  dispatch(checkToken(()=>api.putLike(article.id,data)))
     }
@@ -276,10 +287,10 @@ const DetailArticle = () => {
                         first_name: article.user.first_name,
                         last_name: article.user.last_name
                     },
-                    vote: true
+                    vote: false
                 }).then((res) => {
-                    setVote(vote + 1)
-                    setVoted(true)
+                    setVote(vote - 1)
+                    setVoted(false)
                     console.log(res)
                 })
             }else {

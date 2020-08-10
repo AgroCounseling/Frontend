@@ -7,7 +7,11 @@ import { checkToken } from "../../state/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../preloader/Preloader";
 import noPic from '../../img/noPicture.png'
+<<<<<<< HEAD
 import { useRouteMatch, Switch, Route, Redirect, NavLink } from 'react-router-dom';
+=======
+import {useRouteMatch, Switch, Route, Redirect, NavLink, useLocation} from 'react-router-dom';
+>>>>>>> fbd1e4df4d1ebfed5bc4a9f030ef29cc331a91a7
 import Chat from "../chat/Chat";
 import AddArticle from "../addArticle/AddArticle";
 import Select from "react-select";
@@ -110,7 +114,6 @@ const Admin = () => {
     const cancel = () => {
         onEdit()
     }
-
     useEffect(() => {
         let res = specialties.map((item: any) => {
             return {

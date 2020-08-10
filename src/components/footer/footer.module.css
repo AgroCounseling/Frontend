@@ -1,10 +1,9 @@
 .wrapper{
     background: #ECBF2C;
     padding: 25px 10%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
     text-align: left;
-
 }
 .wrapper>div{
     display: flex;
@@ -15,12 +14,12 @@
 .wrapper>div>div{
     margin: 5px 0;
 }
-.last_footer{
-    margin-left: 50px;
-}
 .last_footer>div{
     display: flex;
     align-items: center;
+}
+.last_footer>div>a{
+    color: black;
 }
 .last_footer>div>img{
     margin-right: 10px;

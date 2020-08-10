@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {Header, MainButton, Wrapper} from "../Styles";
 import api from '../../api/Api'
-import {useHistory, useParams, useRouteMatch} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import Preloader from "../preloader/Preloader";
 import noPicture from '../../img/noPicture.png'
 import css from './answer.module.css'
@@ -43,11 +43,9 @@ const Answer: React.FC<Props> = (props) => {
         })))
     }
     const sendText = () => {
-        setPending(true)
         sendQuestion()
             .then((res:any) => {
                 setComments([...comments, res.data])
-                setPending(false)
                 setText('')
             })
     }
