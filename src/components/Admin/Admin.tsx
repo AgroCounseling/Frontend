@@ -1,23 +1,23 @@
-import React, {ChangeEvent, useEffect, useState} from 'react'
-import {WithNotAuthRedirect} from "../../hocs/AuthHoc";
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { WithNotAuthRedirect } from "../../hocs/AuthHoc";
 import css from './admin.module.css'
-import {MainButton, Yellow} from "../Styles";
+import { MainButton, Yellow } from "../Styles";
 import api from '../../api/Api'
-import {checkToken} from "../../state/authReducer";
-import {useDispatch, useSelector} from "react-redux";
+import { checkToken } from "../../state/authReducer";
+import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../preloader/Preloader";
 import noPic from '../../img/noPicture.png'
-import {useRouteMatch, Switch, Route, Redirect, NavLink} from 'react-router-dom';
+import { useRouteMatch, Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import Chat from "../chat/Chat";
 import AddArticle from "../addArticle/AddArticle";
 import Select from "react-select";
-import {selectStyle} from "../../utils/SelectStyle";
-import {GlobalStateType} from "../../state/root-reducer";
-import {getSpecialties} from "../../state/selectors";
+import { selectStyle } from "../../utils/SelectStyle";
+import { GlobalStateType } from "../../state/root-reducer";
+import { getSpecialties } from "../../state/selectors";
 
 
 const Admin = () => {
-    const {path, url} = useRouteMatch();
+    const { path, url } = useRouteMatch();
     const dispatch = useDispatch()
     const initialise = async () => {
         return dispatch(checkToken(api.getProfile))
@@ -45,7 +45,7 @@ const Admin = () => {
                 last_name: lastName,
                 phone: user.phone,
             },
-            specialty: specialty.map((item: any) => ({category: item.value})),
+            specialty: specialty.map((item: any) => ({ category: item.value })),
             title: '',
             description: description
         }
@@ -145,11 +145,11 @@ const Admin = () => {
     }, [])
     const onEdit = () => setEditing(!editing)
     if (pending) {
-        return <Preloader/>
+        return <Preloader />
     }
     return (
         <div className={css.wrapper}>
-            <Yellow/>
+            <Yellow />
             {
                 editing
                     ? <form onSubmit={submit}>
@@ -158,10 +158,10 @@ const Admin = () => {
                         </div>
                         <div className={css.userWrapper}>
                             <div className={css.user}>
-                            <span>
-                                <img src={img ? "data:image/jpg;base64," + img : user.photo ? user.photo : noPic}
-                                     alt="ava"/>
-                            </span>
+                                <span>
+                                    <img src={img ? "data:image/jpg;base64," + img : user.photo ? user.photo : noPic}
+                                        alt="ava" />
+                                </span>
                                 <label>
                                     <input onChange={(e: any) => {
                                         const reader = new FileReader();
@@ -175,14 +175,14 @@ const Admin = () => {
                                             setImg(newUrl[1])
                                         }
                                         setPic(e.target.files[0])
-                                    }} type={'file'} className={css.file}/>
+                                    }} type={'file'} className={css.file} />
                                     <span className={css.changePhoto}>Изменить фото</span>
                                 </label>
                             </div>
                             <div className={css.nameWrapper + ' ' + css.nameWrapper1}>
                                 <div className={css.fio}>
-                                    <input type="text" value={name} onChange={(e: any) => setName(e.target.value)}/>
-                                    <input type="text" value={lastName} onChange={(e: any) => setLastName(e.target.value)}/>
+                                    <input type="text" value={name} onChange={(e: any) => setName(e.target.value)} />
+                                    <input type="text" value={lastName} onChange={(e: any) => setLastName(e.target.value)} />
                                 </div>
                                 <div>
                                     {
@@ -194,7 +194,7 @@ const Admin = () => {
                                                     placeholder={'Специальность'}
                                                     options={options}
                                                     isMulti
-                                                    styles={selectStyle}/>
+                                                    styles={selectStyle} />
                                             </div>
                                     }
                                 </div>
@@ -204,7 +204,7 @@ const Admin = () => {
                             {
                                 data.status_client ? null : <>
                                     <div className={css.name}>Образование</div>
-                                    <textarea value={description} onChange={(e: any) => setDescription(e.target.value)}/>
+                                    <textarea value={description} onChange={(e: any) => setDescription(e.target.value)} />
                                 </>
                             }
                         </div>
@@ -218,9 +218,9 @@ const Admin = () => {
                     : <>
                         <div className={css.userWrapper}>
                             <div className={css.user}>
-                            <span>
-                                <img src={user.photo ? user.photo : noPic} alt="ava"/>
-                            </span>
+                                <span>
+                                    <img src={user.photo ? user.photo : noPic} alt="ava" />
+                                </span>
                                 <button onClick={onEdit}>Изменить данные</button>
                             </div>
                             <div className={css.nameWrapper}>
@@ -245,12 +245,12 @@ const Admin = () => {
                         </div>
                         <Switch>
                             <Route exact path={`${path}/articles`}>
-                                <AddArticle last_name={lastName} name={name}/>
+                                <AddArticle last_name={lastName} name={name} />
                             </Route>
                             <Route exact path={`${path}/chat`}>
-                                <Chat/>
+                                <Chat />
                             </Route>
-                            <Redirect to={`${path}/chat`}/>
+                            <Redirect to={`${path}/chat`} />
                         </Switch>
                     </>}
         </div>
