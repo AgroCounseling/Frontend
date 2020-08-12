@@ -181,6 +181,7 @@ const AddArticle: React.FC<Props> = (props) => {
             <div className={css.btnWrapper}>
                 <MainButton>Опублековать</MainButton>
             </div>
+
         </form>
     )
 }

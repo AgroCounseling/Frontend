@@ -63,3 +63,9 @@ export const PhonesWrapper = styled.div`
     }
   }
 `
+export const Close = styled.div`
+    position: absolute;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+`
