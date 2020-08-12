@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from "react-select";
-import {selectStyle} from "../../utils/SelectStyle";
+import { selectStyle } from "../../utils/SelectStyle";
 import css from './addArticle.module.css'
 import { Editor } from 'react-draft-wysiwyg';
-import {EditorState, convertToRaw} from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 // @ts-ignore
 import draftToHtml from 'draftjs-to-html';
-import {useDispatch, useSelector} from "react-redux";
-import {GlobalStateType} from "../../state/root-reducer";
-import {getCategories} from "../../state/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { GlobalStateType } from "../../state/root-reducer";
+import { getCategories } from "../../state/selectors";
 import api from "../../api/Api";
-import {AxiosResponse} from "axios";
-import {useFormik} from "formik";
-import {checkToken} from "../../state/authReducer";
+import { AxiosResponse } from "axios";
+import { useFormik } from "formik";
+import { checkToken } from "../../state/authReducer";
 import { useHistory } from 'react-router-dom';
-import {MainButton} from "../Styles";
+import { MainButton } from "../Styles";
+import { useTranslation } from "react-i18next";
 
 
 type Props = {
@@ -23,6 +24,7 @@ type Props = {
     last_name: string
 }
 const AddArticle: React.FC<Props> = (props) => {
+    const { t } = useTranslation();
     const dispatch = useDispatch()
     const history = useHistory()
     console.log(history)
@@ -44,7 +46,7 @@ const AddArticle: React.FC<Props> = (props) => {
     const [type, setType] = useState<any>(null)
     // const [subType, setSubType] = useState(null)
 
-    useEffect(()=>{
+    useEffect(() => {
         api.getSubCategory()
             .then((res: AxiosResponse) => {
                 let newArr = res.data.results.map((item: any) => ({
@@ -55,13 +57,13 @@ const AddArticle: React.FC<Props> = (props) => {
                 setSubCategoriesList(newArr)
             })
     }, [])
-    useEffect(()=>{
+    useEffect(() => {
         const arr = subCategoriesList.filter((item: any) => category.value === +item.category ? item : null)
         console.log(arr)
         setSubCategories(arr)
     }, [category])
-    useEffect(()=>{
-        if(subCategory !== null) {
+    useEffect(() => {
+        if (subCategory !== null) {
             api.getTypes()
                 .then((res) => {
                     let newArr = res.data.results.map((item: any) => ({
@@ -76,8 +78,8 @@ const AddArticle: React.FC<Props> = (props) => {
         }
     }, [subCategory])
 
-    const createArticle = async (data:any) => {
-        return  dispatch(checkToken(()=>api.createArticle(data)))
+    const createArticle = async (data: any) => {
+        return dispatch(checkToken(() => api.createArticle(data)))
     }
     const formik = useFormik({
         initialValues: {
@@ -88,7 +90,7 @@ const AddArticle: React.FC<Props> = (props) => {
             title: '',
             additions: [],
         },
-        onSubmit: (values:any) => {
+        onSubmit: (values: any) => {
             createArticle({
                 ...values,
                 category: category.value,
@@ -103,13 +105,13 @@ const AddArticle: React.FC<Props> = (props) => {
         },
     });
 
-    const uploadCallback = async (file:any) => {
+    const uploadCallback = async (file: any) => {
 
-        let a:any = await new Promise(
+        let a: any = await new Promise(
             (resolve, reject) => {
-                let reader=new FileReader();
+                let reader = new FileReader();
 
-                reader.onloadend = function() {
+                reader.onloadend = function () {
                     resolve({ data: { link: reader.result } })
                 }
                 reader.readAsDataURL(file);
@@ -122,49 +124,49 @@ const AddArticle: React.FC<Props> = (props) => {
         <form onSubmit={formik.handleSubmit} className={css.wrapper}>
             <div className={css.categories}>
                 <div>
-                    <div className={css.title}>Категория</div>
-                    <Select  onChange={ (e) => setCategory(e) }
-                             value={category}
-                            styles={selectStyle}
-                            placeholder={'Введите или выберите категорию'}
-                            options={categoriesList}/>
+                    <div className={css.title}>{t("category")}</div>
+                    <Select onChange={(e) => setCategory(e)}
+                        value={category}
+                        styles={selectStyle}
+                        placeholder={t("selectCategoryText")}
+                        options={categoriesList} />
                 </div>
                 <div>
-                    <div className={css.title}>Подкатегория</div>
-                    <Select  onChange={(e: any) => setSubCategory(e)}
-                             value={subCategory}
-                             styles={selectStyle}
-                             placeholder={'Введите или выберите категорию'}
-                             options={subCategories}/>
+                    <div className={css.title}>{t("subCategory")}</div>
+                    <Select onChange={(e: any) => setSubCategory(e)}
+                        value={subCategory}
+                        styles={selectStyle}
+                        placeholder={t("selectCategoryText")}
+                        options={subCategories} />
                 </div>
                 <div>
-                    <div className={css.title}>Виды</div>
-                    <Select  onChange={(e: any) => setType(e)}
-                             value={type}
-                             styles={selectStyle}
-                             placeholder={'Введите или выберите категорию'}
-                             options={types}/>
+                    <div className={css.title}>{t("type")}</div>
+                    <Select onChange={(e: any) => setType(e)}
+                        value={type}
+                        styles={selectStyle}
+                        placeholder={t("selectCategoryText")}
+                        options={types} />
                 </div>
             </div>
             <div className={css.text_wrapper}>
                 <div>
-                    <div className={css.title}>Заголовок статьи</div>
+                    <div className={css.title}>{t("titleArticle")}</div>
                     <input
                         type={'text'}
                         className={css.title__input}
                         value={formik.values.title}
                         onChange={formik.handleChange}
                         name={'title'}
-                        placeholder={'Введите заголовок.......'} />
+                        placeholder={`${t('titleArticleText')}.......`} />
                 </div>
                 <div>
-                    <div className={css.title}>Описание статьи</div>
+                    <div className={css.title}>{t("descriptionArticle")}</div>
                     <Editor
                         editorState={editor}
                         toolbarClassName="toolbarClassName"
                         wrapperClassName="wrapperClassName"
                         editorClassName={css.editor}
-                        onEditorStateChange={(e)=>{
+                        onEditorStateChange={(e) => {
                             setEditor(e)
                         }}
                         toolbar={{
@@ -179,7 +181,7 @@ const AddArticle: React.FC<Props> = (props) => {
                 </div>
             </div>
             <div className={css.btnWrapper}>
-                <MainButton>Опублековать</MainButton>
+                <MainButton>{t("post")}</MainButton>
             </div>
         </form>
     )
