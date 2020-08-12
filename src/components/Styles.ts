@@ -55,6 +55,7 @@ export const PhonesWrapper = styled.div`
   
   &>a{
     color: #0d1c2e;
+        font-size: 24px;
   }
   &>div{
     display: flex;
