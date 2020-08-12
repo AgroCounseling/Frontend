@@ -1,24 +1,22 @@
 import React, { useState } from "react";
 import Icon from "./../../assets/icons/star.png";
+import Api from "./../../api/Api";
 import "./modal.css";
+import Stars from "../Consultant/Stars";
 const Modal = () => {
   const [close, setClose] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [star, setStar] = useState("");
   const [starsBlockStatus, setStarsBlockStatus] = useState(null);
-  const obj = {
-    " ": [5],
-    d: [10],
-    e: [1],
-    H: [0],
-    l: [2, 3, 9],
-    o: [4, 7],
-    r: [8],
-    w: [6],
+
+  const postReview = () => {
+    Api.createReviews({
+      consultant: 1,
+      text: feedback,
+    }).then((item) => console.log("item", item));
   };
-  console.log(Object.values(obj));
-  let text = Object.values(obj).map((item, key) => console.log(item, key));
-  console.log(text);
+
+  console.log(star);
   return (
     <>
       {close ? null : (
@@ -36,22 +34,25 @@ const Modal = () => {
               <div>
                 <h2>Ваша оценка данной консультации</h2>
                 <div className="stars-block">
-                  {[1, 2, 3, 4, 5].map((item) => (
-                    <div key={item}>
-                      <img
-                        src={Icon}
-                        alt="Icon"
-                        className="star-icon"
-                        onClick={() => {
-                          setClose(true);
-                          setStar(item);
-                        }}
-                      />
-                    </div>
-                  ))}
+                  <Stars
+                    color={"red"}
+                    edit={true}
+                    size={70}
+                    value={star}
+                    setStar={setStar}
+                  />
                 </div>
                 <div className="texts-block">
                   <span>Плохо</span>
+                  <button
+                    className="green-btn"
+                    onClick={() => {
+                      postReview();
+                      setClose(true);
+                    }}
+                  >
+                    Отправить
+                  </button>
                   <span>Отлично</span>
                 </div>
               </div>

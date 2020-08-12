@@ -6,7 +6,7 @@ import card from '../../img/credit-card.png'
 import mail from '../../img/email.png'
 import api from "../../api/Api";
 import Modal from "./../../components/modalWindow/modal";
-import {PhonesWrapper} from "../Styles";
+import { PhonesWrapper } from "../Styles";
 
 const Payment = () => {
     const [data, setData] = useState<any>(null)
@@ -17,6 +17,8 @@ const Payment = () => {
                 setData(res.data.results[0])
             })
     }, [])
+
+    console.log('data', data);
     return (
         <div className={css.wrapper}>
             <div className={css.firstWrapper}>
@@ -37,12 +39,12 @@ const Payment = () => {
                     <div className={css.text}>
                         Свяжитесь по номеру <br />
                         <PhonesWrapper>
-                        {
-                            data?.phones.map((item:any)=> <a key={item.phone} href={`tel:${item?.phone}`}>
+                            {
+                                data?.phones.map((item: any) => <a key={item.phone} href={`tel:${item?.phone}`}>
                                     {item?.phone}
                                 </a>
-                            )
-                        }
+                                )
+                            }
                         </PhonesWrapper>
                     </div>
                 </div>

@@ -1,34 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import css from "./chat.module.css";
+import send from '../../img/Mask.png';
+import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
-import send from '../../img/Mask.png'
-import plus from '../../img/plus.png'
+import Api from "./../../api/Api";
 const Chat = () => {
+    let [rooms, setRooms] = useState([])
+    useEffect(() => {
+        Api.getRooms().then(res => setRooms(res.data));
+    }, [])
+
+    console.log(rooms);
     return (
         <div className={css.chatWrapper}>
             <div>
                 <div className={css.searchWrapper}>
-                    <input type="text" placeholder={'искать'}/>
+                    <input type="text" placeholder={'искать'} />
                 </div>
                 <div className={css.userList}>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
-                    <User/>
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
+                    <User />
                 </div>
             </div>
             <div>
-                <MessageBlock/>
+                <MessageBlock />
             </div>
         </div>
     )
@@ -41,7 +48,7 @@ const User = () => {
         <div className={css.personWrapper}>
             <div className={css.person}>
                 <div>
-                    <img src={noPic} alt="#"/>
+                    <img src={noPic} alt="#" />
                 </div>
                 <div className={css.personName}>Аайза Аайза</div>
                 <div className={css.peronTime}>1 минута назад</div>
@@ -67,7 +74,7 @@ const MessageBlock = () => {
             <div className={css.chatHeader}>
                 <div>
                     <div className={css.avaWrapper}>
-                        <img src={noPic} alt="#"/>
+                        <img src={noPic} alt="#" />
                     </div>
                     <div className={css.personName}>Аайза Аайза</div>
                 </div>
@@ -128,12 +135,12 @@ const MessageBlock = () => {
                 <div>messages</div>
             </div>
             <div className={css.message__input}>
-                <input placeholder={'Введите ваше сообщение'} type="text"/>
+                <input placeholder={'Введите ваше сообщение'} type="text" />
                 <span className={css.plus}>
-                    <img src={plus} alt="+"/>
+                    <img src={plus} alt="+" />
                 </span>
                 <span className={css.send}>
-                    <img src={send} alt="send"/>
+                    <img src={send} alt="send" />
                 </span>
             </div>
         </div>
