@@ -1,44 +1,45 @@
 .wrapper{
     position: relative;
     height: 100%;
+}
+.feedBackWrapper{
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 230px 1fr;
 }
 .feedBack{
-    min-height: 75vh;
-    padding: 50px 0;
+    /*position: absolute;*/
+    /*top: -200px;*/
+    /*bottom: 0;*/
+    /*left: 0;*/
+    width: 230px;
+    padding-top: 370px;
     background: #FFFAEA;
     z-index: -1;
+
 }
 .feedBack>span{
     margin-top: 200px;
 }
 .user{
-    margin: 60px 5% 50px 5%;
+    margin: 200px 10% 50px 0%;
     min-height: 150px;
     background: rgba(236, 191, 44, 0.8);
-    border-radius: 5px;
     position: relative;
-    display: flex;
 }
 .imgWrapper{
-    position: relative;
-    width: 150px;
-    display: block;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: 10px ;
+    position: absolute;
+    top: -100%;
+    left: -13%;
+    width: 250px;
+    height: 250px;
 }
 .imgWrapper>img{
+    border-radius: 50%;
     width: 100%;
     height: 100%;
 }
-.userInfo{
-    display: flex;
-    justify-content: space-between;
-}
 .person{
-    padding: 0 20px 0 20px;
+    padding: 0 20px 0 150px;
 }
 .name{
     font-weight: bold;
@@ -52,6 +53,9 @@
     font-size: 20px;
     color: #213336;
 }
+.textWrapper{
+    margin-left: 250px;
+}
 .education{
     font-weight: 500;
     font-size: 33px;
@@ -59,7 +63,7 @@
     margin-left: 55px;
 }
 .text{
-    margin: 10px 5% 20px 82px;
+    margin: 20px;
     font-weight: normal;
     font-size: 20px;
     line-height: 180%;
@@ -97,4 +101,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.footerWrapper{
+    margin-top: auto;
 }
