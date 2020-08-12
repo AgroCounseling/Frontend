@@ -127,6 +127,7 @@ const Admin = () => {
         setSpecialty(arr)
     }, [options, all])
 
+    console.log("user", user);
     useEffect(() => {
         initialise().then((r: any) => {
             if (data.status_client) {
@@ -248,7 +249,7 @@ const Admin = () => {
                                 <AddArticle last_name={lastName} name={name} />
                             </Route>
                             <Route exact path={`${path}/chat`}>
-                                <Chat />
+                                <Chat id={user.id} />
                             </Route>
                             <Redirect to={`${path}/chat`} />
                         </Switch>

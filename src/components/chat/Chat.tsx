@@ -4,13 +4,16 @@ import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
 import Api from "./../../api/Api";
-const Chat = () => {
+type ChatType = {
+    id?: number
+}
+const Chat: React.FC<ChatType> = ({ id }) => {
     let [rooms, setRooms] = useState([])
     useEffect(() => {
         Api.getRooms().then(res => setRooms(res.data));
     }, [])
 
-    console.log(rooms);
+    console.log(rooms, id);
     return (
         <div className={css.chatWrapper}>
             <div>
