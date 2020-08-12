@@ -20,9 +20,10 @@ import Footer from "./components/footer/Footer";
 import Forum from "./components/forum/Forum";
 import Answer from "./components/answer/Answer";
 import Consultant from "./components/Consultant/Consultant";
-import Articles from "./components/articles/Articles";
+import Articles, {DetailArticle} from "./components/articles/Articles";
 import Payment from "./components/payment/Payment";
 import AddQuestion from "./components/forum/AddQuestion";
+import Search from "./components/Search/Search";
 
 type OwnProps = {
     isPending: boolean
@@ -98,6 +99,12 @@ const App = (props: OwnProps) => {
                     </Route>
                     <Route path={'/forum'}>
                         <Forum />
+                    </Route>
+                    <Route path={'/search'}>
+                        <Search />
+                    </Route>
+                    <Route exact path={`/article-detail/:id/:article`}>
+                        <DetailArticle/>
                     </Route>
                     <Route path={'/add-question'}>
                         <AddQuestion />

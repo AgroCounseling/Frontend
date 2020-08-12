@@ -13,5 +13,8 @@ const NoElement = (props:Props) => {
     )
 }
 
-
 export default NoElement
+
+export const NoOption = (str:string) =>{
+    return str
+}

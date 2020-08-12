@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import css from './articles.module.css'
 import api from '../../api/Api'
-import { AxiosResponse } from "axios";
+import {AxiosResponse} from "axios";
 import Select from "react-select";
-import { Link, useParams, useHistory, Switch, Route, useRouteMatch } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { getCategories, isAuth } from "../../state/selectors";
-import { GlobalStateType } from "../../state/root-reducer";
+import {Link, useParams, useHistory, Switch, Route, useRouteMatch} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {getCategories, isAuth} from "../../state/selectors";
+import {GlobalStateType} from "../../state/root-reducer";
 import Pagination from "../pagination/Pagination";
-import { ArticleSearch } from "../Styles";
+import {ArticleSearch} from "../Styles";
 import Footer from "../footer/Footer";
 import Preloader from "../preloader/Preloader";
 import like from "../../img/like.png";
-import { selectStyle } from "../../utils/SelectStyle";
+import {selectStyle} from "../../utils/SelectStyle";
 import Interweave from "interweave";
-import NoElement from "../../utils/NoElement";
-import { checkToken } from "../../state/authReducer";
-import { useTranslation } from "react-i18next";
+import NoElement, {NoOption} from "../../utils/NoElement";
+import {checkToken} from "../../state/authReducer";
+import {useTranslation} from "react-i18next";
 
 
 type Props = {}
 const Articles: React.FC<Props> = (props) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const params: any = useParams()
     const history = useHistory()
-    const { path, url } = useRouteMatch();
+    const {path, url} = useRouteMatch();
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const categoriesList = categories.map((item: any) => {
         return {
@@ -42,7 +42,7 @@ const Articles: React.FC<Props> = (props) => {
     const [subCategories, setSubCategories] = useState<any>(null)
     const [subCategory, setSubCategory] = useState<any>(null)
     const [typesList, setTypesList] = useState<any>([])
-    const [types, setTypes] = useState<any>(null)
+    const [types, setTypes] = useState<any>([])
     const [type, setType] = useState<any>(null)
     const [subType, setSubType] = useState<any>(null)
 
@@ -167,11 +167,11 @@ const Articles: React.FC<Props> = (props) => {
     }, [])
 
     if (pending) {
-        return <Preloader />
+        return <Preloader/>
     }
     return (
         <div className={css.wrapper}>
-            <Search value={search} setValue={onSearch} />
+            <Search value={search} setValue={onSearch}/>
             <div className={css.articlesWrapper}>
                 <ArticleNavBar
                     getPopular={getPopular}
@@ -195,30 +195,30 @@ const Articles: React.FC<Props> = (props) => {
                             {
                                 articles.length ? articles.map((item: any) => <Article
 
-                                    key={item.id}
-                                    id={item.id}
-                                    description={item.text}
-                                    title={item.title}
-                                    date={item.pub_date}
-                                    name={item.user.first_name + ' ' + item.user.last_name}
-                                    category={item.category}
-                                />)
+                                        key={item.id}
+                                        id={item.id}
+                                        description={item.text}
+                                        title={item.title}
+                                        date={item.pub_date}
+                                        name={item.user.first_name + ' ' + item.user.last_name}
+                                        category={item.category}
+                                    />)
 
-                                    : <NoElement text={'Нет статей'} />
+                                    : <NoElement text={'Нет статей'}/>
                             }
                             {
                                 articles.length
-                                    ? < Pagination setPage={setPage} pageCount={pagination} />
+                                    ? < Pagination setPage={setPage} pageCount={pagination}/>
                                     : null
                             }
                         </div>
                     </Route>
                     <Route path={`${path}/:article`}>
-                        <DetailArticle />
+                        <DetailArticle/>
                     </Route>
                 </Switch>
             </div>
-            <Footer />
+            <Footer/>
         </div>
     )
 }
@@ -230,15 +230,16 @@ type ArticleProps = {
     date: string
     title: string
     description: string
+    newUrl?: string
 }
-const Article: React.FC<ArticleProps> = (props) => {
-    const { url } = useRouteMatch();
+export const Article: React.FC<ArticleProps> = (props) => {
+    const {url} = useRouteMatch();
     const params: any = useParams()
 
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     let category: any = categories.map((item: any) => props.category === item.id ? item.title : null)
     return (
-        <Link to={`${url}/${params.id ? '' : "0/"}${props.id}`}>
+        <Link to={`${props.newUrl ? props.newUrl : url}/${params.id ? '' : "0/"}${props.id}`}>
             <div className={css.article}>
                 <div className={css.header}>
                     <div className={css.category}>{category}</div>
@@ -248,18 +249,18 @@ const Article: React.FC<ArticleProps> = (props) => {
                 <div className={css.title}>
                     {props.title}
                 </div>
-                <div className={css.text}><Interweave content={props.description} /></div>
+                <div className={css.text}><Interweave content={props.description}/></div>
             </div>
         </Link>
     )
 }
 
-const DetailArticle = () => {
+export const DetailArticle = () => {
     const params: any = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
     const auth = useSelector((state: GlobalStateType) => isAuth(state))
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [article, setArticle] = useState<any>({})
@@ -267,14 +268,16 @@ const DetailArticle = () => {
     const [vote, setVote] = useState(0)
     const [voted, setVoted] = useState(false)
     let category: any = categories.map((item: any) => article.category === item.id ? item.title : null)
+    const getVote = async () => {
+        return dispatch(checkToken( () => api.getVotesUser(params.article)))
+    }
     useEffect(() => {
         if (auth) {
-            api.getVotesUser(params.article)
-                .then((res) => {
+            getVote()
+                .then((res:any) => {
                     if (res.data[0]) {
                         setVoted(res.data[0].vote)
                     }
-
                 })
         }
     }, [])
@@ -325,7 +328,7 @@ const DetailArticle = () => {
     }, [params.article])
 
     if (pending) {
-        return <div><Preloader /></div>
+        return <div><Preloader/></div>
     }
     return (
         <div className={css.article}>
@@ -338,19 +341,19 @@ const DetailArticle = () => {
                 {article.title}
             </div>
             <div className={css.ArticleText}>
-                <Interweave content={article.text} />
+                <Interweave content={article.text}/>
                 {
                     article.additions.map((item: any) => {
                         return <div key={item.id}>
                             <div className={css.title}>{item.subtitle}</div>
-                            <Interweave content={item.subtext} />
+                            <Interweave content={item.subtext}/>
                         </div>
                     })
                 }
             </div>
             <div className={css.likes}>
                 <div onClick={putLike} className={voted ? css.imgWrapper + ' ' + css.blueBorder1 : css.imgWrapper}>
-                    <img src={like} alt="Like" />{t("like")}
+                    <img src={like} alt="Like"/>{t("like")}
                 </div>
                 <div className={voted ? css.count + ' ' + css.blueBorder2 : css.count}>
                     {vote}
@@ -379,7 +382,7 @@ type ArticleNavBarProps = {
 
 export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
     const history = useHistory()
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     return (
         <div className={css.navBar}>
@@ -394,13 +397,15 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                         history.push(`/articles/${e.value}`)
                         props.setCategory(e)
                     }}
-                        styles={selectStyle}
-                        placeholder={t('selectCategoryText')}
-                        options={props.category} />
+                            noOptionsMessage={() => NoOption('')}
+                            styles={selectStyle}
+                            placeholder={t('selectCategoryText')}
+                            options={props.category}/>
                 </div>
                 <div>
                     <div className={css.filterCategory}>{t('subCategory')}</div>
                     <Select
+                        noOptionsMessage={() => NoOption('')}
                         styles={selectStyle}
                         placeholder={t('selectCategoryText')}
                         options={props.subCategories}
@@ -411,6 +416,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                 <div>
                     <div className={css.filterCategory}>{t('type')}</div>
                     <Select
+                        noOptionsMessage={() => NoOption('')}
                         styles={selectStyle}
                         placeholder={t("selectType")}
                         options={props.typesOption}
@@ -421,6 +427,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                 <div>
                     <div className={css.filterCategory}>{t("selectSubType")}</div>
                     <Select
+                        noOptionsMessage={() => NoOption('')}
                         styles={selectStyle}
                         placeholder={t("selectSubTypeText")}
                         options={props.subTypesOption}
@@ -440,16 +447,16 @@ type SearchProps = {
     setValue: any
 }
 export const Search: React.FC<SearchProps> = (props) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
 
     return (
         <div className={css.search}>
             <label>
-                <ArticleSearch />
+                <ArticleSearch/>
                 <input type="text" placeholder={t("search")}
-                    value={props.value} onChange={props.setValue}
-                    className={css.submit2} />
-                <input type="submit" placeholder={''} value={''} className={css.submit} />
+                       value={props.value} onChange={props.setValue}
+                       className={css.submit2}/>
+                <input type="submit" placeholder={''} value={''} className={css.submit}/>
             </label>
         </div>
     )

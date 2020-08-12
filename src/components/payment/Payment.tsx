@@ -38,7 +38,7 @@ const Payment = () => {
                         Свяжитесь по номеру <br />
                         <PhonesWrapper>
                         {
-                            data?.phones.map((item:any)=> <a href={`tel:${item?.phone}`}>
+                            data?.phones.map((item:any)=> <a key={item.phone} href={`tel:${item?.phone}`}>
                                     {item?.phone}
                                 </a>
                             )

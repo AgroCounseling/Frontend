@@ -1,22 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import Select from "react-select";
-import { selectStyle } from "../../utils/SelectStyle";
+import {selectStyle} from "../../utils/SelectStyle";
 import css from './addArticle.module.css'
-import { Editor } from 'react-draft-wysiwyg';
-import { EditorState, convertToRaw } from 'draft-js';
+import {Editor} from 'react-draft-wysiwyg';
+import {EditorState, convertToRaw} from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 // @ts-ignore
 import draftToHtml from 'draftjs-to-html';
-import { useDispatch, useSelector } from "react-redux";
-import { GlobalStateType } from "../../state/root-reducer";
-import { getCategories } from "../../state/selectors";
+import {useDispatch, useSelector} from "react-redux";
+import {GlobalStateType} from "../../state/root-reducer";
+import {getCategories} from "../../state/selectors";
 import api from "../../api/Api";
-import { AxiosResponse } from "axios";
-import { useFormik } from "formik";
-import { checkToken } from "../../state/authReducer";
-import { useHistory } from 'react-router-dom';
-import { MainButton } from "../Styles";
-import { useTranslation } from "react-i18next";
+import {AxiosResponse} from "axios";
+import {useFormik} from "formik";
+import {checkToken} from "../../state/authReducer";
+import {useHistory} from 'react-router-dom';
+import {MainButton} from "../Styles";
+import {useTranslation} from "react-i18next";
+import ModalWrapper from "../../utils/modalWindow";
+import {NoOption} from "../../utils/NoElement";
 
 
 type Props = {
@@ -24,7 +26,7 @@ type Props = {
     last_name: string
 }
 const AddArticle: React.FC<Props> = (props) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     const dispatch = useDispatch()
     const history = useHistory()
     console.log(history)
@@ -42,9 +44,12 @@ const AddArticle: React.FC<Props> = (props) => {
     const [subCategories, setSubCategories] = useState<any>(null)
     const [subCategory, setSubCategory] = useState<any>(null)
     const [typesList, setTypesList] = useState([])
-    const [types, setTypes] = useState<any>(null)
-    const [type, setType] = useState<any>(null)
+    const [types, setTypes] = useState<any>([])
+    const [type, setType] = useState<any>([])
     // const [subType, setSubType] = useState(null)
+
+    const [visible, setVisible] = useState(false)
+    const onModal = () => setVisible(!visible)
 
     useEffect(() => {
         api.getSubCategory()
@@ -99,20 +104,20 @@ const AddArticle: React.FC<Props> = (props) => {
                 text: draftToHtml(convertToRaw(editor.getCurrentContent())),
             })
                 .then((res) => {
-                    history.goForward()
+                    // history.go()
+                    setVisible(true)
                     console.log(res)
                 })
         },
     });
 
     const uploadCallback = async (file: any) => {
-
         let a: any = await new Promise(
             (resolve, reject) => {
                 let reader = new FileReader();
 
                 reader.onloadend = function () {
-                    resolve({ data: { link: reader.result } })
+                    resolve({data: {link: reader.result}})
                 }
                 reader.readAsDataURL(file);
             }
@@ -126,26 +131,29 @@ const AddArticle: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.title}>{t("category")}</div>
                     <Select onChange={(e) => setCategory(e)}
-                        value={category}
-                        styles={selectStyle}
-                        placeholder={t("selectCategoryText")}
-                        options={categoriesList} />
+                            noOptionsMessage={() => NoOption('')}
+                            value={category}
+                            styles={selectStyle}
+                            placeholder={t("selectCategoryText")}
+                            options={categoriesList}/>
                 </div>
                 <div>
                     <div className={css.title}>{t("subCategory")}</div>
                     <Select onChange={(e: any) => setSubCategory(e)}
-                        value={subCategory}
-                        styles={selectStyle}
-                        placeholder={t("selectCategoryText")}
-                        options={subCategories} />
+                            noOptionsMessage={() => NoOption('')}
+                            value={subCategory}
+                            styles={selectStyle}
+                            placeholder={t("selectCategoryText")}
+                            options={subCategories}/>
                 </div>
                 <div>
                     <div className={css.title}>{t("type")}</div>
                     <Select onChange={(e: any) => setType(e)}
-                        value={type}
-                        styles={selectStyle}
-                        placeholder={t("selectCategoryText")}
-                        options={types} />
+                            noOptionsMessage={() => NoOption('')}
+                            value={type}
+                            styles={selectStyle}
+                            placeholder={t("selectCategoryText")}
+                            options={types}/>
                 </div>
             </div>
             <div className={css.text_wrapper}>
@@ -157,7 +165,7 @@ const AddArticle: React.FC<Props> = (props) => {
                         value={formik.values.title}
                         onChange={formik.handleChange}
                         name={'title'}
-                        placeholder={`${t('titleArticleText')}.......`} />
+                        placeholder={`${t('titleArticleText')}.......`}/>
                 </div>
                 <div>
                     <div className={css.title}>{t("descriptionArticle")}</div>
@@ -170,12 +178,16 @@ const AddArticle: React.FC<Props> = (props) => {
                             setEditor(e)
                         }}
                         toolbar={{
-                            inline: { inDropdown: false },
-                            list: { inDropdown: true },
-                            textAlign: { inDropdown: true },
-                            link: { inDropdown: true },
-                            history: { inDropdown: true },
-                            image: { uploadCallback: uploadCallback, preview_image: true, alt: { present: false, mandatory: false } },
+                            inline: {inDropdown: false},
+                            list: {inDropdown: true},
+                            textAlign: {inDropdown: true},
+                            link: {inDropdown: true},
+                            history: {inDropdown: true},
+                            image: {
+                                uploadCallback: uploadCallback,
+                                preview_image: true,
+                                alt: {present: false, mandatory: false}
+                            },
                         }}
                     />
                 </div>
@@ -183,7 +195,17 @@ const AddArticle: React.FC<Props> = (props) => {
             <div className={css.btnWrapper}>
                 <MainButton>{t("post")}</MainButton>
             </div>
-
+            <ModalWrapper onModal={onModal} visible={visible} width={"450"} height={"400"} onClickAway={onModal}>
+                <div className={css.modal__wrapper}>
+                    <div>
+                        Ваша статья на рассмотрении.
+                    </div>
+                    <MainButton onClick={() => {
+                        setVisible(false)
+                        history.push('/admin')
+                    }}>ОК</MainButton>
+                </div>
+            </ModalWrapper>
         </form>
     )
 }

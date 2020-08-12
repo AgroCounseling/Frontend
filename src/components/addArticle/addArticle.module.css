@@ -39,3 +39,15 @@
     padding: 0 30px 60px 0;
     float: right;
 }
+.modal__wrapper{
+    margin: auto;
+    text-align: center;
+}
+.modal__wrapper>button{
+    margin: 15px auto !important;
+}
+.modal__wrapper>div{
+    margin-top: 150px;
+    font-size: 22px;
+    font-weight: 500;
+}

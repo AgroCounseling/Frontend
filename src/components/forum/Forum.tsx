@@ -160,7 +160,7 @@ type QuestionProps = {
     comment_count: number
 }
 
-const Question = (props: QuestionProps) => {
+export const Question = (props: QuestionProps) => {
     return (
         <Link to={`/answer/${props.id}`}>
             <AnswerWrapper style={{

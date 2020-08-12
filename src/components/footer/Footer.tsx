@@ -54,7 +54,7 @@ const Footer = () => {
                 <div>
                     <PhonesWrapper>
                     {
-                        data?.phones.map((item:any)=> <div> <img src={phone} alt="phone"/> <a href={`tel:${item?.phone}`}>
+                        data?.phones.map((item:any)=> <div key={item.phone}> <img src={phone} alt="phone"/> <a href={`tel:${item?.phone}`}>
                                 {item?.phone}
                             </a>
                         </div>
