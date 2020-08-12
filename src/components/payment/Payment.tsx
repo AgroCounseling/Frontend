@@ -6,6 +6,7 @@ import card from '../../img/credit-card.png'
 import mail from '../../img/email.png'
 import api from "../../api/Api";
 import Modal from "./../../components/modalWindow/modal";
+import {PhonesWrapper} from "../Styles";
 
 const Payment = () => {
     const [data, setData] = useState<any>(null)
@@ -35,9 +36,14 @@ const Payment = () => {
                     </span>
                     <div className={css.text}>
                         Свяжитесь по номеру <br />
-                        <a href={`tel:${data?.phone}`}>
-                            {data?.phone}
-                        </a>
+                        <PhonesWrapper>
+                        {
+                            data?.phones.map((item:any)=> <a href={`tel:${item?.phone}`}>
+                                    {item?.phone}
+                                </a>
+                            )
+                        }
+                        </PhonesWrapper>
                     </div>
                 </div>
                 <div className={css.block}>

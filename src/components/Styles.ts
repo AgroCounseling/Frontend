@@ -50,3 +50,16 @@ export const Yellow = styled.div`
     height: 80px;
     box-shadow: 0 6px 16px rgba(176, 176, 176, 0.1);
 `
+export const PhonesWrapper = styled.div`
+  display: grid;
+  
+  &>a{
+    color: #0d1c2e;
+  }
+  &>div{
+    display: flex;
+    &>a{
+    color: #0d1c2e;
+    }
+  }
+`

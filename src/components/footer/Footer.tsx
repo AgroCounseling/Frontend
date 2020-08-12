@@ -9,6 +9,7 @@ import logo from '../../img/footer-logo.png'
 import agro from '../../img/AgroConsulting.png'
 import {Link} from "react-router-dom";
 import api from '../../api/Api'
+import {PhonesWrapper} from "../Styles";
 
 const Footer = () => {
     const [data, setData] = useState<any>(null)
@@ -48,10 +49,15 @@ const Footer = () => {
                     <span className={css.title}>Свяжитесь с нами</span>
                 </div>
                 <div>
-                    <img src={phone} alt="phone"/>
-                    <a href={`tel:${data?.phone}`}>
-                        {data?.phone}
-                    </a>
+                    <PhonesWrapper>
+                    {
+                        data?.phones.map((item:any)=> <div> <img src={phone} alt="phone"/> <a href={`tel:${item?.phone}`}>
+                                {item?.phone}
+                            </a>
+                        </div>
+                        )
+                    }
+                    </PhonesWrapper>
                 </div>
                 <div>
                     <img src={location} alt="loc"/>
