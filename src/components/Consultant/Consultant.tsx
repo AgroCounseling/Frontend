@@ -6,15 +6,18 @@ import css from './consultant.module.css'
 import api from '../../api/Api'
 import noPicture from '../../img/noPicture.png'
 import Stars from './Stars'
-import {GlobalStateType} from "../../state/root-reducer";
-import {getSpecialties} from "../../state/selectors";
-import {connect} from "react-redux";
+import { GlobalStateType } from "../../state/root-reducer";
+import { getSpecialties } from "../../state/selectors";
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     specialties: any
 }
 const Consultant: React.FC<Props> = (props) => {
-    const params: { id?: string | undefined } = useParams()
+    const params: { id?: string | undefined } = useParams();
+    const { t } = useTranslation();
+
     const [pending, setPending] = useState(true)
     const [user, setUser] = useState<any>(null)
     const [specialties, setSpecialties] = useState<any>([])
@@ -29,7 +32,7 @@ const Consultant: React.FC<Props> = (props) => {
             })
     }, [params.id, props.specialties])
     if (pending) {
-        return <Preloader/>
+        return <Preloader />
     }
     return (
         <>
@@ -38,7 +41,7 @@ const Consultant: React.FC<Props> = (props) => {
                     <span>
                         {
                             user.reviews.map((item: any) => <Answer key={item.id} name={item.name} answer={item.text} date={'16 мая'}
-                                                                    stars={2.5}/>)
+                                stars={2.5} />)
                         }
                         {/*<Answer name={'test name'} answer={'sdfsdf sdgsdg asgsdg'} date={'16 мая'} stars={2.5}/>*/}
                         {/*<Answer name={'test name'} answer={'sdfsdf sdgsdg asgsdg'} date={'16 мая'} stars={2.5}/>*/}
@@ -50,27 +53,27 @@ const Consultant: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.user}>
                         <div className={css.imgWrapper}>
-                            <img src={noPicture} alt="NoPicture"/>
+                            <img src={noPicture} alt="NoPicture" />
                         </div>
                         <div className={css.userInfo}>
                             <div className={css.person}>
                                 <div className={css.nameWrapper}>
                                     <div className={css.name}>{user.user.first_name} {user.user.last_name}</div>
                                 </div>
-                                <div className={css.specialty}>Cпециальность: {
+                                <div className={css.specialty}>{t("specialty")}: {
                                     specialties.map((item: any) => <span key={item.id}> {item.title}, </span>)
                                 }</div>
                             </div>
-                            <Stars color={'red'} edit={false} size={44} value={3.5}/>
+                            <Stars color={'red'} edit={false} size={44} value={3.5} />
                         </div>
                     </div>
                     <div>
-                        <div className={css.education}>Образование</div>
+                        <div className={css.education}>{t("education")}</div>
                         <div className={css.text}>{user.description}</div>
                     </div>
                 </div>
             </div>
-            <Footer/>
+            <Footer />
         </>
     )
 }
@@ -87,7 +90,7 @@ const Answer: React.FC<AnswerProps> = (props) => {
             <div className={css.answerName}>{props.name}</div>
             <div className={css.answer}>{props.answer}</div>
             <div className={css.stars}>
-                <Stars edit={true} color={'#ffd700'} size={24} value={props.stars}/>
+                <Stars edit={true} color={'#ffd700'} size={24} value={props.stars} />
                 <div>{props.date}</div>
             </div>
         </div>

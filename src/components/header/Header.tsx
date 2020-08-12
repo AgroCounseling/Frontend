@@ -44,7 +44,7 @@ const Header = (props: any) => {
                         </>
                         : <>
                             <Link to={'/sign-in/1'} className={css.enter}>{t("singIn")}</Link>
-                            <Link to={'/sign-up'} className={css.register}>{t("AboutUs")}</Link>
+                            <Link to={'/sign-up'} className={css.register}>{t("register")}</Link>
                         </>
                 }
                 <Language />

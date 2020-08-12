@@ -1,28 +1,30 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import css from './articles.module.css'
 import api from '../../api/Api'
-import {AxiosResponse} from "axios";
+import { AxiosResponse } from "axios";
 import Select from "react-select";
-import {Link, useParams, useHistory, Switch, Route, useRouteMatch} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {getCategories, isAuth} from "../../state/selectors";
-import {GlobalStateType} from "../../state/root-reducer";
+import { Link, useParams, useHistory, Switch, Route, useRouteMatch } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategories, isAuth } from "../../state/selectors";
+import { GlobalStateType } from "../../state/root-reducer";
 import Pagination from "../pagination/Pagination";
-import {ArticleSearch} from "../Styles";
+import { ArticleSearch } from "../Styles";
 import Footer from "../footer/Footer";
 import Preloader from "../preloader/Preloader";
 import like from "../../img/like.png";
-import {selectStyle} from "../../utils/SelectStyle";
+import { selectStyle } from "../../utils/SelectStyle";
 import Interweave from "interweave";
 import NoElement from "../../utils/NoElement";
-import {checkToken} from "../../state/authReducer";
+import { checkToken } from "../../state/authReducer";
+import { useTranslation } from "react-i18next";
 
 
 type Props = {}
 const Articles: React.FC<Props> = (props) => {
+    const { t } = useTranslation();
     const params: any = useParams()
     const history = useHistory()
-    const {path, url} = useRouteMatch();
+    const { path, url } = useRouteMatch();
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const categoriesList = categories.map((item: any) => {
         return {
@@ -165,11 +167,11 @@ const Articles: React.FC<Props> = (props) => {
     }, [])
 
     if (pending) {
-        return <Preloader/>
+        return <Preloader />
     }
     return (
         <div className={css.wrapper}>
-            <Search value={search} setValue={onSearch}/>
+            <Search value={search} setValue={onSearch} />
             <div className={css.articlesWrapper}>
                 <ArticleNavBar
                     getPopular={getPopular}
@@ -193,30 +195,30 @@ const Articles: React.FC<Props> = (props) => {
                             {
                                 articles.length ? articles.map((item: any) => <Article
 
-                                        key={item.id}
-                                        id={item.id}
-                                        description={item.text}
-                                        title={item.title}
-                                        date={item.pub_date}
-                                        name={item.user.first_name + ' ' + item.user.last_name}
-                                        category={item.category}
-                                    />)
+                                    key={item.id}
+                                    id={item.id}
+                                    description={item.text}
+                                    title={item.title}
+                                    date={item.pub_date}
+                                    name={item.user.first_name + ' ' + item.user.last_name}
+                                    category={item.category}
+                                />)
 
-                                    :  <NoElement text={'Нет статей'} />
+                                    : <NoElement text={'Нет статей'} />
                             }
                             {
                                 articles.length
-                                    ? < Pagination setPage={setPage} pageCount={pagination}/>
+                                    ? < Pagination setPage={setPage} pageCount={pagination} />
                                     : null
                             }
                         </div>
                     </Route>
                     <Route path={`${path}/:article`}>
-                        <DetailArticle/>
+                        <DetailArticle />
                     </Route>
                 </Switch>
             </div>
-            <Footer/>
+            <Footer />
         </div>
     )
 }
@@ -230,7 +232,7 @@ type ArticleProps = {
     description: string
 }
 const Article: React.FC<ArticleProps> = (props) => {
-    const {url} = useRouteMatch();
+    const { url } = useRouteMatch();
     const params: any = useParams()
 
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
@@ -246,7 +248,7 @@ const Article: React.FC<ArticleProps> = (props) => {
                 <div className={css.title}>
                     {props.title}
                 </div>
-                <div className={css.text}><Interweave content={props.description}/></div>
+                <div className={css.text}><Interweave content={props.description} /></div>
             </div>
         </Link>
     )
@@ -256,7 +258,8 @@ const DetailArticle = () => {
     const params: any = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
-    const auth = useSelector((state:GlobalStateType) => isAuth(state))
+    const auth = useSelector((state: GlobalStateType) => isAuth(state))
+    const { t } = useTranslation();
 
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [article, setArticle] = useState<any>({})
@@ -264,8 +267,8 @@ const DetailArticle = () => {
     const [vote, setVote] = useState(0)
     const [voted, setVoted] = useState(false)
     let category: any = categories.map((item: any) => article.category === item.id ? item.title : null)
-    useEffect(()=>{
-        if(auth) {
+    useEffect(() => {
+        if (auth) {
             api.getVotesUser(params.article)
                 .then((res) => {
                     if (res.data[0]) {
@@ -275,13 +278,13 @@ const DetailArticle = () => {
                 })
         }
     }, [])
-    const checkLike = async (data:any) => {
-        return  dispatch(checkToken(()=>api.putLike(article.id,data)))
+    const checkLike = async (data: any) => {
+        return dispatch(checkToken(() => api.putLike(article.id, data)))
     }
 
     const putLike = () => {
-        if(auth) {
-            if(voted){
+        if (auth) {
+            if (voted) {
                 checkLike({
                     user: {
                         first_name: article.user.first_name,
@@ -293,7 +296,7 @@ const DetailArticle = () => {
                     setVoted(false)
                     console.log(res)
                 })
-            }else {
+            } else {
                 checkLike({
                     user: {
                         first_name: article.user.first_name,
@@ -306,7 +309,7 @@ const DetailArticle = () => {
                     console.log(res)
                 })
             }
-        }else{
+        } else {
             history.push('/sign-in')
         }
     }
@@ -322,7 +325,7 @@ const DetailArticle = () => {
     }, [params.article])
 
     if (pending) {
-        return <div><Preloader/></div>
+        return <div><Preloader /></div>
     }
     return (
         <div className={css.article}>
@@ -335,21 +338,21 @@ const DetailArticle = () => {
                 {article.title}
             </div>
             <div className={css.ArticleText}>
-                <Interweave content={article.text}/>
+                <Interweave content={article.text} />
                 {
-                    article.additions.map((item:any) => {
+                    article.additions.map((item: any) => {
                         return <div key={item.id}>
                             <div className={css.title}>{item.subtitle}</div>
                             <Interweave content={item.subtext} />
-                         </div>
+                        </div>
                     })
                 }
             </div>
             <div className={css.likes}>
-                <div onClick={putLike} className={ voted ?  css.imgWrapper + ' ' + css.blueBorder1 : css.imgWrapper}>
-                    <img src={like} alt="Like"/> Понравилась
+                <div onClick={putLike} className={voted ? css.imgWrapper + ' ' + css.blueBorder1 : css.imgWrapper}>
+                    <img src={like} alt="Like" />{t("like")}
                 </div>
-                <div className={voted ? css.count  + ' ' + css.blueBorder2 : css.count }>
+                <div className={voted ? css.count + ' ' + css.blueBorder2 : css.count}>
                     {vote}
                 </div>
             </div>
@@ -376,48 +379,50 @@ type ArticleNavBarProps = {
 
 export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
     const history = useHistory()
+    const { t } = useTranslation();
+
     return (
         <div className={css.navBar}>
             <div className={css.newPopular}>
-                <div onClick={props.getNew}>Новое</div>
-                <div onClick={props.getPopular}>Популярные</div>
+                <div onClick={props.getNew}>{t("new")}</div>
+                <div onClick={props.getPopular}>{t("popular")}</div>
             </div>
             <div className={css.filterWrapper}>
                 <div>
-                    <div className={css.filterCategory}>Категория</div>
+                    <div className={css.filterCategory}>{t("category")}</div>
                     <Select value={props.categoryVal} onChange={(e: any) => {
                         history.push(`/articles/${e.value}`)
                         props.setCategory(e)
                     }}
-                            styles={selectStyle}
-                            placeholder={'выберите категорию'}
-                            options={props.category}/>
+                        styles={selectStyle}
+                        placeholder={t('selectCategoryText')}
+                        options={props.category} />
                 </div>
                 <div>
-                    <div className={css.filterCategory}>Подкатегории</div>
+                    <div className={css.filterCategory}>{t('subCategory')}</div>
                     <Select
                         styles={selectStyle}
-                        placeholder={'выберите подкатегорию'}
+                        placeholder={t('selectCategoryText')}
                         options={props.subCategories}
                         value={props.subCategory}
                         onChange={props.setSubCategory}
                     />
                 </div>
                 <div>
-                    <div className={css.filterCategory}>Виды</div>
+                    <div className={css.filterCategory}>{t('type')}</div>
                     <Select
                         styles={selectStyle}
-                        placeholder={'выберите вид'}
+                        placeholder={t("selectType")}
                         options={props.typesOption}
                         value={props.types}
                         onChange={props.setTypes}
                     />
                 </div>
                 <div>
-                    <div className={css.filterCategory}>Подвиды</div>
+                    <div className={css.filterCategory}>{t("selectSubType")}</div>
                     <Select
                         styles={selectStyle}
-                        placeholder={'выберите подвид'}
+                        placeholder={t("selectSubTypeText")}
                         options={props.subTypesOption}
                         value={props.subTypes}
                         onChange={props.setSubTypes}
@@ -435,14 +440,16 @@ type SearchProps = {
     setValue: any
 }
 export const Search: React.FC<SearchProps> = (props) => {
+    const { t } = useTranslation();
+
     return (
         <div className={css.search}>
             <label>
-                <ArticleSearch/>
-                <input type="text" placeholder={'поиск'}
-                       value={props.value} onChange={props.setValue}
-                       className={css.submit2}/>
-                <input type="submit" placeholder={''} value={''} className={css.submit}/>
+                <ArticleSearch />
+                <input type="text" placeholder={t("search")}
+                    value={props.value} onChange={props.setValue}
+                    className={css.submit2} />
+                <input type="submit" placeholder={''} value={''} className={css.submit} />
             </label>
         </div>
     )

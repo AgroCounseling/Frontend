@@ -7,17 +7,18 @@ import { checkToken } from "../../state/authReducer";
 import { useDispatch, useSelector } from "react-redux";
 import Preloader from "../preloader/Preloader";
 import noPic from '../../img/noPicture.png'
-import {useRouteMatch, Switch, Route, Redirect, NavLink, useLocation} from 'react-router-dom';
+import { useRouteMatch, Switch, Route, Redirect, NavLink, useLocation } from 'react-router-dom';
 import Chat from "../chat/Chat";
 import AddArticle from "../addArticle/AddArticle";
 import Select from "react-select";
 import { selectStyle } from "../../utils/SelectStyle";
 import { GlobalStateType } from "../../state/root-reducer";
 import { getSpecialties } from "../../state/selectors";
-
+import { useTranslation } from "react-i18next";
 
 const Admin = () => {
     const { path, url } = useRouteMatch();
+    const { t } = useTranslation();
     const dispatch = useDispatch()
     const initialise = async () => {
         return dispatch(checkToken(api.getProfile))
@@ -153,7 +154,7 @@ const Admin = () => {
                 editing
                     ? <form onSubmit={submit}>
                         <div className={css.linksWrapperEdit}>
-                            <div className={css.active}>Личные данные</div>
+                            <div className={css.active}>{t("pesonalData")}</div>
                         </div>
                         <div className={css.userWrapper}>
                             <div className={css.user}>
@@ -175,7 +176,7 @@ const Admin = () => {
                                         }
                                         setPic(e.target.files[0])
                                     }} type={'file'} className={css.file} />
-                                    <span className={css.changePhoto}>Изменить фото</span>
+                                    <span className={css.changePhoto}>{t("changeFoto")}</span>
                                 </label>
                             </div>
                             <div className={css.nameWrapper + ' ' + css.nameWrapper1}>
@@ -190,7 +191,7 @@ const Admin = () => {
                                                 <Select
                                                     value={specialty}
                                                     onChange={(e) => setSpecialty(e)}
-                                                    placeholder={'Специальность'}
+                                                    placeholder={t("specialty")}
                                                     options={options}
                                                     isMulti
                                                     styles={selectStyle} />
@@ -202,15 +203,15 @@ const Admin = () => {
                         <div className={css.nameWrapper2}>
                             {
                                 data.status_client ? null : <>
-                                    <div className={css.name}>Образование</div>
+                                    <div className={css.name}>{t("education")}</div>
                                     <textarea value={description} onChange={(e: any) => setDescription(e.target.value)} />
                                 </>
                             }
                         </div>
                         <div>
                             <div className={css.btnWrapper}>
-                                <MainButton className={css.cancel} onClick={cancel}>Отмена</MainButton>
-                                <MainButton type={'submit'}>Сохранить изменения</MainButton>
+                                <MainButton className={css.cancel} onClick={cancel}>{t("back")}</MainButton>
+                                <MainButton type={'submit'}>{t("save")}</MainButton>
                             </div>
                         </div>
                     </form>
@@ -220,14 +221,14 @@ const Admin = () => {
                                 <span>
                                     <img src={user.photo ? user.photo : noPic} alt="ava" />
                                 </span>
-                                <button onClick={onEdit}>Изменить данные</button>
+                                <button onClick={onEdit}>{t("changeData")}</button>
                             </div>
                             <div className={css.nameWrapper}>
                                 <div className={css.name}>{name + ' ' + lastName}</div>
                                 <div>
                                     {
                                         data.status_client ? null :
-                                            <div className={css.consultant}>Консультант | {
+                                            <div className={css.consultant}>{t("consultant")} | {
                                                 specialty.map((item: any) => <span
                                                     key={item.value}> {item.label + ', '} </span>)
                                             }</div>
@@ -238,9 +239,9 @@ const Admin = () => {
                         <div className={css.linksWrapper}>
                             {
                                 data.status_client ? null :
-                                    <NavLink activeClassName={css.active} to={`${url}/articles`}>Статьи</NavLink>
+                                    <NavLink activeClassName={css.active} to={`${url}/articles`}>{t("article")}</NavLink>
                             }
-                            <NavLink activeClassName={css.active} to={`${url}/chat`}>Чат</NavLink>
+                            <NavLink activeClassName={css.active} to={`${url}/chat`}>{t("chat")}</NavLink>
                         </div>
                         <Switch>
                             <Route exact path={`${path}/articles`}>
