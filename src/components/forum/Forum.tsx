@@ -154,7 +154,8 @@ const Forum: React.FC<Props> = (props) => {
 }
 
 type QuestionProps = {
-    last?: true
+    last?: boolean
+    noAnswer?: boolean
     title: string
     id: number
     comment_count: number
@@ -172,14 +173,18 @@ export const Question = (props: QuestionProps) => {
                     </Text>
                     <span>{props.title}</span>
                 </ImageWrapper>
-                <Answers>
-                    <div>
-                        {props.comment_count}
-                    </div>
-                    <p>
-                        ответ
-                    </p>
-                </Answers>
+                {
+                    !props.noAnswer ?
+                        <Answers>
+                            <div>
+                                {props.comment_count}
+                            </div>
+                            <p>
+                                ответ
+                            </p>
+                        </Answers>
+                        : <span />
+                }
             </AnswerWrapper>
         </Link>
     )

@@ -43,31 +43,41 @@ const Search = () => {
             <Header>
                 {t('consultants')}
             </Header>
-            <div className={css.cardWrapper}>{
-                consultants?.map((item: any) => <ConsultantCard
-                    id={item.id}
-                    star={item.middle_star}
-                    description={item.description}
-                    name={item.user.first_name}
-                    last_name={item.user.last_name}
-                    url={item.user.photo}
-                    specialization={item.specialty.map((item: any) => specialties.find((i: any) => item.category === i.id ? i.title : null))}
-                    key={item.id}
-                />)
-            }</div>
+            {
+                consultants?.length ?
+                    <div className={css.cardWrapper}>{
+                        consultants?.map((item: any) => <ConsultantCard
+                            id={item.id}
+                            star={item.middle_star}
+                            description={item.description}
+                            name={item.user.first_name}
+                            last_name={item.user.last_name}
+                            url={item.user.photo}
+                            specialization={item.specialty.map((item: any) => specialties.find((i: any) => item.category === i.id ? i.title : null))}
+                            key={item.id}
+                        />)
+                    }</div>
+                    : <NoElement text={'Консультанты не найдены'}/>
+            }
             <Header>Форум</Header>
-            <QuestionWrappers>
-                {
-                    forum?.map((item: any, index: number) => {
-                        if (index === forum.length - 1) {
-                            return <Question comment_count={item.comment_count} key={item.id} id={item.id}
-                                             title={item.title} last={true}/>
+            {
+                forum?.length ?
+                    <QuestionWrappers>
+                        {
+                            forum?.map((item: any, index: number) => {
+                                if (index === forum.length - 1) {
+                                    return <Question noAnswer={true} comment_count={item.comment_count} key={item.id}
+                                                     id={item.id}
+                                                     title={item.title} last={true}/>
+                                }
+                                return <Question noAnswer={true} comment_count={item.comment_count} key={item.id}
+                                                 id={item.id}
+                                                 title={item.title}/>
+                            })
                         }
-                        return <Question comment_count={item.comment_count} key={item.id} id={item.id}
-                                         title={item.title}/>
-                    })
-                }
-            </QuestionWrappers>
+                    </QuestionWrappers>
+                    : <NoElement text={'Вопросы не найдены'}/>
+            }
             <Header>Статьи</Header>
             {
                 articles?.length ? articles?.map((item: any) => <Article
