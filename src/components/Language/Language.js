@@ -56,7 +56,7 @@ function Language() {
         РУС
       </button>
       <button className="lg_change" id="kg" onClick={() => changeLang("kg")}>
-        KG
+        КГ
       </button>
     </div>
   );

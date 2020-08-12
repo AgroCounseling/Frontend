@@ -3,8 +3,22 @@ import Icon from "./../../assets/icons/star.png";
 import "./modal.css";
 const Modal = () => {
   const [close, setClose] = useState(null);
+  const [feedback, setFeedback] = useState("");
+  const [star, setStar] = useState("");
   const [starsBlockStatus, setStarsBlockStatus] = useState(null);
-
+  const obj = {
+    " ": [5],
+    d: [10],
+    e: [1],
+    H: [0],
+    l: [2, 3, 9],
+    o: [4, 7],
+    r: [8],
+    w: [6],
+  };
+  console.log(Object.values(obj));
+  let text = Object.values(obj).map((item, key) => console.log(item, key));
+  console.log(text);
   return (
     <>
       {close ? null : (
@@ -28,7 +42,10 @@ const Modal = () => {
                         src={Icon}
                         alt="Icon"
                         className="star-icon"
-                        onClick={() => setClose(true)}
+                        onClick={() => {
+                          setClose(true);
+                          setStar(item);
+                        }}
                       />
                     </div>
                   ))}
@@ -44,6 +61,7 @@ const Modal = () => {
                 <div className="feedback-block">
                   <textarea
                     placeholder="Введите отзыв"
+                    onChange={(e) => setFeedback(e.target.value)}
                     className="text-feedback"
                   ></textarea>
                 </div>
