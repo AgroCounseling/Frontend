@@ -34,17 +34,24 @@ const Modal = () => {
               <div>
                 <h2>Ваша оценка данной консультации</h2>
                 <div className="stars-block">
-                  <Stars
-                    color={"red"}
-                    edit={true}
-                    size={70}
-                    value={star}
-                    setStar={setStar}
-                  />
+                  {[1, 2, 3, 4, 5].map((item) => (
+                    <div key={item}>
+                      <img
+                        src={Icon}
+                        alt="Icon"
+                        className="star-icon"
+                        onClick={() => {
+                          setStar(item);
+                          postReview();
+                          setClose(true);
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
                 <div className="texts-block">
                   <span>Плохо</span>
-                  <button
+                  {/* <button
                     className="green-btn"
                     onClick={() => {
                       postReview();
@@ -52,13 +59,13 @@ const Modal = () => {
                     }}
                   >
                     Отправить
-                  </button>
+                  </button> */}
                   <span>Отлично</span>
                 </div>
               </div>
             ) : (
               <div>
-                <h2>Оставьте остыв пожалуйста</h2>
+                <h2>Оставьте отзыв пожалуйста</h2>
                 <div className="feedback-block">
                   <textarea
                     placeholder="Введите отзыв"
