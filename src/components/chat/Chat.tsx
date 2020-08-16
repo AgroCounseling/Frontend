@@ -21,20 +21,9 @@ const Chat: React.FC<ChatType> = ({ id }) => {
                     <input type="text" placeholder={'искать'} />
                 </div>
                 <div className={css.userList}>
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
-                    <User />
+                    {
+                        rooms.map((item:any) => <User key={item.id} time={item.timestamp} image={item.second.photo} name={item.second.first_name + ' ' + item.second.last_name} />)
+                    }
                 </div>
             </div>
             <div>
@@ -46,20 +35,25 @@ const Chat: React.FC<ChatType> = ({ id }) => {
 
 export default Chat
 
-const User = () => {
+type UserProps = {
+    name: string
+    image: string
+    time: string
+}
+const User = (props:UserProps) => {
     return (
         <div className={css.personWrapper}>
             <div className={css.person}>
                 <div>
-                    <img src={noPic} alt="#" />
+                    <img src={props.image ? props.image : noPic} alt="#" />
                 </div>
-                <div className={css.personName}>Аайза Аайза</div>
-                <div className={css.peronTime}>1 минута назад</div>
+                <div className={css.personName}>{props.name}</div>
+                <div className={css.peronTime}>{props.time}</div>
             </div>
             <div className={css.textWrapper}>
                 <div>
-                    Отвечать моментально считается необязательным в бизнес-переписке, в конце концов, электронная почта
-                    – это не мессенджер. Но лучше не задерживайте ответ дольше, чем на 24 часа.
+                    {/*Отвечать моментально считается необязательным в бизнес-переписке, в конце концов, электронная почта*/}
+                    {/*– это не мессенджер. Но лучше не задерживайте ответ дольше, чем на 24 часа.*/}
                 </div>
                 <span className={css.count}>
                     <span>
