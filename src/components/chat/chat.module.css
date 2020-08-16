@@ -51,6 +51,7 @@
     border-radius: 6px;
     border: none;
     box-shadow:  0px 4px 10px rgba(0, 0, 0, 0.10);
+    cursor: pointer;
 }
 .activeUser{
     background: #ECBF2C;
@@ -62,10 +63,15 @@
     color: #FFFFFF;
 
 }
-.person{
-    display: grid;
-    grid-template-columns: 60px 1fr  1fr;
-    /*height: 55px;*/
+.person {
+    display: flex;
+    justify-content: space-between;
+}
+
+.personImg {
+    width: 50px;
+    margin-top: 10px;
+    height: 50px;
 }
 .textWrapper{
     display: grid;

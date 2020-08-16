@@ -1,33 +1,48 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import css from "./chat.module.css";
 import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
 import Api from "./../../api/Api";
+import {Time} from "../functions/time";
+
 type ChatType = {
     id?: number
 }
-const Chat: React.FC<ChatType> = ({ id }) => {
+const Chat: React.FC<ChatType> = ({id}) => {
     let [rooms, setRooms] = useState<any>([])
+    const [current, setCurrent] = useState(0)
     useEffect(() => {
-        Api.getRooms().then((res) => setRooms(res.data));
+        Api.getRooms().then((res: any) => {
+                let data = res.data.map((item: any) => {
+                    item.user = item.first.id != id ? "first" : "second";
+                    return item;
+                })
+                setRooms(data);
+            }
+        );
     }, [])
 
-    console.log(rooms, id);
+    // console.log('rooms', rooms, id);
     return (
         <div className={css.chatWrapper}>
             <div>
                 <div className={css.searchWrapper}>
-                    <input type="text" placeholder={'искать'} />
+                    <input type="text" placeholder={'искать'}/>
                 </div>
                 <div className={css.userList}>
                     {
-                        rooms.map((item:any) => <User key={item.id} time={item.timestamp} image={item.second.photo} name={item.second.first_name + ' ' + item.second.last_name} />)
+                        rooms.map((item: any) => <User
+                            key={item.id}
+                            id={item.id}
+                            setCurrent={setCurrent}
+                            time={item.timestamp} image={item[item.user].photo}
+                            name={item[item.user].first_name + ' ' + item[item.user].last_name}/>)
                     }
                 </div>
             </div>
             <div>
-                {/*<MessageBlock email={rooms[0]?.second.email} />*/}
+                <MessageBlock id={current} />
             </div>
         </div>
     )
@@ -39,16 +54,18 @@ type UserProps = {
     name: string
     image: string
     time: string
+    setCurrent: any
+    id: number
 }
-const User = (props:UserProps) => {
+const User = (props: UserProps) => {
     return (
-        <div className={css.personWrapper}>
+        <div className={css.personWrapper} onClick={props.setCurrent(props.id)}>
             <div className={css.person}>
-                <div>
-                    <img src={props.image ? props.image : noPic} alt="#" />
+                <div className={css.person}>
+                    <img src={props.image ? props.image : noPic} alt="#" className={css.personImg}/>
+                    <div className={css.personName}>{props.name}</div>
                 </div>
-                <div className={css.personName}>{props.name}</div>
-                <div className={css.peronTime}>{props.time}</div>
+                <div className={css.peronTime}>{Time(props.time)}</div>
             </div>
             <div className={css.textWrapper}>
                 <div>
@@ -65,26 +82,29 @@ const User = (props:UserProps) => {
     )
 }
 type MessageProps = {
-    email: string
-    name: string
-    id: string | number
+    id:  number
 }
-const MessageBlock = (props:MessageProps) => {
+const MessageBlock = (props: MessageProps) => {
     const [inp, setInp] = useState('')
-    const submit = (e:any) =>{
+    const submit = (e: any) => {
         e.preventDefault()
-        console.log(props.email)
-        Api.sendMessage(props.email, {message: inp})
-            .then((res)=>{
+        Api.sendMessage('', {message: inp})
+            .then((res) => {
                 console.log(res)
             })
     }
+    useEffect(()=>{
+        Api.getRooms(props.id)
+            .then((res)=>{
+                console.log(res)
+            })
+    }, [])
     return (
         <div className={css.message__wrapper}>
             <div className={css.chatHeader}>
                 <div>
                     <div className={css.avaWrapper}>
-                        <img src={noPic} alt="#" />
+                        <img src={noPic} alt="#"/>
                     </div>
                     <div className={css.personName}>Аайза Аайза</div>
                 </div>
@@ -113,12 +133,13 @@ const MessageBlock = (props:MessageProps) => {
                 <div>messages</div>
             </div>
             <form onSubmit={submit} className={css.message__input}>
-                <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e)=>setInp(e.target.value)} type="text" />
+                <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
+                       type="text"/>
                 <span className={css.plus}>
-                    <img src={plus} alt="+" />
+                    <img src={plus} alt="+"/>
                 </span>
                 <span onClick={submit} className={css.send}>
-                    <img src={send} alt="send" />
+                    <img src={send} alt="send"/>
                 </span>
             </form>
         </div>
