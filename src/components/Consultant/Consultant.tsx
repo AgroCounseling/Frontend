@@ -16,7 +16,7 @@ type Props = {
 }
 const Consultant: React.FC<Props> = (props) => {
     const params: { id?: string | undefined } = useParams();
-    const {t} = useTranslation();
+    // const {t} = useTranslation();
 
     const [pending, setPending] = useState(true)
     const [user, setUser] = useState<any>(null)
@@ -40,9 +40,10 @@ const Consultant: React.FC<Props> = (props) => {
                 <div className={css.feedBack}>
                     <span>
                         {
-                            user.reviews.map((item: any) => <Answer key={item.id} name={item.name} answer={item.text}
-                                                                    date={'16 мая'}
-                                                                    stars={2.5}/>)
+                            user.reviews.map((item: any) => <Answer key={item.id} name={item.name}
+                                                                    answer={item.text}
+                                                                    date={''}
+                                                                    stars={user.ratings.map((i: any) => item.id === i.id ? i.star.value : false)}/>)
                         }
                     </span>
                 </div>
@@ -54,7 +55,7 @@ const Consultant: React.FC<Props> = (props) => {
                         <div className={css.person}>
                             <div className={css.nameWrapper}>
                                 <div className={css.name}>{user.user.first_name} {user.user.last_name}</div>
-                                <Stars color={'red'} edit={false} size={44} value={3.5}/>
+                                <Stars color={'red'} edit={false} size={44} value={user.middle_star}/>
                             </div>
                             <div className={css.specialty}>Cпециальность: {
                                 specialties.map((item: any) => <span key={item.id}> {item.title}, </span>)
@@ -77,16 +78,19 @@ const Consultant: React.FC<Props> = (props) => {
 type AnswerProps = {
     name: string
     answer: string
-    stars: number
+    stars: number | boolean | any
     date: string
 }
 const Answer: React.FC<AnswerProps> = (props) => {
+    console.log(props.stars[0])
     return (
         <div className={css.answerWrapper}>
             <div className={css.answerName}>{props.name}</div>
             <div className={css.answer}>{props.answer}</div>
             <div className={css.stars}>
-                <Stars edit={true} color={'#ffd700'} size={24} value={props.stars}/>
+                {
+                    props.stars[0] ? <Stars edit={true} color={'#ffd700'} size={24} value={props.stars[0]}/> : null
+                }
                 <div>{props.date}</div>
             </div>
         </div>
