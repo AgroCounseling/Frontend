@@ -67,10 +67,14 @@
     outline: none;
 }
 
+.texts-block .send-btn {
+    margin-top: 40px;
+}
+
 .btnBlock {
     display: flex;
     justify-content: space-between;
-    padding: 10px 20px;
+    padding: 10px 6px;
     margin-top: 20px;
 }
 
@@ -108,6 +112,10 @@
 .stars-block {
     display: flex;
     justify-content: center;
+}
+
+.stars-block span {
+    margin: 10px
 }
 
 .texts-block {

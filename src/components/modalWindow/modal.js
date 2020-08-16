@@ -34,32 +34,26 @@ const Modal = () => {
               <div>
                 <h2>Ваша оценка данной консультации</h2>
                 <div className="stars-block">
-                  {[1, 2, 3, 4, 5].map((item) => (
-                    <div key={item}>
-                      <img
-                        src={Icon}
-                        alt="Icon"
-                        className="star-icon"
-                        onClick={() => {
-                          setStar(item);
-                          postReview();
-                          setClose(true);
-                        }}
-                      />
-                    </div>
-                  ))}
+                  <Stars
+                    color={"#ECBF2C"}
+                    edit={true}
+                    size={70}
+                    value={star}
+
+                    setStar={setStar}
+                  />
                 </div>
-                <div className="texts-block">
+                <div className="texts-block btnBlock">
                   <span>Плохо</span>
-                  {/* <button
-                    className="green-btn"
+                  <button
+                    className="send-btn"
                     onClick={() => {
                       postReview();
                       setClose(true);
                     }}
                   >
                     Отправить
-                  </button> */}
+                  </button>
                   <span>Отлично</span>
                 </div>
               </div>
@@ -76,7 +70,9 @@ const Modal = () => {
                 <div className="btnBlock">
                   <button
                     className="send-btn"
-                    onClick={() => setStarsBlockStatus(true)}
+                    onClick={() => {
+                      setStarsBlockStatus(true);
+                    }}
                   >
                     Отправить
                   </button>

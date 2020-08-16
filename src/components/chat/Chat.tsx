@@ -13,7 +13,7 @@ const Chat: React.FC<ChatType> = ({ id }) => {
         Api.getRooms().then(res => setRooms(res.data));
     }, [])
 
-    console.log(rooms, id);
+
     return (
         <div className={css.chatWrapper}>
             <div>
