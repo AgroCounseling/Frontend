@@ -8,9 +8,9 @@ type ChatType = {
     id?: number
 }
 const Chat: React.FC<ChatType> = ({ id }) => {
-    let [rooms, setRooms] = useState([])
+    let [rooms, setRooms] = useState<any>([])
     useEffect(() => {
-        Api.getRooms().then(res => setRooms(res.data));
+        Api.getRooms().then((res) => setRooms(res.data));
     }, [])
 
     console.log(rooms, id);
@@ -27,7 +27,7 @@ const Chat: React.FC<ChatType> = ({ id }) => {
                 </div>
             </div>
             <div>
-                <MessageBlock />
+                {/*<MessageBlock email={rooms[0]?.second.email} />*/}
             </div>
         </div>
     )
@@ -64,8 +64,21 @@ const User = (props:UserProps) => {
         </div>
     )
 }
-
-const MessageBlock = () => {
+type MessageProps = {
+    email: string
+    name: string
+    id: string | number
+}
+const MessageBlock = (props:MessageProps) => {
+    const [inp, setInp] = useState('')
+    const submit = (e:any) =>{
+        e.preventDefault()
+        console.log(props.email)
+        Api.sendMessage(props.email, {message: inp})
+            .then((res)=>{
+                console.log(res)
+            })
+    }
     return (
         <div className={css.message__wrapper}>
             <div className={css.chatHeader}>
@@ -98,48 +111,16 @@ const MessageBlock = () => {
                 <div>messages</div>
                 <div>messages</div>
                 <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
             </div>
-            <div className={css.message__input}>
-                <input placeholder={'Введите ваше сообщение'} type="text" />
+            <form onSubmit={submit} className={css.message__input}>
+                <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e)=>setInp(e.target.value)} type="text" />
                 <span className={css.plus}>
                     <img src={plus} alt="+" />
                 </span>
-                <span className={css.send}>
+                <span onClick={submit} className={css.send}>
                     <img src={send} alt="send" />
                 </span>
-            </div>
+            </form>
         </div>
     )
 }

@@ -49,6 +49,11 @@ export default {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
     }),
+    sendMessage: (email:string, data:any) => http.post(`${getLng()}/api/messages/${email}`, data, {
+        headers: {
+            "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
+        }
+    }),
     setProfile: (name: string, data: any) => http.put(`${getLng()}/api/profile/edit/${name}/`, data, {
         headers: {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
