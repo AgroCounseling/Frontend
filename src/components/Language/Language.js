@@ -53,10 +53,10 @@ function Language() {
   return (
     <div className="language">
       <button className="lg_change" id="rus" onClick={() => changeLang("ru")}>
-        РУС
+        RUS
       </button>
       <button className="lg_change" id="kg" onClick={() => changeLang("kg")}>
-        КГ
+        KG
       </button>
     </div>
   );

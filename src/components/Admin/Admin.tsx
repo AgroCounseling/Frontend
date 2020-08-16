@@ -240,7 +240,7 @@ const Admin = () => {
                         <div className={css.linksWrapper}>
                             {
                                 data.status_client ? null :
-                                    <NavLink activeClassName={css.active} to={`${url}/articles`}>{t("article")}</NavLink>
+                                    <NavLink activeClassName={css.active} to={`${url}/articles`}>{t("articles")}</NavLink>
                             }
                             <NavLink activeClassName={css.active} to={`${url}/chat`}>{t("chat")}</NavLink>
                         </div>

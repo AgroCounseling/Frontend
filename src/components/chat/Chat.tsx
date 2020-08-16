@@ -23,7 +23,20 @@ const Chat: React.FC<ChatType> = ({ id }) => {
         );
     }, [])
 
-    console.log('rooms', rooms, id);
+    const socketChat = () => {
+        Api.getRooms().then((res: any) => {
+            let data = res.data.map((item: any) => {
+                console.log('item', item);
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                item.user = item.first.id != id ? "first" : "second";
+                return item;
+            })
+            setRooms(data);
+        }
+        );
+    }
+
+    // setTimeout(() => socketChat(), 5000);
     return (
         <div className={css.chatWrapper}>
             <div>
