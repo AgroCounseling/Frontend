@@ -47,7 +47,7 @@ const AddArticle: React.FC<Props> = (props) => {
     const [types, setTypes] = useState<any>([])
     const [type, setType] = useState<any>([])
     // const [subType, setSubType] = useState(null)
-
+    console.log(typesList)
     const [visible, setVisible] = useState(false)
     const onModal = () => setVisible(!visible)
 
@@ -112,7 +112,7 @@ const AddArticle: React.FC<Props> = (props) => {
     });
 
     const uploadCallback = async (file: any) => {
-        let a: any = await new Promise(
+        return await new Promise(
             (resolve, reject) => {
                 let reader = new FileReader();
 
@@ -121,8 +121,7 @@ const AddArticle: React.FC<Props> = (props) => {
                 }
                 reader.readAsDataURL(file);
             }
-        );
-        return a
+        )
     }
 
     return (
@@ -131,7 +130,7 @@ const AddArticle: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.title}>{t("category")}</div>
                     <Select onChange={(e) => setCategory(e)}
-                            noOptionsMessage={() => NoOption('')}
+                            noOptionsMessage={() => NoOption('Нет категорий')}
                             value={category}
                             styles={selectStyle}
                             placeholder={t("selectCategoryText")}
@@ -140,7 +139,7 @@ const AddArticle: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.title}>{t("subCategory")}</div>
                     <Select onChange={(e: any) => setSubCategory(e)}
-                            noOptionsMessage={() => NoOption('')}
+                            noOptionsMessage={() => NoOption('Нет подкатегорий')}
                             value={subCategory}
                             styles={selectStyle}
                             placeholder={t("selectCategoryText")}
@@ -149,7 +148,7 @@ const AddArticle: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.title}>{t("type")}</div>
                     <Select onChange={(e: any) => setType(e)}
-                            noOptionsMessage={() => NoOption('')}
+                            noOptionsMessage={() => NoOption('Нет видов')}
                             value={type}
                             styles={selectStyle}
                             placeholder={t("selectCategoryText")}

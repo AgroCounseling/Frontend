@@ -10,7 +10,6 @@ import { isAuth } from "../../state/selectors";
 import { signIn } from "../../state/authReducer";
 import { GlobalStateType } from "../../state/root-reducer";
 import { HeaderWrapper, LogoWrapper } from "./HeaderStyles";
-import api from '../../api/Api'
 import {setSearch} from "../../state/appReducer";
 
 const Header = (props: any) => {
@@ -23,6 +22,7 @@ const Header = (props: any) => {
             isAuth: false
         })
         localStorage.removeItem('userData')
+        history.push('/sign-in/1')
     }
     const submit = (e:any) =>{
         e.preventDefault()

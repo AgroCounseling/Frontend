@@ -24,7 +24,10 @@ const Chat: React.FC<ChatType> = ({ id }) => {
         );
     }, [])
 
-    // console.log('rooms', rooms, id);
+    const setCur = (e:any) => {
+        setCurrent(e)
+    }
+
     return (
         <div className={css.chatWrapper}>
             <div>

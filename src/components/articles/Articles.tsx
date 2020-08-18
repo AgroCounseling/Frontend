@@ -397,7 +397,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                         history.push(`/articles/${e.value}`)
                         props.setCategory(e)
                     }}
-                            noOptionsMessage={() => NoOption('')}
+                            noOptionsMessage={() => NoOption('Нет категорий')}
                             styles={selectStyle}
                             placeholder={t('selectCategoryText')}
                             options={props.category}/>
@@ -405,7 +405,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                 <div>
                     <div className={css.filterCategory}>{t('subCategory')}</div>
                     <Select
-                        noOptionsMessage={() => NoOption('')}
+                        noOptionsMessage={() => NoOption('Нет подкатегорий')}
                         styles={selectStyle}
                         placeholder={t('selectCategoryText')}
                         options={props.subCategories}
@@ -416,7 +416,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                 <div>
                     <div className={css.filterCategory}>{t('type')}</div>
                     <Select
-                        noOptionsMessage={() => NoOption('')}
+                        noOptionsMessage={() => NoOption('Нет видов')}
                         styles={selectStyle}
                         placeholder={t("selectType")}
                         options={props.typesOption}
@@ -427,7 +427,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                 <div>
                     <div className={css.filterCategory}>{t("selectSubType")}</div>
                     <Select
-                        noOptionsMessage={() => NoOption('')}
+                        noOptionsMessage={() => NoOption('Нет подвидов')}
                         styles={selectStyle}
                         placeholder={t("selectSubTypeText")}
                         options={props.subTypesOption}
