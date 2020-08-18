@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import Icon from "./../../assets/icons/star.png";
+// import Icon from "./../../assets/icons/star.png";
 import Api from "./../../api/Api";
 import "./modal.css";
 import Stars from "../Consultant/Stars";
+
 const Modal = () => {
   const [close, setClose] = useState(null);
   const [feedback, setFeedback] = useState("");
@@ -16,7 +17,6 @@ const Modal = () => {
     }).then((item) => console.log("item", item));
   };
 
-  console.log(star);
   return (
     <>
       {close ? null : (
@@ -65,7 +65,7 @@ const Modal = () => {
                     placeholder="Введите отзыв"
                     onChange={(e) => setFeedback(e.target.value)}
                     className="text-feedback"
-                  ></textarea>
+                  />
                 </div>
                 <div className="btnBlock">
                   <button

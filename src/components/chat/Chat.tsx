@@ -10,8 +10,9 @@ type ChatType = {
     id?: number
 }
 const Chat: React.FC<ChatType> = ({id}) => {
-    let [rooms, setRooms] = useState<any>([])
+    const [rooms, setRooms] = useState<any>([])
     const [current, setCurrent] = useState(0)
+    console.log(current)
     useEffect(() => {
         Api.getRooms().then((res: any) => {
                 let data = res.data.map((item: any) => {
@@ -23,7 +24,10 @@ const Chat: React.FC<ChatType> = ({id}) => {
         );
     }, [])
 
-    // console.log('rooms', rooms, id);
+    const setCur = (e:any) => {
+        setCurrent(e)
+    }
+
     return (
         <div className={css.chatWrapper}>
             <div>
@@ -35,7 +39,7 @@ const Chat: React.FC<ChatType> = ({id}) => {
                         rooms.map((item: any) => <User
                             key={item.id}
                             id={item.id}
-                            setCurrent={setCurrent}
+                            setCurrent={setCur}
                             time={item.timestamp} image={item[item.user].photo}
                             name={item[item.user].first_name + ' ' + item[item.user].last_name}/>)
                     }
@@ -59,7 +63,7 @@ type UserProps = {
 }
 const User = (props: UserProps) => {
     return (
-        <div className={css.personWrapper} onClick={props.setCurrent(props.id)}>
+        <div className={css.personWrapper} onClick={()=>props.setCurrent(props.id)}>
             <div className={css.person}>
                 <div className={css.person}>
                     <img src={props.image ? props.image : noPic} alt="#" className={css.personImg}/>
@@ -98,7 +102,7 @@ const MessageBlock = (props: MessageProps) => {
             .then((res)=>{
                 console.log(res)
             })
-    }, [])
+    }, [props.id])
     return (
         <div className={css.message__wrapper}>
             <div className={css.chatHeader}>
