@@ -7,7 +7,7 @@ import Api from "./../../api/Api";
 import { Time } from "../functions/time";
 
 type ChatType = {
-    id?: number
+    id: number
 }
 const Chat: React.FC<ChatType> = ({ id }) => {
     let [rooms, setRooms] = useState<any>([])
@@ -48,7 +48,11 @@ const Chat: React.FC<ChatType> = ({ id }) => {
                 </div>
             </div>
             <div>
-                <MessageBlock id={current} email={email} />
+                {
+                    current
+                        ? <MessageBlock userId={id} id={current} email={email}/>
+                        : <div>Выберите чат что бы начать переписку.</div>
+                }
             </div>
         </div>
     )
@@ -93,21 +97,39 @@ const User = (props: UserProps) => {
     )
 }
 type MessageProps = {
-    id: number, email: string
+    id: number
+    userId: number
+    email: string
 }
 const MessageBlock = (props: MessageProps) => {
     const [inp, setInp] = useState('')
+    const [data, setData] = useState<any>(null)
+    const [user, setUser] = useState<any>(null)
+    const [messages, setMessages] = useState<any>(null)
+
     const submit = (e: any) => {
         e.preventDefault()
         Api.sendMessage(props.email, { message: inp })
             .then((res) => {
-                console.log(res)
+                console.log(res.data)
+                let a = {
+                    ...res.data,
+                    id: props.userId,
+                }
+                setMessages([...messages, a])
             })
     }
     useEffect(() => {
         Api.getRooms(props.id)
             .then((res) => {
                 console.log('res', res);
+                setData(res.data)
+                setMessages(res.data.messages)
+                if(+res.data.first.id === +props.userId){
+                    setUser(res.data.second)
+                }else{
+                    setUser(res.data.first)
+                }
             })
     }, [props.id])
     return (
@@ -115,9 +137,9 @@ const MessageBlock = (props: MessageProps) => {
             <div className={css.chatHeader}>
                 <div>
                     <div className={css.avaWrapper}>
-                        <img src={noPic} alt="#" />
+                        <img src={user?.photo ? user.photo : noPic} alt="#" />
                     </div>
-                    <div className={css.personName}>Аайза Аайза</div>
+                    <div className={css.personName}>{user?.first_name + ' ' + user?.last_name}</div>
                 </div>
                 <div>
                     <button>A</button>
@@ -125,23 +147,11 @@ const MessageBlock = (props: MessageProps) => {
                 </div>
             </div>
             <div className={css.messages}>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
+                {
+                    messages
+                        ? messages?.map((item:any) => <div key={item.id}>{item.message}</div> )
+                        : null
+                }
             </div>
             <form onSubmit={submit} className={css.message__input}>
                 <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
