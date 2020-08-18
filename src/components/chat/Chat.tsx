@@ -4,17 +4,18 @@ import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
 import Api from "./../../api/Api";
-import { Time } from "./../functions/time.js";
+import { Time } from "../functions/time";
+
 type ChatType = {
     id?: number
 }
 const Chat: React.FC<ChatType> = ({ id }) => {
-    let [rooms, setRooms] = useState([])
+    let [rooms, setRooms] = useState<any>([])
+    const [current, setCurrent] = useState(0)
+    const [email, setEmail] = useState('');
     useEffect(() => {
         Api.getRooms().then((res: any) => {
             let data = res.data.map((item: any) => {
-                console.log('item', item);
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 item.user = item.first.id != id ? "first" : "second";
                 return item;
             })
@@ -23,20 +24,7 @@ const Chat: React.FC<ChatType> = ({ id }) => {
         );
     }, [])
 
-    const socketChat = () => {
-        Api.getRooms().then((res: any) => {
-            let data = res.data.map((item: any) => {
-                console.log('item', item);
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-                item.user = item.first.id != id ? "first" : "second";
-                return item;
-            })
-            setRooms(data);
-        }
-        );
-    }
-
-    // setTimeout(() => socketChat(), 5000);
+    // console.log('rooms', rooms, id);
     return (
         <div className={css.chatWrapper}>
             <div>
@@ -45,12 +33,19 @@ const Chat: React.FC<ChatType> = ({ id }) => {
                 </div>
                 <div className={css.userList}>
                     {
-                        rooms.map((item: any) => <User key={item.id} time={item.timestamp} image={item[item.user].photo} name={item[item.user].first_name + ' ' + item[item.user].last_name} />)
+                        rooms.map((item: any) => <User
+                            key={item.id}
+                            id={item.id}
+                            setCurrent={setCurrent}
+                            setEmail={setEmail}
+                            email={item[item.user].email}
+                            time={item.timestamp} image={item[item.user].photo}
+                            name={item[item.user].first_name + ' ' + item[item.user].last_name} />)
                     }
                 </div>
             </div>
             <div>
-
+                <MessageBlock id={current} email={email} />
             </div>
         </div>
     )
@@ -62,10 +57,17 @@ type UserProps = {
     name: string
     image: string
     time: string
+    setCurrent: any
+    id: number
+    email: string
+    setEmail: any;
 }
 const User = (props: UserProps) => {
     return (
-        <div className={css.personWrapper}>
+        <div className={css.personWrapper} onClick={() => {
+            props.setCurrent(props.id);
+            props.setEmail(props.email);
+        }}>
             <div className={css.person}>
                 <div className={css.person}>
                     <img src={props.image ? props.image : noPic} alt="#" className={css.personImg} />
@@ -87,8 +89,24 @@ const User = (props: UserProps) => {
         </div>
     )
 }
-
-const MessageBlock = () => {
+type MessageProps = {
+    id: number, email: string
+}
+const MessageBlock = (props: MessageProps) => {
+    const [inp, setInp] = useState('')
+    const submit = (e: any) => {
+        e.preventDefault()
+        Api.sendMessage(props.email, { message: inp })
+            .then((res) => {
+                console.log(res)
+            })
+    }
+    useEffect(() => {
+        Api.getRooms(props.id)
+            .then((res) => {
+                console.log('res', res);
+            })
+    }, [props.id])
     return (
         <div className={css.message__wrapper}>
             <div className={css.chatHeader}>
@@ -121,48 +139,17 @@ const MessageBlock = () => {
                 <div>messages</div>
                 <div>messages</div>
                 <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
-                <div>messages</div>
             </div>
-            <div className={css.message__input}>
-                <input placeholder={'Введите ваше сообщение'} type="text" />
+            <form onSubmit={submit} className={css.message__input}>
+                <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
+                    type="text" />
                 <span className={css.plus}>
                     <img src={plus} alt="+" />
                 </span>
-                <span className={css.send}>
+                <span onClick={submit} className={css.send}>
                     <img src={send} alt="send" />
                 </span>
-            </div>
+            </form>
         </div>
     )
 }

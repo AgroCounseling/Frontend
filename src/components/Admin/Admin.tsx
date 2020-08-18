@@ -127,7 +127,6 @@ const Admin = () => {
         setSpecialty(arr)
     }, [options, all])
 
-    console.log("user", user);
     useEffect(() => {
         initialise().then((r: any) => {
             if (data.status_client) {

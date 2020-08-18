@@ -44,7 +44,12 @@ export default {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
     }),
-    getRooms: () => http.get(`${getLng()}/api/rooms/`, {
+    getRooms: (id?:number) => http.get(`${getLng()}/api/rooms/${id ? id : ''}`, {
+        headers: {
+            "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
+        }
+    }),
+    sendMessage: (email:string, data:any) => http.post(`${getLng()}/api/messages/${email}`, data, {
         headers: {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
