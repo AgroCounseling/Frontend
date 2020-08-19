@@ -145,7 +145,11 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 } else {
                     setUser(res.data.first)
                 }
-                scrollToBottom()
+                if(scroll){
+                    scrollToBottom()
+                }
+            }, (error: any) => {
+                console.log(error)
             })
     }
     useEffect(() => {
