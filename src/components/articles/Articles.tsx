@@ -25,6 +25,7 @@ const Articles: React.FC<Props> = (props) => {
     const params: any = useParams()
     const history = useHistory()
     const {path, url} = useRouteMatch();
+
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const categoriesList = categories.map((item: any) => {
         return {
@@ -36,8 +37,10 @@ const Articles: React.FC<Props> = (props) => {
     const [articles, setArticles] = useState([])
     const [page, setPage] = useState(1)
     const [pagination, setPagination] = useState(0)
-    const [category, setCategory] = useState<any>(null)
+    const [goBack, setGoBack] = useState(false)
+
     const [search, setSearch] = useState('')
+    const [category, setCategory] = useState<any>(null)
     const [subCategoriesList, setSubCategoriesList] = useState<any>([])
     const [subCategories, setSubCategories] = useState<any>(null)
     const [subCategory, setSubCategory] = useState<any>(null)
@@ -86,7 +89,6 @@ const Articles: React.FC<Props> = (props) => {
         if (subCategory !== null) {
             api.getTypes()
                 .then((res) => {
-                    console.log(res)
                     let newArr = res.data.results.map((item: any) => ({
                         value: item.id,
                         label: item.title,
@@ -103,7 +105,6 @@ const Articles: React.FC<Props> = (props) => {
         if (type !== null) {
             api.getSubTypes()
                 .then((res) => {
-                    console.log(res)
                     let newArr = res.data.results.map((item: any) => ({
                         value: item.id,
                         label: item.title,
@@ -123,7 +124,6 @@ const Articles: React.FC<Props> = (props) => {
     useEffect(() => {
         api.getSubCategory()
             .then((res: AxiosResponse) => {
-                console.log(res.data.results)
                 let newArr = res.data.results.map((item: any) => ({
                     value: item.id,
                     label: item.title,
@@ -174,6 +174,8 @@ const Articles: React.FC<Props> = (props) => {
             <Search value={search} setValue={onSearch}/>
             <div className={css.articlesWrapper}>
                 <ArticleNavBar
+                    goBack={goBack}
+                    setGoBack={()=>setGoBack(false)}
                     getPopular={getPopular}
                     getNew={getNew}
                     typesOption={types}
@@ -214,7 +216,9 @@ const Articles: React.FC<Props> = (props) => {
                         </div>
                     </Route>
                     <Route path={`${path}/:article`}>
-                        <DetailArticle/>
+                        <DetailArticle
+                            setGoBack={() => setGoBack(true)}
+                        />
                     </Route>
                 </Switch>
             </div>
@@ -255,7 +259,10 @@ export const Article: React.FC<ArticleProps> = (props) => {
     )
 }
 
-export const DetailArticle = () => {
+type DetailArticleProps = {
+    setGoBack?: any
+}
+export const DetailArticle = (props:DetailArticleProps) => {
     const params: any = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
@@ -280,6 +287,7 @@ export const DetailArticle = () => {
                     }
                 })
         }
+        props?.setGoBack()
     }, [])
     const checkLike = async (data: any) => {
         return dispatch(checkToken(() => api.putLike(article.id, data)))
@@ -297,7 +305,6 @@ export const DetailArticle = () => {
                 }).then((res) => {
                     setVote(vote - 1)
                     setVoted(false)
-                    console.log(res)
                 })
             } else {
                 checkLike({
@@ -309,7 +316,6 @@ export const DetailArticle = () => {
                 }).then((res) => {
                     setVote(vote + 1)
                     setVoted(true)
-                    console.log(res)
                 })
             }
         } else {
@@ -320,7 +326,6 @@ export const DetailArticle = () => {
     useEffect(() => {
         api.getArticle(params.article)
             .then((res: AxiosResponse) => {
-                console.log(res)
                 setArticle(res.data)
                 setVote(res.data.votes)
                 setPending(false)
@@ -378,6 +383,8 @@ type ArticleNavBarProps = {
     subTypesOption: [{}]
     getNew: () => void
     getPopular: () => void
+    goBack: boolean
+    setGoBack: any
 }
 
 export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
@@ -387,8 +394,17 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
     return (
         <div className={css.navBar}>
             <div className={css.newPopular}>
-                <div onClick={props.getNew}>{t("new")}</div>
-                <div onClick={props.getPopular}>{t("popular")}</div>
+                {
+                    props.goBack
+                        ? <div onClick={()=> {
+                            history.goBack()
+                            props.setGoBack()
+                        }}>Назад</div>
+                        : <>
+                            <div onClick={props.getNew}>{t("new")}</div>
+                            <div onClick={props.getPopular}>{t("popular")}</div>
+                        </>
+                }
             </div>
             <div className={css.filterWrapper}>
                 <div>
