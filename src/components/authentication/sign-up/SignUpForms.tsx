@@ -3,9 +3,6 @@ import css from "../auth.module.css";
 import chooseIcon from "../../../img/choose-icon.png";
 import {Button, Input, Label} from "../styledElements";
 import {Link, useHistory} from "react-router-dom";
-import google from "../../../img/google.png";
-import facebook from "../../../img/facebook.png";
-import twitter from "../../../img/twitter.png";
 import Select from "react-select";
 import {WithAuthRedirect} from "../../../hocs/AuthHoc";
 import {useFormik} from "formik";
@@ -123,7 +120,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                 .then(async (res) => {
                     history.push('sign-in')
                 }, (error: any) => {
-                    setError(error.response.data.user.email[0])
+                    setError(error.response?.data?.user?.email[0])
                     console.log(error.response.data)
                 })
         },
@@ -157,6 +154,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     <Label>
                         Имя
                         <Input
+                            required
                             name={'name'}
                             onChange={formik.handleChange}
                             value={formik.values.name}
@@ -165,6 +163,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     <Label>
                         Фамилия
                         <Input
+                            required
                             name={'surname'}
                             onChange={formik.handleChange}
                             value={formik.values.surname}
@@ -173,6 +172,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     <Label>
                         Email
                         <Input
+                            required
                             name={'email'}
                             onChange={formik.handleChange}
                             value={formik.values.email}
@@ -181,6 +181,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     <Label>
                         Номер
                         <Input
+                            required
                             name={'number'}
                             onChange={formik.handleChange}
                             value={formik.values.number}
@@ -189,22 +190,25 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     <Label>
                         Пароль
                         <Input
+                            required
                             name={'password'}
                             onChange={formik.handleChange}
                             value={formik.values.password}
-                            type="text"/>
+                            type="password"/>
                     </Label>
                     <Label>
                         Подтвердите пароль
                         <Input
+                            required
                             name={'password2'}
                             onChange={formik.handleChange}
                             value={formik.values.password2}
-                            type="text"/>
+                            type="password"/>
                     </Label>
                     <Label>
                         Комментарии
                         <Input
+                            required
                             name={'comment'}
                             onChange={formik.handleChange}
                             value={formik.values.comment}
@@ -238,6 +242,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             </div>
                             {/*<Input className={css.diploma} disabled={true} value={'Прикрепить документ'} type="button"/>*/}
                         </label>
+
                     </Label>
                 </div>
                 <div className={css.errorSignUp}>{
@@ -262,9 +267,6 @@ const Registration = (props: BtnProps) => {
                     <Link className={css.enter} to={'/sign-in'}>Войти</Link>
                 </span>
                 <div>
-                    <Link to={'#'}><img src={google} alt="G"/></Link>
-                    <Link to={'#'}><img src={facebook} alt="F"/></Link>
-                    <Link to={'#'}><img src={twitter} alt="T"/></Link>
                 </div>
             </div>
         </div>

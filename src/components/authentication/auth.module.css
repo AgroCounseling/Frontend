@@ -18,7 +18,7 @@
     font-weight: 500;
     font-size: 24px;
     line-height: 29px;
-
+    padding-top: 10px;
     color: #213336;
 }
 .registration{
@@ -136,6 +136,10 @@
     display: flex;
     justify-content: space-between;
 }
+.loginWith>div>label{
+    cursor: pointer;
+    margin-left: 15px;
+}
 .enter{
     font-size: 20px;
     line-height: 21px;
@@ -147,7 +151,7 @@
     margin-top: 15px;
 }
 .diploma{
-    background: rgba(92, 155, 72, 0.5) !important;
+    background: rgba(92, 155, 72, 0.8) !important;
     font-size: 18px;
     line-height: 21px;
     color: #FFFFFF;

@@ -2,14 +2,18 @@ import React, {useState} from 'react'
 import css from "../auth.module.css";
 import chooseIcon from "../../../img/choose-icon.png";
 import {Button, Input, Label} from "../styledElements";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import google from "../../../img/google.png";
 import facebook from "../../../img/facebook.png";
-import twitter from "../../../img/twitter.png";
 import {WithAuthRedirect} from "../../../hocs/AuthHoc";
 import {useFormik} from "formik";
 import api from './../../../api/Api'
 import {useHistory} from 'react-router-dom'
+import {googleAuth} from "../../../state/authReducer";
+import {useDispatch} from "react-redux";
+import GoogleLogin from "react-google-login";
+import {data} from "../sign-in/SignInForm";
+import FacebookLogin from "react-facebook-login";
 
 
 
@@ -171,6 +175,25 @@ type BtnProps = {
     btn: string
 }
 const Registration = (props: BtnProps) => {
+    const dispatch = useDispatch()
+    const history = useHistory()
+    const params = useParams()
+    const responseGoogle = async (response: any) => {
+        const newDate = {
+            ...data,
+            backend: "google-oauth2",
+            token: response.wc.access_token
+        }
+        dispatch(googleAuth(newDate))
+    }
+    const responseFacebook = async (response: any) => {
+        const newDate = {
+            ...data,
+            facebook: "google-oauth2",
+            token: response.accessToken
+        }
+        dispatch(googleAuth(newDate))
+    }
     return (
         <div className={css.registrationWrapper}>
             <Button>{props.btn}</Button>
@@ -180,9 +203,31 @@ const Registration = (props: BtnProps) => {
                     <Link className={css.enter} to={'/sign-in'}>Войти</Link>
                 </span>
                 <div>
-                    <Link to={'#'}><img src={google} alt="G"/></Link>
-                    <Link to={'#'}><img src={facebook} alt="F"/></Link>
-                    <Link to={'#'}><img src={twitter} alt="T"/></Link>
+                    <GoogleLogin
+                        autoLoad={false}
+                        clientId="675832405065-vkf55huhutjrhearfn5a3agomvk6g0a1.apps.googleusercontent.com"
+                        buttonText=""
+                        onSuccess={responseGoogle}
+                        onFailure={responseGoogle}
+                        cookiePolicy={'single_host_origin'}
+                        render={renderProps => (
+                            <span className={css.links}>
+                                                <img onClick={renderProps.onClick} src={google} alt="G"/>
+                                            </span>
+                        )}
+                    />
+                    <label>
+                        <FacebookLogin
+                            appId="325647148571013"
+                            autoLoad={false}
+                            // fields="name,email,picture"
+                            // onClick={componentClicked}
+                            callback={responseFacebook}
+                            buttonStyle={{
+                                display: 'none'
+                            }}
+                        /><img src={facebook} alt="F"/>
+                    </label>
                 </div>
             </div>
         </div>

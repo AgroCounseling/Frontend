@@ -18,7 +18,7 @@ const Chat: React.FC<ChatType> = ({id}) => {
     useEffect(() => {
         Api.getRooms().then((res: any) => {
                 let data = res.data.map((item: any) => {
-                    item.user = item.first.id != id ? "first" : "second";
+                    item.user = +item.first.id !== +id ? "first" : "second";
                     return item;
                 })
                 setRooms(data);

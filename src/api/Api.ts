@@ -33,8 +33,8 @@ export default {
     signInWithRefresh: () => http.post(`${getLng()}/api/token/refresh/`, {
         "refresh": getRefreshToken()
     }),
-    signUpClient: (data: any) => http.post(`${getLng}/api/signup/client`, data),
-    signUpConsultant: (data: any) => http.post(`${getLng}/api/signup/consultant`, data, {
+    signUpClient: (data: any) => http.post(`${getLng()}/api/signup/client`, data),
+    signUpConsultant: (data: any) => http.post(`${getLng()}/api/signup/consultant`, data, {
         headers: {
             "Content-Type": "application/json"
         }

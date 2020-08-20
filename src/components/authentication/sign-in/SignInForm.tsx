@@ -22,7 +22,7 @@ const validateFormik = {
 }
 
 
-const data = {
+export const data = {
     grant_type: "convert_token",
     client_id: "qJ7cVMs5DPgP9Otg0NEXnQJO3STDnNOc4Xsdc7BU",
     client_secret: "u2d6EdZaXJdI6sEj8N6C8SecOy7xhDsDx1ttoNGA5Xsi72yYuYDzwyxXoxKpwzPxEpmaUs9I5gfAcU85ISzt2eCmDDbRqBT7WGPN4w8mooTvmcMyrBzQESIhM135unJb",
@@ -41,7 +41,7 @@ export const SignIn = WithAuthRedirect(() => {
         }
         let res = await dispatch(googleAuth(newDate))
         // @ts-ignore
-        if(res && !params.id){
+        if (res && !params.id) {
             history.goBack()
         }
     }
@@ -53,7 +53,7 @@ export const SignIn = WithAuthRedirect(() => {
         }
         let res = await dispatch(googleAuth(newDate))
         // @ts-ignore
-        if(res && !params.id){
+        if (res && !params.id) {
             history.goBack()
         }
     }
@@ -67,8 +67,8 @@ export const SignIn = WithAuthRedirect(() => {
             onSubmit={async (values, {setSubmitting}) => {
                 setSubmitting(true);
                 let res = await dispatch(authFunction(values.email, values.password))
-                 // @ts-ignore
-                if(res && !params.id){
+                // @ts-ignore
+                if (res && !params.id) {
                     history.goBack()
                 }
                 setError(!res)
@@ -112,7 +112,8 @@ export const SignIn = WithAuthRedirect(() => {
                                         }
                                         type="text"
                                     />
-                                    {touched.email && errors.email && <div className={css.errorText}>{errors.email}</div>}
+                                    {touched.email && errors.email &&
+                                    <div className={css.errorText}>{errors.email}</div>}
                                 </Label>
                                 <Label>
                                     Пароль
@@ -129,7 +130,8 @@ export const SignIn = WithAuthRedirect(() => {
                                         }
                                         type="password"
                                     />
-                                    {touched.password && errors.password && <div className={css.errorText}>{errors.password}</div>}
+                                    {touched.password && errors.password &&
+                                    <div className={css.errorText}>{errors.password}</div>}
                                 </Label>
                             </div>
                             <div>
@@ -151,8 +153,8 @@ export const SignIn = WithAuthRedirect(() => {
                                         cookiePolicy={'single_host_origin'}
                                         render={renderProps => (
                                             <span className={css.links}>
-                                    <img onClick={renderProps.onClick} src={google} alt="G"/>
-                                </span>
+                                                <img onClick={renderProps.onClick} src={google} alt="G"/>
+                                            </span>
                                         )}
                                     />
                                     <label>
