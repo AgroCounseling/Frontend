@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react'
 import css from './footer.module.css'
 import phone from '../../img/footer-phone.png'
 import location from '../../img/footer-location.png'
-// import twitter from '../../img/black-twitter.png'
-// import insta from '../../img/black-insta.png'
-// import facebook from '../../img/black-facebook.png'
 import logo from '../../img/footer-logo.png'
 import agro from '../../img/AgroConsulting.png'
 import { Link } from "react-router-dom";
@@ -19,7 +16,6 @@ const Footer = () => {
     useEffect(() => {
         api.getContact()
             .then((res) => {
-                console.log(res.data.results[0])
                 setData(res.data.results[0])
             })
     }, [])

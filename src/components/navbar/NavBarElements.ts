@@ -1,10 +1,20 @@
 import styled from 'styled-components'
 
 export const NavBarWrapper = styled.div`
-    padding: 15px 100px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+      padding: 15px 40px;
+      position:relative;
+      display: flex;
+    &>div{
+        padding: 0;
+        margin: 0;
+        position:relative;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: calc(100% - 100px);
+        white-space: nowrap;
+        overflow: hidden;
+    }
     
 `
 
@@ -16,6 +26,8 @@ export const NavBarElement = styled.div`
     align-items: center;
     color: rgba(33, 51, 54, 0.8);
     cursor: pointer;
+    white-space: nowrap;
+    margin: 0 5px;
     &>img{
         display: block;
         margin-top: 5px;

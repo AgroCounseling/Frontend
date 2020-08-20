@@ -122,7 +122,12 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
 
     const submit = (e: any) => {
         e.preventDefault()
-        Send(Api.sendMessage(props.email, {message: inp}))
+        const newForm = new FormData()
+        newForm.append('message', inp)
+        newForm.append('video', '')
+        newForm.append('image', '')
+        newForm.append('audio', '')
+        Send(Api.sendMessage(props.email, newForm))
             .then((res: any) => {
                 let a = {
                     ...res.data,
