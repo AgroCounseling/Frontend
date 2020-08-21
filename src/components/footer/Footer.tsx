@@ -39,7 +39,7 @@ const Footer = () => {
                     </div>
                 </div>
                 <div className={css.centerText}>
-                    <div>Разработано Neobis 2020</div>
+                    <div>{t("designed")} Neobis 2020</div>
                     <div>Copyright © 2020</div>
                 </div>
             </div>
