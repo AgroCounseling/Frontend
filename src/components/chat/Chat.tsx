@@ -128,12 +128,9 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
         e.preventDefault()
         const newForm = new FormData()
         newForm.append('message', inp)
-        // @ts-ignore
-        newForm.append('video', null)
-        // @ts-ignore
+        newForm.append('video', '')
         newForm.append('image', img)
-        // @ts-ignore
-        newForm.append('audio', null)
+        newForm.append('audio', '')
         Send(Api.sendMessage(props.email, newForm))
             .then((res: any) => {
                 let a = {
@@ -200,12 +197,9 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
                        type="text"/>
                 <label className={css.plus}>
-                        <input onChange={(e:any)=>setImg(e.target.files[0])} type="file" style={{display: 'none'}}/>
-                        <img src={plus} alt="+"/>
+                    <input  onChange={(e:any)=>setImg(e.target.files[0])} type="file" style={{display: 'none'}}/>
+                    <img src={plus} alt="+"/>
                 </label>
-                <span className={css.plus}>
-                    <img src={plus} alt="+" />
-                </span>
                 <span onClick={submit} className={css.send}>
                     <img src={send} alt="send" />
                 </span>

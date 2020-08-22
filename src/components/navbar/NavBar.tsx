@@ -17,7 +17,6 @@ const NavBar = (props: OwnProps) => {
     function btnClick() {
         document.querySelector('#m')?.classList.toggle('menu--open');
     }
-
     useEffect(() => {
         window.addEventListener('resize', restart);
         return () => window.removeEventListener('resize', restart);
@@ -30,10 +29,11 @@ const NavBar = (props: OwnProps) => {
         let listElements = Array.from(document.querySelectorAll('.el')),
             invisibleElements = getInvisible(listElements),
             mList: any = document.getElementById('menu-list');
-        // setMenuList(mList)
+
         invisibleElements?.forEach(function (item: any) {
             mList?.appendChild(item);
         })
+        setMenuList(invisibleElements)
     }
 
     function moveBackward() {
@@ -72,21 +72,22 @@ const NavBar = (props: OwnProps) => {
                 }
             </div>
             <span>
-                <NavBarElement onClick={btnClick} id="menu-toggler">
-                    все статьи
-                    <img src={drop} alt="drop"/>
-                </NavBarElement>
+                {
+                    menuList?.length
+                        ? <NavBarElement onClick={btnClick} id="menu-toggler">
+                            <img src={drop} alt="drop"/>
+                        </NavBarElement>
+                        : null
+                }
+                {/*<NavBarElement onClick={btnClick} id="menu-toggler">*/}
+                {/*    <img src={drop} alt="drop"/>*/}
+                {/*</NavBarElement>*/}
                 <div className={css.menu} id={'m'}>
                     <div id="menu-list">
 
                     </div>
                 </div>
             </span>
-            {/*<Link to={'articles'}>*/}
-            {/*<NavBarElement>*/}
-            {/*    все статьи*/}
-            {/*</NavBarElement>*/}
-            {/*</Link>*/}
         </NavBarWrapper>
     )
 }
