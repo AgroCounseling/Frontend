@@ -59,7 +59,7 @@ export const authFunction = (email: string, password: string) => (dispatch: any,
     dispatch(pend(true))
     let a = api.signIn({"email": email, "password": password})
         .then((res)=>{
-            const access_life = Date.now() + (res.data.time_access * 1000)
+            const access_life = Date.now() + ((res.data.time_access - 10) * 1000)
             const refresh_life = Date.now() + (res.data.time_refresh * 1000)
             localStorage.setItem(storageName, JSON.stringify({
                 access_token: res.data.access,
@@ -84,7 +84,7 @@ export const googleAuth = (data:any) => async (dispatch:any) => {
     let a = api.googleAuth(data)
         .then((res)=>{
             console.log(res)
-            const access_life = Date.now() + (res.data.expires_in * 1000)
+            const access_life = Date.now() + ((res.data.expires_in - 10) * 1000)
             localStorage.setItem(storageName, JSON.stringify({
                 access_token: res.data.access_token,
                 refresh_token: res.data.refresh_token,
@@ -105,7 +105,7 @@ export const googleAuth = (data:any) => async (dispatch:any) => {
 
 export const setDataRefresh = () => async (dispatch: any) => {
     const res = await api.signInWithRefresh();
-    const access_life = Date.now() + (res.data.time_access * 1000)
+    const access_life = Date.now() + ((300 - 10) * 1000)
     const userData = JSON.parse(localStorage.getItem('userData') as string)
     const {status_client, refresh_token, status_consultant, refresh_life} = userData;
     localStorage.setItem('userData', JSON.stringify({
@@ -134,7 +134,7 @@ export const googleRefresh = () => async (dispatch:any) => {
     }
     api.googleRefresh(newData)
         .then((res)=>{
-            const access_life = Date.now() + (res.data.expires_in * 1000)
+            const access_life = Date.now() + ((res.data.expires_in - 10) * 1000)
             localStorage.setItem(storageName, JSON.stringify({
                 access_token: res.data.access_token,
                 refresh_token: res.data.refresh_token,
