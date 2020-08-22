@@ -3,6 +3,7 @@ import css from "./chat.module.css";
 import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
+import imgIcon from "./../.../../../assets/icons/Image-512.webp";
 import Api from "./../../api/Api";
 import { Time } from "../functions/time";
 import { useDispatch } from "react-redux";
@@ -75,6 +76,8 @@ type UserProps = {
     messages: string
 }
 const User = (props: UserProps) => {
+
+
     return (
         <div className={props.current === props.id ? css.activeUser + ' ' + css.personWrapper : css.personWrapper}
             onClick={() => {
@@ -171,6 +174,8 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
         let a = setInterval(() => getRoom(), 5000)
         return () => clearInterval(a)
     }, [id])
+
+    const [open, setOpen] = useState(false);
     return (
         <div className={css.message__wrapper}>
             <div className={css.chatHeader}>
@@ -200,12 +205,28 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                         : null
                 }
             </div>
+            {
+                open ? <div className={css.open}>
+                    <label>
+                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
+                        <img src={imgIcon} alt="imgIcon" />
+                    </label><label>
+                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
+                        <img src={imgIcon} alt="imgIcon" />
+                    </label><label>
+                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
+                        <img src={imgIcon} alt="imgIcon" />
+                    </label>
+                </div> : ""
+            }
             <form onSubmit={submit} className={css.message__input}>
                 <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
-                       type="text"/>
+                    type="text" />
                 <label className={css.plus}>
                     <input  onChange={(e:any)=>setImg(e.target.files[0])} accept="image/*" type="file" style={{display: 'none'}}/>
                     <img src={plus} alt="+"/>
+                    {/* <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} /> */}
+                    <img src={plus} alt="+" onClick={() => setOpen(true)} />
                 </label>
                 <span onClick={submit} className={css.send}>
                     <img src={send} alt="send" />

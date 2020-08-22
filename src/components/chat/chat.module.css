@@ -49,13 +49,15 @@
     border-radius: 20px;
 }
 
-.myMessageWrapper{
+.myMessageWrapper {
     margin-left: 15%;
 }
-.messageWrapper{
+
+.messageWrapper {
     margin-right: 15%;
 }
-.myMessage{
+
+.myMessage {
     text-align: right;
     margin: 15px 15px 15px auto;
     padding: 10px 20px;
@@ -70,7 +72,8 @@
     width: fit-content;
     border-radius: 10px 10px 0 10px;
 }
-.message{
+
+.message {
     text-align: left;
     margin: 15px auto 15px 15px;
     padding: 10px 20px;
@@ -280,4 +283,29 @@
 .plus>img {
     width: 100%;
     filter: invert(100%) sepia(1%) saturate(23%) hue-rotate(75deg) brightness(104%) contrast(100%);
+}
+
+
+.open {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 42px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #e5e5e5;
+}
+
+.open img {
+    width: 30px;
+    margin: 5px;
+    
+    height: 30px;
+}
+
+.open img:hover {
+    cursor: pointer;
 }
