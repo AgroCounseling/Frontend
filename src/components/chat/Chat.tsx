@@ -115,6 +115,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const [data, setData] = useState<any>(null)
     const [user, setUser] = useState<any>(null)
     const [messages, setMessages] = useState<any>([])
+    const [img, setImg] = useState<any>(null)
     const messageId: any = useRef(null)
 
     const Send = async (req: any) => {
@@ -131,7 +132,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
         const newForm = new FormData()
         newForm.append('message', inp)
         newForm.append('video', '')
-        newForm.append('image', '')
+        newForm.append('image', img)
         newForm.append('audio', '')
         Send(Api.sendMessage(props.email, newForm))
             .then((res: any) => {
@@ -199,19 +200,25 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
             </div>
             {
                 open ? <div className={css.open}>
-                    <img src={imgIcon} alt="imgIcon" />
-                    <img src={imgIcon} alt="imgIcon" />
-                    <img src={imgIcon} alt="imgIcon" />
-                    {/* <img src />
-                        <img src /> */}
+                    <label>
+                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
+                        <img src={imgIcon} alt="imgIcon" />
+                    </label><label>
+                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
+                        <img src={imgIcon} alt="imgIcon" />
+                    </label><label>
+                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
+                        <img src={imgIcon} alt="imgIcon" />
+                    </label>
                 </div> : ""
             }
             <form onSubmit={submit} className={css.message__input}>
                 <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
                     type="text" />
-                <span className={css.plus} onClick={() => setOpen(true)}>
-                    <img src={plus} alt="+" />
-                </span>
+                <label className={css.plus}>
+                    {/* <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} /> */}
+                    <img src={plus} alt="+" onClick={() => setOpen(true)} />
+                </label>
                 <span onClick={submit} className={css.send}>
                     <img src={send} alt="send" />
                 </span>
