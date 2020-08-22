@@ -42,6 +42,7 @@ const Chat: React.FC<ChatType> = ({ id }) => {
                             key={item.id}
                             id={item.id}
                             setCurrent={setCurrent}
+                            messages={item.new_messages}
                             setEmail={setEmail}
                             email={item[item.user].email}
                             time={item.timestamp} image={item[item.user].photo}
@@ -71,6 +72,7 @@ type UserProps = {
     email: string
     setEmail: any;
     current: number
+    messages: string
 }
 const User = (props: UserProps) => {
     return (
@@ -93,7 +95,7 @@ const User = (props: UserProps) => {
                 </div>
                 <span className={css.count}>
                     <span>
-                        1
+                        {props.messages}
                     </span>
                 </span>
             </div>
@@ -128,9 +130,9 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
         e.preventDefault()
         const newForm = new FormData()
         newForm.append('message', inp)
-        newForm.append('video', '')
+        // newForm.append('video', '')
         newForm.append('image', img)
-        newForm.append('audio', '')
+        // newForm.append('audio', '')
         Send(Api.sendMessage(props.email, newForm))
             .then((res: any) => {
                 let a = {
@@ -188,7 +190,12 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                     messages
                         ? messages?.map((item: any) => <div key={item.id}
                             className={item.user === props.userId ? css.myMessageWrapper : css.messageWrapper}>
-                            <div className={item.user === props.userId ? css.myMessage : css.message}>{item.message}</div>
+                            <div className={item.user === props.userId ? css.myMessage : css.message}>
+                                {
+                                    item?.image ? <img width={'50px'} src={item.image} alt="#"/> : null
+                                }
+                                <div>{item.message}</div>
+                            </div>
                         </div>)
                         : null
                 }
@@ -197,7 +204,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
                        type="text"/>
                 <label className={css.plus}>
-                    <input  onChange={(e:any)=>setImg(e.target.files[0])} type="file" style={{display: 'none'}}/>
+                    <input  onChange={(e:any)=>setImg(e.target.files[0])} accept="image/*" type="file" style={{display: 'none'}}/>
                     <img src={plus} alt="+"/>
                 </label>
                 <span onClick={submit} className={css.send}>
