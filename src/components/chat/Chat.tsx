@@ -4,6 +4,8 @@ import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
 import imgIcon from "./../.../../../assets/icons/Image-512.webp";
+import highVolume from "./../../assets/icons/high-volume.png"
+import videoIcon from "./../../assets/icons/23.Videos-512.png"
 import Api from "./../../api/Api";
 import { Time } from "../functions/time";
 import { useDispatch } from "react-redux";
@@ -205,10 +207,10 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                         <img src={imgIcon} alt="imgIcon" />
                     </label><label>
                         <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
-                        <img src={imgIcon} alt="imgIcon" />
+                        <img src={highVolume} alt="imgIcon" />
                     </label><label>
                         <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
-                        <img src={imgIcon} alt="imgIcon" />
+                        <img src={videoIcon} alt="imgIcon" />
                     </label>
                 </div> : ""
             }
