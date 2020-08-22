@@ -2,10 +2,10 @@ import axios from "axios";
 
 
 const http = axios.create({
-    baseURL: `http://134.122.76.224/`
+    baseURL: `https://agronomy-online.kg/`
 });
 const http_g = axios.create({
-    baseURL: `http://134.122.76.224/`
+    baseURL: `https://agronomy-online.kg/`
 })
 
 const getToken = () => {

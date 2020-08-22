@@ -109,6 +109,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
     const [data, setData] = useState<any>(null)
     const [user, setUser] = useState<any>(null)
     const [messages, setMessages] = useState<any>([])
+    const [img, setImg] = useState<any>(null)
     const messageId: any = useRef(null)
 
     const Send = async (req: any) => {
@@ -124,9 +125,12 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
         e.preventDefault()
         const newForm = new FormData()
         newForm.append('message', inp)
-        newForm.append('video', '')
-        newForm.append('image', '')
-        newForm.append('audio', '')
+        // @ts-ignore
+        newForm.append('video', null)
+        // @ts-ignore
+        newForm.append('image', img)
+        // @ts-ignore
+        newForm.append('audio', null)
         Send(Api.sendMessage(props.email, newForm))
             .then((res: any) => {
                 let a = {
@@ -150,7 +154,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 } else {
                     setUser(res.data.first)
                 }
-                if(scroll){
+                if (scroll) {
                     scrollToBottom()
                 }
             }, (error: any) => {
@@ -192,9 +196,10 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
             <form onSubmit={submit} className={css.message__input}>
                 <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
                        type="text"/>
-                <span className={css.plus}>
-                    <img src={plus} alt="+"/>
-                </span>
+                <label className={css.plus}>
+                        <input onChange={(e:any)=>setImg(e.target.files[0])} type="file" style={{display: 'none'}}/>
+                        <img src={plus} alt="+"/>
+                </label>
                 <span onClick={submit} className={css.send}>
                     <img src={send} alt="send"/>
                 </span>
