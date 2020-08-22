@@ -1,28 +1,31 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import css from "./chat.module.css";
 import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
 import Api from "./../../api/Api";
-import {Time} from "../functions/time";
-import {useDispatch} from "react-redux";
-import {checkToken} from "../../state/authReducer";
+import { Time } from "../functions/time";
+import { useDispatch } from "react-redux";
+import { checkToken } from "../../state/authReducer";
+import { useTranslation } from "react-i18next";
 
 type ChatType = {
     id: number
 }
-const Chat: React.FC<ChatType> = ({id}) => {
+const Chat: React.FC<ChatType> = ({ id }) => {
+    const { t } = useTranslation();
+
     let [rooms, setRooms] = useState<any>([])
     const [current, setCurrent] = useState(0)
     const [email, setEmail] = useState('');
     useEffect(() => {
         Api.getRooms().then((res: any) => {
-                let data = res.data.map((item: any) => {
-                    item.user = +item.first.id !== +id ? "first" : "second";
-                    return item;
-                })
-                setRooms(data);
-            }
+            let data = res.data.map((item: any) => {
+                item.user = +item.first.id !== +id ? "first" : "second";
+                return item;
+            })
+            setRooms(data);
+        }
         );
     }, [])
 
@@ -30,7 +33,7 @@ const Chat: React.FC<ChatType> = ({id}) => {
         <div className={css.chatWrapper}>
             <div>
                 <div className={css.searchWrapper}>
-                    <input type="text" placeholder={'искать'}/>
+                    <input type="text" placeholder={t('search')} />
                 </div>
                 <div className={css.userList}>
                     {
@@ -42,15 +45,15 @@ const Chat: React.FC<ChatType> = ({id}) => {
                             setEmail={setEmail}
                             email={item[item.user].email}
                             time={item.timestamp} image={item[item.user].photo}
-                            name={item[item.user].first_name + ' ' + item[item.user].last_name}/>)
+                            name={item[item.user].first_name + ' ' + item[item.user].last_name} />)
                     }
                 </div>
             </div>
             <div>
                 {
                     current
-                        ? <MessageBlock userId={id} id={current} email={email}/>
-                        : <div>Выберите чат что бы начать переписку.</div>
+                        ? <MessageBlock userId={id} id={current} email={email} />
+                        : <div>{t('selectChatText')}</div>
                 }
             </div>
         </div>
@@ -72,13 +75,13 @@ type UserProps = {
 const User = (props: UserProps) => {
     return (
         <div className={props.current === props.id ? css.activeUser + ' ' + css.personWrapper : css.personWrapper}
-             onClick={() => {
-                 props.setCurrent(props.id);
-                 props.setEmail(props.email);
-             }}>
+            onClick={() => {
+                props.setCurrent(props.id);
+                props.setEmail(props.email);
+            }}>
             <div className={css.person}>
                 <div className={css.person}>
-                    <img src={props.image ? props.image : noPic} alt="#" className={css.personImg}/>
+                    <img src={props.image ? props.image : noPic} alt="#" className={css.personImg} />
                     <div className={css.personName}>{props.name}</div>
                 </div>
                 <div className={css.peronTime}>{Time(props.time)}</div>
@@ -102,7 +105,7 @@ type MessageProps = {
     userId: number
     email: string
 }
-const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
+const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const dispatch = useDispatch()
 
     const [inp, setInp] = useState('')
@@ -174,7 +177,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
             <div className={css.chatHeader}>
                 <div>
                     <div className={css.avaWrapper}>
-                        <img src={user?.photo ? user.photo : noPic} alt="#"/>
+                        <img src={user?.photo ? user.photo : noPic} alt="#" />
                     </div>
                     <div className={css.personName}>{user?.first_name + ' ' + user?.last_name}</div>
                 </div>
@@ -187,7 +190,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 {
                     messages
                         ? messages?.map((item: any) => <div key={item.id}
-                                                            className={item.user === props.userId ? css.myMessageWrapper : css.messageWrapper}>
+                            className={item.user === props.userId ? css.myMessageWrapper : css.messageWrapper}>
                             <div className={item.user === props.userId ? css.myMessage : css.message}>{item.message}</div>
                         </div>)
                         : null
@@ -200,8 +203,11 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                         <input onChange={(e:any)=>setImg(e.target.files[0])} type="file" style={{display: 'none'}}/>
                         <img src={plus} alt="+"/>
                 </label>
+                <span className={css.plus}>
+                    <img src={plus} alt="+" />
+                </span>
                 <span onClick={submit} className={css.send}>
-                    <img src={send} alt="send"/>
+                    <img src={send} alt="send" />
                 </span>
             </form>
         </div>
