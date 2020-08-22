@@ -3,6 +3,7 @@ import css from "./chat.module.css";
 import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
+import imgIcon from "./../.../../../assets/icons/Image-512.webp";
 import Api from "./../../api/Api";
 import { Time } from "../functions/time";
 import { useDispatch } from "react-redux";
@@ -73,6 +74,8 @@ type UserProps = {
     current: number
 }
 const User = (props: UserProps) => {
+
+
     return (
         <div className={props.current === props.id ? css.activeUser + ' ' + css.personWrapper : css.personWrapper}
             onClick={() => {
@@ -168,6 +171,8 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
         let a = setInterval(() => getRoom(), 5000)
         return () => clearInterval(a)
     }, [id])
+
+    const [open, setOpen] = useState(false);
     return (
         <div className={css.message__wrapper}>
             <div className={css.chatHeader}>
@@ -192,15 +197,25 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                         : null
                 }
             </div>
+            {
+                open ? <div className={css.open}>
+                    <img src={imgIcon} alt="imgIcon" />
+                    <img src={imgIcon} alt="imgIcon" />
+                    <img src={imgIcon} alt="imgIcon" />
+                    {/* <img src />
+                        <img src /> */}
+                </div> : ""
+            }
             <form onSubmit={submit} className={css.message__input}>
                 <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
                     type="text" />
-                <span className={css.plus}>
+                <span className={css.plus} onClick={() => setOpen(true)}>
                     <img src={plus} alt="+" />
                 </span>
                 <span onClick={submit} className={css.send}>
                     <img src={send} alt="send" />
                 </span>
+
             </form>
         </div>
     )
