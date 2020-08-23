@@ -23,7 +23,7 @@ const getTokenType = () => {
 
 const getLng = () => {
     let lng = localStorage.getItem('i18nextLng')
-    return lng === 'ru-Ru' ? 'ru' : lng
+    return lng === 'ru-RU' ? 'ru' : lng
 }
 
 
