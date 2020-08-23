@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import css from "../auth.module.css";
 import chooseIcon from "../../../img/choose-icon.png";
-import {Button, Input, Label} from "../styledElements";
-import {Link, useHistory} from "react-router-dom";
+import { Button, Input, Label } from "../styledElements";
+import { Link, useHistory } from "react-router-dom";
 import Select from "react-select";
-import {WithAuthRedirect} from "../../../hocs/AuthHoc";
-import {useFormik} from "formik";
+import { WithAuthRedirect } from "../../../hocs/AuthHoc";
+import { useFormik } from "formik";
 import api from './../../../api/Api'
 import add_pic from '../../../img/add_pic.png'
-import {useSelector} from "react-redux";
-import {GlobalStateType} from "../../../state/root-reducer";
-import {getSpecialties} from "../../../state/selectors";
+import { useSelector } from "react-redux";
+import { GlobalStateType } from "../../../state/root-reducer";
+import { getSpecialties } from "../../../state/selectors";
+import { useTranslation } from "react-i18next";
 
 const customStyles = {
     container: (base: any, state: any) => ({
@@ -28,6 +29,7 @@ const customStyles = {
 
 
 export const RegisterFormConsultant = WithAuthRedirect(() => {
+    const { t } = useTranslation();
     const categories = useSelector((state: GlobalStateType) => getSpecialties(state))
     const history = useHistory()
     const [specialization, setSpecialization] = useState<any>(null)
@@ -78,7 +80,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                 specialty: specialization.map((item: any) => ({
                     "category": item.value
                 })),
-                certificates: pic.map((item:any)=>({
+                certificates: pic.map((item: any) => ({
                     "certificate_image": item
                 })),
                 password1: values.password2,
@@ -129,16 +131,16 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={css.registration}>
-                Зарегистрируйтесь, чтобы получить доступ к консультации
+                {t('singInText')}
             </div>
             <div>
                 <label>
                     <div className={css.choosePic}>
                         <input onChange={(e: any) => {
                             const reader = new FileReader();
-                            if(e.target.files.length) {
+                            if (e.target.files.length) {
                                 reader.readAsDataURL(e.target.files[0])
-                            }else{
+                            } else {
                                 setImg('')
                             }
                             reader.onload = (e: any) => {
@@ -146,19 +148,19 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                                 setImg(newUrl[1])
                             }
                             setPhoto(e.target.files[0])
-                        }} type={'file'}/>
-                        <img src={img ? "data:image/jpg;base64," + img : chooseIcon} alt="#"/>
+                        }} type={'file'} />
+                        <img src={img ? "data:image/jpg;base64," + img : chooseIcon} alt="#" />
                     </div>
                 </label>
                 <div className={css.form}>
                     <Label>
-                        Имя
+                        {t('name')}
                         <Input
                             required
                             name={'name'}
                             onChange={formik.handleChange}
                             value={formik.values.name}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
                         Фамилия
@@ -167,7 +169,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             name={'surname'}
                             onChange={formik.handleChange}
                             value={formik.values.surname}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
                         Email
@@ -176,7 +178,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             name={'email'}
                             onChange={formik.handleChange}
                             value={formik.values.email}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
                         Номер
@@ -185,25 +187,25 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             name={'number'}
                             onChange={formik.handleChange}
                             value={formik.values.number}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
-                        Пароль
+                        {t('password')}
                         <Input
                             required
                             name={'password'}
                             onChange={formik.handleChange}
                             value={formik.values.password}
-                            type="password"/>
+                            type="password" />
                     </Label>
                     <Label>
-                        Подтвердите пароль
+                        {t('confirm-password')}
                         <Input
                             required
                             name={'password2'}
                             onChange={formik.handleChange}
                             value={formik.values.password2}
-                            type="password"/>
+                            type="password" />
                     </Label>
                     <Label>
                         Комментарии
@@ -212,7 +214,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             name={'comment'}
                             onChange={formik.handleChange}
                             value={formik.values.comment}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
                         Специальность
@@ -231,13 +233,13 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                         Диплом
                         <label className={css.file}>
                             <input type="file"
-                                   multiple={true}
-                                   onChange={fileSelectHandler}
+                                multiple={true}
+                                onChange={fileSelectHandler}
                             />
                             <div className={css.diploma}>
                                 <span>
-                                    <img src={add_pic} alt="#"/>
-                                    Прикрепить документ
+                                    <img src={add_pic} alt="#" />
+                                    {t('add-document')}
                                 </span>
                             </div>
                             {/*<Input className={css.diploma} disabled={true} value={'Прикрепить документ'} type="button"/>*/}
@@ -248,7 +250,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                 <div className={css.errorSignUp}>{
                     error ? error : null
                 }</div>
-                <Registration btn={'Зарегистрироваться'}/>
+                <Registration btn={t('register')} />
             </div>
         </form>
     )
@@ -258,13 +260,14 @@ type BtnProps = {
     btn: string
 }
 const Registration = (props: BtnProps) => {
+    const { t } = useTranslation();
     return (
         <div className={css.registrationWrapper}>
             <Button>{props.btn}</Button>
             <div className={css.loginWith}>
                 <span>
                     или <span>  </span>
-                    <Link className={css.enter} to={'/sign-in'}>Войти</Link>
+                    <Link className={css.enter} to={'/sign-in'}>{t('singIn')}</Link>
                 </span>
                 <div>
                 </div>

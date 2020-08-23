@@ -1,21 +1,21 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import api from '../../api/Api'
-import {useSelector} from "react-redux";
-import {GlobalStateType} from "../../state/root-reducer";
+import { useSelector } from "react-redux";
+import { GlobalStateType } from "../../state/root-reducer";
 import ConsultantCard from "../consultantCard/ConsultantCard";
-import {getSpecialties} from "../../state/selectors";
+import { getSpecialties } from "../../state/selectors";
 import css from './search.module.css'
-import {Header} from "../Styles";
-import {useTranslation} from "react-i18next";
-import {QuestionWrappers} from "../forum/forum-styles";
-import {Question} from "../forum/Forum";
+import { Header } from "../Styles";
+import { useTranslation } from "react-i18next";
+import { QuestionWrappers } from "../forum/forum-styles";
+import { Question } from "../forum/Forum";
 import NoElement from "../../utils/NoElement";
-import {Article} from "../articles/Articles";
+import { Article } from "../articles/Articles";
 import Preloader from "../preloader/Preloader";
 
 
 const Search = () => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const str = useSelector((state: GlobalStateType) => state.app.search)
     const specialties = useSelector((state: GlobalStateType) => getSpecialties(state))
     const [articles, setArticles] = useState<any>(null)
@@ -35,8 +35,8 @@ const Search = () => {
             })
     }, [str])
 
-    if(pending){
-        return  <Preloader />
+    if (pending) {
+        return <Preloader />
     }
     return (
         <div className={css.wrapper}>
@@ -57,7 +57,7 @@ const Search = () => {
                             key={item.id}
                         />)
                     }</div>
-                    : <NoElement text={'Консультанты не найдены'}/>
+                    : <NoElement text={t('noConsultant')} />
             }
             <Header>Форум</Header>
             {
@@ -67,31 +67,31 @@ const Search = () => {
                             forum?.map((item: any, index: number) => {
                                 if (index === forum.length - 1) {
                                     return <Question noAnswer={true} comment_count={item.comment_count} key={item.id}
-                                                     id={item.id}
-                                                     title={item.title} last={true}/>
+                                        id={item.id}
+                                        title={item.title} last={true} />
                                 }
                                 return <Question noAnswer={true} comment_count={item.comment_count} key={item.id}
-                                                 id={item.id}
-                                                 title={item.title}/>
+                                    id={item.id}
+                                    title={item.title} />
                             })
                         }
                     </QuestionWrappers>
-                    : <NoElement text={'Вопросы не найдены'}/>
+                    : <NoElement text={t('noQuestion')} />
             }
             <Header>Статьи</Header>
             {
                 articles?.length ? articles?.map((item: any) => <Article
-                        newUrl={'/article-detail'}
-                        key={item.id}
-                        id={item.id}
-                        description={item.text}
-                        title={item.title}
-                        date={item.pub_date}
-                        name={item.user.first_name + ' ' + item.user.last_name}
-                        category={item.category}
-                    />)
+                    newUrl={'/article-detail'}
+                    key={item.id}
+                    id={item.id}
+                    description={item.text}
+                    title={item.title}
+                    date={item.pub_date}
+                    name={item.user.first_name + ' ' + item.user.last_name}
+                    category={item.category}
+                />)
 
-                    : <NoElement text={'Нет статей'}/>
+                    : <NoElement text={'Нет статей'} />
             }
         </div>
     )

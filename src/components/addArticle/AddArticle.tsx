@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from "react-select";
-import {selectStyle} from "../../utils/SelectStyle";
+import { selectStyle } from "../../utils/SelectStyle";
 import css from './addArticle.module.css'
-import {Editor} from 'react-draft-wysiwyg';
-import {EditorState, convertToRaw} from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import { EditorState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 // @ts-ignore
 import draftToHtml from 'draftjs-to-html';
-import {useDispatch, useSelector} from "react-redux";
-import {GlobalStateType} from "../../state/root-reducer";
-import {getCategories} from "../../state/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { GlobalStateType } from "../../state/root-reducer";
+import { getCategories } from "../../state/selectors";
 import api from "../../api/Api";
-import {AxiosResponse} from "axios";
-import {useFormik} from "formik";
-import {checkToken} from "../../state/authReducer";
-import {useHistory} from 'react-router-dom';
-import {MainButton} from "../Styles";
-import {useTranslation} from "react-i18next";
+import { AxiosResponse } from "axios";
+import { useFormik } from "formik";
+import { checkToken } from "../../state/authReducer";
+import { useHistory } from 'react-router-dom';
+import { MainButton } from "../Styles";
+import { useTranslation } from "react-i18next";
 import ModalWrapper from "../../utils/modalWindow";
-import {NoOption} from "../../utils/NoElement";
+import { NoOption } from "../../utils/NoElement";
 
 
 type Props = {
@@ -26,7 +26,7 @@ type Props = {
     last_name: string
 }
 const AddArticle: React.FC<Props> = (props) => {
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const dispatch = useDispatch()
     const history = useHistory()
     console.log(history)
@@ -117,7 +117,7 @@ const AddArticle: React.FC<Props> = (props) => {
                 let reader = new FileReader();
 
                 reader.onloadend = function () {
-                    resolve({data: {link: reader.result}})
+                    resolve({ data: { link: reader.result } })
                 }
                 reader.readAsDataURL(file);
             }
@@ -130,29 +130,29 @@ const AddArticle: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.title}>{t("category")}</div>
                     <Select onChange={(e) => setCategory(e)}
-                            noOptionsMessage={() => NoOption('Нет категорий')}
-                            value={category}
-                            styles={selectStyle}
-                            placeholder={t("selectCategoryText")}
-                            options={categoriesList}/>
+                        noOptionsMessage={() => NoOption('Нет категорий')}
+                        value={category}
+                        styles={selectStyle}
+                        placeholder={t("selectCategoryText")}
+                        options={categoriesList} />
                 </div>
                 <div>
                     <div className={css.title}>{t("subCategory")}</div>
                     <Select onChange={(e: any) => setSubCategory(e)}
-                            noOptionsMessage={() => NoOption('Нет подкатегорий')}
-                            value={subCategory}
-                            styles={selectStyle}
-                            placeholder={t("selectCategoryText")}
-                            options={subCategories}/>
+                        noOptionsMessage={() => NoOption('Нет подкатегорий')}
+                        value={subCategory}
+                        styles={selectStyle}
+                        placeholder={t("selectCategoryText")}
+                        options={subCategories} />
                 </div>
                 <div>
                     <div className={css.title}>{t("type")}</div>
                     <Select onChange={(e: any) => setType(e)}
-                            noOptionsMessage={() => NoOption('Нет видов')}
-                            value={type}
-                            styles={selectStyle}
-                            placeholder={t("selectCategoryText")}
-                            options={types}/>
+                        noOptionsMessage={() => NoOption('Нет видов')}
+                        value={type}
+                        styles={selectStyle}
+                        placeholder={t("selectCategoryText")}
+                        options={types} />
                 </div>
             </div>
             <div className={css.text_wrapper}>
@@ -164,7 +164,7 @@ const AddArticle: React.FC<Props> = (props) => {
                         value={formik.values.title}
                         onChange={formik.handleChange}
                         name={'title'}
-                        placeholder={`${t('titleArticleText')}.......`}/>
+                        placeholder={`${t('titleArticleText')}.......`} />
                 </div>
                 <div>
                     <div className={css.title}>{t("descriptionArticle")}</div>
@@ -177,15 +177,15 @@ const AddArticle: React.FC<Props> = (props) => {
                             setEditor(e)
                         }}
                         toolbar={{
-                            inline: {inDropdown: false},
-                            list: {inDropdown: true},
-                            textAlign: {inDropdown: true},
-                            link: {inDropdown: true},
-                            history: {inDropdown: true},
+                            inline: { inDropdown: false },
+                            list: { inDropdown: true },
+                            textAlign: { inDropdown: true },
+                            link: { inDropdown: true },
+                            history: { inDropdown: true },
                             image: {
                                 uploadCallback: uploadCallback,
                                 preview_image: true,
-                                alt: {present: false, mandatory: false}
+                                alt: { present: false, mandatory: false }
                             },
                         }}
                     />

@@ -6,7 +6,7 @@ import logo from '../../img/footer-logo.png'
 import agro from '../../img/AgroConsulting.png'
 import { Link } from "react-router-dom";
 import api from '../../api/Api'
-import {PhonesWrapper} from "../Styles";
+import { PhonesWrapper } from "../Styles";
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
@@ -26,7 +26,7 @@ const Footer = () => {
                     <span className={css.title}>{t('uslugs')}</span>
                 </div>
                 <Link style={{ color: "#000000" }} to={'/payment'}>{t('consult')}</Link>
-                <Link style={{ color: "#000000" }} to={'/forum'}>Форму</Link>
+                <Link style={{ color: "#000000" }} to={'/forum'}>Форум</Link>
                 <Link style={{ color: "#000000" }} to={'/add-question'}>{t("questionText")}</Link>
             </div>
             <div>
@@ -49,13 +49,13 @@ const Footer = () => {
                 </div>
                 <div>
                     <PhonesWrapper>
-                    {
-                        data?.phones.map((item:any)=> <div key={item.phone}> <img src={phone} alt="phone"/> <a href={`tel:${item?.phone}`}>
+                        {
+                            data?.phones.map((item: any) => <div key={item.phone}> <img src={phone} alt="phone" /> <a href={`tel:${item?.phone}`}>
                                 {item?.phone}
                             </a>
-                        </div>
-                        )
-                    }
+                            </div>
+                            )
+                        }
                     </PhonesWrapper>
                 </div>
                 <div>

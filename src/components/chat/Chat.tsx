@@ -3,13 +3,13 @@ import css from "./chat.module.css";
 import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
-import imgIcon from "./../.../../../assets/icons/Image-512.webp";
-import highVolume from "./../../assets/icons/high-volume.png"
-import videoIcon from "./../../assets/icons/23.Videos-512.png"
 import Api from "./../../api/Api";
 import { Time } from "../functions/time";
 import { useDispatch } from "react-redux";
 import { checkToken } from "../../state/authReducer";
+import highVolume from "./../../assets/icons/high-volume.png"
+import videoIcon from "./../../assets/icons/23.Videos-512.png"
+import imgIcon from "./../.../../../assets/icons/Image-512.webp";
 import { useTranslation } from "react-i18next";
 
 type ChatType = {
@@ -120,6 +120,8 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const [user, setUser] = useState<any>(null)
     const [messages, setMessages] = useState<any>([])
     const [img, setImg] = useState<any>(null)
+    const [video, setVideo] = useState<any>(null)
+    const [audio, setAudio] = useState<any>(null)
     const messageId: any = useRef(null)
 
     const Send = async (req: any) => {
@@ -135,9 +137,10 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
         e.preventDefault()
         const newForm = new FormData()
         newForm.append('message', inp)
-        // newForm.append('video', '')
-        newForm.append('image', img)
-        // newForm.append('audio', '')
+        if (video) newForm.append('video', video)
+        if (img) newForm.append('image', img)
+        if (audio) newForm.append('audio', audio)
+
         Send(Api.sendMessage(props.email, newForm))
             .then((res: any) => {
                 let a = {
@@ -146,6 +149,9 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 }
                 setMessages([...messages, a])
                 setInp('')
+                setVideo(null)
+                setImg(null)
+                setAudio(null)
                 scrollToBottom()
             })
     }
@@ -199,7 +205,14 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                             className={item.user === props.userId ? css.myMessageWrapper : css.messageWrapper}>
                             <div className={item.user === props.userId ? css.myMessage : css.message}>
                                 {
-                                    item?.image ? <img width={'50px'} src={item.image} alt="#"/> : null
+                                    item?.image ? <img width={'50px'} src={item.image} alt="#" /> : null
+                                }
+                                {
+                                    item?.video ? <video width="400" controls>
+                                        <source src={item.video} type="video/mp4" />
+                                        <source src={item.video} type="video/ogg" />
+                                        Your browser does not support HTML video.
+                                    </video> : null
                                 }
                                 <div>{item.message}</div>
                             </div>
@@ -210,26 +223,26 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
             {
                 open ? <div className={css.open}>
                     <label>
-                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
+                        <input onChange={(e: any) => setImg(e.target.files[0])} accept="image/*" type="file"
+                            style={{ display: 'none' }} />
                         <img src={imgIcon} alt="imgIcon" />
                     </label><label>
-                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
-                        <img src={highVolume} alt="imgIcon" />
+                        <input onChange={(e: any) => setVideo(e.target.files[0])} accept="Video/*" type="file"
+                            style={{ display: 'none' }} />
+                        <img src={videoIcon} alt="videoIcon" />
                     </label><label>
-                        <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} />
-                        <img src={videoIcon} alt="imgIcon" />
+                        <input onChange={(e: any) => setAudio(e.target.files[0])} accept="Audio/*" type="file"
+                            style={{ display: 'none' }} />
+                        <img src={highVolume} alt="highVolume" />
                     </label>
                 </div> : ""
             }
             <form onSubmit={submit} className={css.message__input}>
                 <input placeholder={'Введите ваше сообщение'} value={inp} onChange={(e) => setInp(e.target.value)}
                     type="text" />
-                <label className={css.plus}>
-                    <input  onChange={(e:any)=>setImg(e.target.files[0])} accept="image/*" type="file" style={{display: 'none'}}/>
-                    <img src={plus} alt="+"/>
-                    {/* <input onChange={(e: any) => setImg(e.target.files[0])} type="file" style={{ display: 'none' }} /> */}
+                <span className={css.plus}>
                     <img src={plus} alt="+" onClick={() => setOpen(true)} />
-                </label>
+                </span>
                 <span onClick={submit} className={css.send}>
                     <img src={send} alt="send" />
                 </span>
