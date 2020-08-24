@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 function Language() {
   const { i18n } = useTranslation();
   const [click, setClick] = useState(false);
+  // const [lang, setLang] = useState("ru");
 
   const changeLang = (lang) => {
     setClick(true);

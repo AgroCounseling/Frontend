@@ -1,7 +1,8 @@
 import React from 'react'
-import {Ava, CardWrapper, ConnectButton, Description, Specialization, Star} from "./CardStyled";
+import { Ava, CardWrapper, ConnectButton, Description, Specialization, Star } from "./CardStyled";
 import star from '../../img/star.png'
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 type OwnProps = {
     id: string | number
@@ -14,6 +15,8 @@ type OwnProps = {
 }
 
 const ConsultantCard: React.FC<OwnProps> = (props) => {
+    const { t } = useTranslation();
+
     return (
         <CardWrapper>
             <Link to={`/consultant/${props.id}`}>
@@ -24,23 +27,23 @@ const ConsultantCard: React.FC<OwnProps> = (props) => {
                         src={
                             props.url !== null ? props.url : "https://thumbs.dreamstime.com/b/young-man-agronom-checking-state-vegetables-tomatoes-tablet-greenhouse-men-agriculture-96553509.jpg"
                         }
-                        alt="#"/>
+                        alt="#" />
                 </Ava>
                 <Star>
                     {props.star}
-                    <img src={star} alt="star"/>
+                    <img src={star} alt="star" />
                 </Star>
                 <h2>{props.name} {props.last_name}</h2>
 
                 <Description>
-                    {props.description ? props.description : 'Нет описания'}
+                    {props.description ? props.description : t('')}
                 </Description>
 
-                <hr/>
+                <hr />
 
                 <p>
                     <Specialization>
-                        Специализация:
+                        {t('specialization')}:
                     </Specialization>
                     <span>
                         {props.specialization.map((item: any, index) => item ? index + 1 === props.specialization.length ? item.title : item.title + ', ' : null)}
@@ -49,7 +52,7 @@ const ConsultantCard: React.FC<OwnProps> = (props) => {
             </Link>
             <Link to={'/payment'}>
                 <ConnectButton>
-                    Связаться
+                    {t('selectConsultant')}
                 </ConnectButton>
             </Link>
         </CardWrapper>

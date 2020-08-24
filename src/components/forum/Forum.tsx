@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {Header, Wrapper} from "../Styles";
+import React, { useEffect, useState } from 'react'
+import { Header, Wrapper } from "../Styles";
 import {
     FormWrapper,
     Input,
@@ -11,15 +11,16 @@ import {
     Answers,
     Search, FilterWrapper
 } from "./forum-styles";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import api from '../../api/Api'
 import Preloader from "../preloader/Preloader";
 import Pagination from "../pagination/Pagination";
 import noPicture from '../../img/noPicture.png'
 import Footer from "../footer/Footer";
-import {GlobalStateType} from "../../state/root-reducer";
-import {getCategories} from '../../state/selectors'
-import {connect} from "react-redux";
+import { GlobalStateType } from "../../state/root-reducer";
+import { getCategories } from '../../state/selectors'
+import { connect } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 // const colourStyles = {
 //     control: (styles: any) => ({
@@ -50,6 +51,7 @@ type Props = {
     categories?: any
 }
 const Forum: React.FC<Props> = (props) => {
+    const { t } = useTranslation();
     // const categories = props.categories.map((item: any) => {
     //     return {
     //         value: item.id,
@@ -62,7 +64,7 @@ const Forum: React.FC<Props> = (props) => {
     const [pagination, setPagination] = useState(0)
     const [page, setPage] = useState(1)
     const [text, setText] = useState('')
-    const [filter, setFilter] = useState<{value: number, label: string}|null>(null)
+    const [filter, setFilter] = useState<{ value: number, label: string } | null>(null)
 
     useEffect(() => {
         api.getForums(page)
@@ -108,7 +110,7 @@ const Forum: React.FC<Props> = (props) => {
             )
     }
     if (pending) {
-        return <Preloader/>
+        return <Preloader />
     }
     return (
         <>
@@ -117,11 +119,11 @@ const Forum: React.FC<Props> = (props) => {
                 <Search>
                     <FormWrapper onSubmit={submit}>
                         <Input value={text} onChange={(e: any) => setText(e.target.value)}
-                               placeholder={'Введите ваш вопрос.......'} type="text"/>
-                        <Button>Искать</Button>
+                            placeholder={t('questionText')} type="text" />
+                        <Button>{t('search')}</Button>
                     </FormWrapper>
                     <Link to={'/add-question'}>
-                        <Button>Задать вопрос</Button>
+                        <Button>{t('question?')}</Button>
                     </Link>
                 </Search>
                 <FilterWrapper>
@@ -131,7 +133,7 @@ const Forum: React.FC<Props> = (props) => {
                     {/*</FilterBy>*/}
                     <span />
                     <div onClick={removeAll}>
-                        Сбросить все
+                        {t('clean')}
                     </div>
                 </FilterWrapper>
                 <QuestionWrappers>
@@ -139,16 +141,16 @@ const Forum: React.FC<Props> = (props) => {
                         questions.map((item: any, index: number) => {
                             if (index === questions.length - 1) {
                                 return <Question comment_count={item.comment_count} key={item.id} id={item.id}
-                                                 title={item.title} last={true}/>
+                                    title={item.title} last={true} />
                             }
                             return <Question comment_count={item.comment_count} key={item.id} id={item.id}
-                                             title={item.title}/>
+                                title={item.title} />
                         })
                     }
                 </QuestionWrappers>
-                <Pagination setPage={setPage} pageCount={pagination}/>
+                <Pagination setPage={setPage} pageCount={pagination} />
             </Wrapper>
-            <Footer/>
+            <Footer />
         </>
     )
 }
@@ -162,6 +164,7 @@ type QuestionProps = {
 }
 
 export const Question = (props: QuestionProps) => {
+    const { t } = useTranslation();
     return (
         <Link to={`/answer/${props.id}`}>
             <AnswerWrapper style={{
@@ -169,7 +172,7 @@ export const Question = (props: QuestionProps) => {
             }}>
                 <ImageWrapper>
                     <Text>
-                        <img src={noPicture} alt="#"/>
+                        <img src={noPicture} alt="#" />
                     </Text>
                     <span>{props.title}</span>
                 </ImageWrapper>
@@ -180,7 +183,7 @@ export const Question = (props: QuestionProps) => {
                                 {props.comment_count}
                             </div>
                             <p>
-                                ответ
+                                {t('answer')}
                             </p>
                         </Answers>
                         : <span />

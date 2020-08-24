@@ -1,17 +1,18 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import css from "../auth.module.css";
-import {Button, Input, Label} from "../styledElements";
-import {Link, useHistory, useParams} from "react-router-dom";
+import { Button, Input, Label } from "../styledElements";
+import { Link, useHistory, useParams } from "react-router-dom";
 import google from '../../../img/google.png'
 import facebook from '../../../img/facebook.png'
-import {useDispatch} from "react-redux";
-import {authFunction, googleAuth} from "../../../state/authReducer";
-import {WithAuthRedirect} from "../../../hocs/AuthHoc";
-import {Form, Formik, useFormik} from "formik"
+import { useDispatch } from "react-redux";
+import { authFunction, googleAuth } from "../../../state/authReducer";
+import { WithAuthRedirect } from "../../../hocs/AuthHoc";
+import { Form, Formik, useFormik } from "formik"
 import GoogleLogin from "react-google-login";
 import FacebookLogin from 'react-facebook-login';
 import * as Yup from 'yup'
 import deepEqual from 'lodash.isequal';
+import { useTranslation } from "react-i18next";
 
 const validateFormik = {
     email: Yup.string()
@@ -29,6 +30,8 @@ export const data = {
 }
 
 export const SignIn = WithAuthRedirect(() => {
+    const { t } = useTranslation();
+
     const dispatch = useDispatch()
     const history = useHistory()
     const params = useParams()
@@ -64,7 +67,7 @@ export const SignIn = WithAuthRedirect(() => {
                 password: ''
             }}
             validationSchema={Yup.object().shape(validateFormik)}
-            onSubmit={async (values, {setSubmitting}) => {
+            onSubmit={async (values, { setSubmitting }) => {
                 setSubmitting(true);
                 let res = await dispatch(authFunction(values.email, values.password))
                 // @ts-ignore
@@ -76,19 +79,19 @@ export const SignIn = WithAuthRedirect(() => {
         >
             {
                 ({
-                     values,
-                     touched,
-                     errors,
-                     initialValues,
-                     isSubmitting,
-                     handleChange,
-                     handleBlur,
-                 }) => {
+                    values,
+                    touched,
+                    errors,
+                    initialValues,
+                    isSubmitting,
+                    handleChange,
+                    handleBlur,
+                }) => {
                     const hasChanged = !deepEqual(values, initialValues);
                     const hasErrors = Object.keys(errors).length > 0;
                     return <Form className={css.loginWrapper}>
                         <div className={css.registration}>
-                            Войдите, чтобы получить доступ к консультации
+                            {t("singInText")}
                         </div>
                         <div className={css.mainWrapper}>
                             {
@@ -113,7 +116,7 @@ export const SignIn = WithAuthRedirect(() => {
                                         type="text"
                                     />
                                     {touched.email && errors.email &&
-                                    <div className={css.errorText}>{errors.email}</div>}
+                                        <div className={css.errorText}>{errors.email}</div>}
                                 </Label>
                                 <Label>
                                     Пароль
@@ -131,18 +134,18 @@ export const SignIn = WithAuthRedirect(() => {
                                         type="password"
                                     />
                                     {touched.password && errors.password &&
-                                    <div className={css.errorText}>{errors.password}</div>}
+                                        <div className={css.errorText}>{errors.password}</div>}
                                 </Label>
                             </div>
                             <div>
                                 <label className={css.rememberMe}>
-                                    <input type="checkbox"/>
-                                    Запомнить меня
+                                    <input type="checkbox" />
+                                    {t("saveText")}
                                 </label>
                             </div>
                             <Button type="submit" disabled={!hasChanged || hasErrors || isSubmitting}>Войти</Button>
                             <div className={css.footerSignIn}>
-                                <Link to={'/forgot'}>Забыли пароль?</Link>
+                                <Link to={'/forgot'}>{t("resetPassword")}</Link>
                                 <div className={css.socialNetworks}>
                                     <GoogleLogin
                                         autoLoad={false}
@@ -153,7 +156,7 @@ export const SignIn = WithAuthRedirect(() => {
                                         cookiePolicy={'single_host_origin'}
                                         render={renderProps => (
                                             <span className={css.links}>
-                                                <img onClick={renderProps.onClick} src={google} alt="G"/>
+                                                <img onClick={renderProps.onClick} src={google} alt="G" />
                                             </span>
                                         )}
                                     />
@@ -168,10 +171,10 @@ export const SignIn = WithAuthRedirect(() => {
                                                 display: 'none'
                                             }}
                                         />
-                                        <span className={css.links}><img src={facebook} alt="F"/></span>
+                                        <span className={css.links}><img src={facebook} alt="F" /></span>
                                     </label>
                                 </div>
-                                <Link className={css.noAkk} to={'/sign-up-consultant'}>Еще нет аккаунта? </Link>
+                                <Link className={css.noAkk} to={'/sign-up-consultant'}>{t("noAccountText")} </Link>
                             </div>
                         </div>
                     </Form>
@@ -182,6 +185,8 @@ export const SignIn = WithAuthRedirect(() => {
 })
 
 export const Sign = WithAuthRedirect(() => {
+    const { t } = useTranslation();
+
     const dispatch = useDispatch()
     const formik = useFormik({
         initialValues: {
@@ -212,7 +217,7 @@ export const Sign = WithAuthRedirect(() => {
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={css.registration}>
-                Войдите, чтобы получить доступ к консультации
+                {t("singInText")}
             </div>
             <div className={css.mainWrapper}>
                 <div className={css.signInForm}>
@@ -237,13 +242,13 @@ export const Sign = WithAuthRedirect(() => {
                 </div>
                 <div>
                     <label className={css.rememberMe}>
-                        <input type="checkbox"/>
+                        <input type="checkbox" />
                         Запомнить меня
                     </label>
                 </div>
                 <Button>Войти</Button>
                 <div className={css.footerSignIn}>
-                    <Link to={'/forgot'}>Забыли пароль?</Link>
+                    <Link to={'/forgot'}>{t('resetPassword')}</Link>
                     <div className={css.socialNetworks}>
                         <GoogleLogin
                             autoLoad={false}
@@ -254,7 +259,7 @@ export const Sign = WithAuthRedirect(() => {
                             cookiePolicy={'single_host_origin'}
                             render={renderProps => (
                                 <span className={css.links}>
-                                    <img onClick={renderProps.onClick} src={google} alt="G"/>
+                                    <img onClick={renderProps.onClick} src={google} alt="G" />
                                 </span>
                             )}
                         />
@@ -269,10 +274,10 @@ export const Sign = WithAuthRedirect(() => {
                                     display: 'none'
                                 }}
                             />
-                            <span className={css.links}><img src={facebook} alt="F"/></span>
+                            <span className={css.links}><img src={facebook} alt="F" /></span>
                         </label>
                     </div>
-                    <Link className={css.noAkk} to={'/sign-up-consultant'}>Еще нет аккаунта? </Link>
+                    <Link className={css.noAkk} to={'/sign-up-consultant'}>{t('noAccountText')} </Link>
                 </div>
             </div>
         </form>
