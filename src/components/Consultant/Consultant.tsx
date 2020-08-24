@@ -16,7 +16,7 @@ type Props = {
 }
 const Consultant: React.FC<Props> = (props) => {
     const params: { id?: string | undefined } = useParams();
-    // const {t} = useTranslation();
+    const {t} = useTranslation();
 
     const [pending, setPending] = useState(true)
     const [user, setUser] = useState<any>(null)
@@ -57,13 +57,13 @@ const Consultant: React.FC<Props> = (props) => {
                                 <div className={css.name}>{user.user.first_name} {user.user.last_name}</div>
                                 <Stars color={'red'} edit={false} size={44} value={user.middle_star}/>
                             </div>
-                            <div className={css.specialty}>Cпециальность: {
+                            <div className={css.specialty}>{t('specialty')}: {
                                 specialties.map((item: any) => <span key={item.id}> {item.title}, </span>)
                             }</div>
                         </div>
                     </div>
                     <div>
-                        <div className={css.education}>Образование</div>
+                        <div className={css.education}>{t('info')}</div>
                         <div className={css.text}>{user.description}</div>
                     </div>
                 </div>

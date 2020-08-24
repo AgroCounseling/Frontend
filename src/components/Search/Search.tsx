@@ -91,7 +91,7 @@ const Search = () => {
                     category={item.category}
                 />)
 
-                    : <NoElement text={'Нет статей'} />
+                    : <NoElement text={t('noArticles')} />
             }
         </div>
     )

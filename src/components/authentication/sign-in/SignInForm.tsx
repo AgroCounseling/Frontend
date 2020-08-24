@@ -122,7 +122,7 @@ export const SignIn = WithAuthRedirect(() => {
                                     Пароль
                                     <Input
                                         onBlur={handleBlur}
-                                        name={'password'}
+                                        name={t("password")}
                                         value={values.password}
                                         onChange={(e) => {
                                             handleChange(e)
@@ -143,7 +143,7 @@ export const SignIn = WithAuthRedirect(() => {
                                     {t("saveText")}
                                 </label>
                             </div>
-                            <Button type="submit" disabled={!hasChanged || hasErrors || isSubmitting}>Войти</Button>
+                            <Button type="submit" disabled={!hasChanged || hasErrors || isSubmitting}>{t("singIn")}</Button>
                             <div className={css.footerSignIn}>
                                 <Link to={'/forgot'}>{t("resetPassword")}</Link>
                                 <div className={css.socialNetworks}>

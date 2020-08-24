@@ -208,7 +208,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             type="password" />
                     </Label>
                     <Label>
-                        Комментарии
+                    {t('comments')}
                         <Input
                             required
                             name={'comment'}
@@ -217,7 +217,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             type="text" />
                     </Label>
                     <Label>
-                        Специальность
+                    {t('spes')}
                         <Select
                             isMulti
                             value={specialization}

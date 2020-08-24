@@ -1,21 +1,24 @@
-import React, {useEffect, useState} from 'react'
-import {Header, MainButton, Wrapper} from "../Styles";
+import React, { useEffect, useState } from 'react'
+import { Header, MainButton, Wrapper } from "../Styles";
 import api from '../../api/Api'
-import {useParams} from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import Preloader from "../preloader/Preloader";
 import noPicture from '../../img/noPicture.png'
 import css from './answer.module.css'
-import {GlobalStateType} from "../../state/root-reducer";
-import {isAuth} from "../../state/selectors";
-import {connect, useDispatch} from "react-redux";
+import { GlobalStateType } from "../../state/root-reducer";
+import { isAuth } from "../../state/selectors";
+import { connect, useDispatch } from "react-redux";
 import Footer from "../footer/Footer";
-import {checkToken} from "../../state/authReducer";
+import { checkToken } from "../../state/authReducer";
 import NotAuth from "../notAuthorized/NotAuth";
+import { useTranslation } from "react-i18next";
 
 type Props = {
     isAuth: boolean
 }
 const Answer: React.FC<Props> = (props) => {
+    const { t } = useTranslation();
+
     const dispatch = useDispatch()
     const params: { id: string } = useParams()
     const [pending, setPending] = useState(true)
@@ -37,20 +40,20 @@ const Answer: React.FC<Props> = (props) => {
             )
     }, [params.id])
     const sendQuestion = async () => {
-        return  dispatch(checkToken(()=>api.setAnswer({
+        return dispatch(checkToken(() => api.setAnswer({
             forum: params.id,
             description: text
         })))
     }
     const sendText = () => {
         sendQuestion()
-            .then((res:any) => {
+            .then((res: any) => {
                 setComments([...comments, res.data])
                 setText('')
             })
     }
     if (pending) {
-        return <Preloader/>
+        return <Preloader />
     }
     return (
         <>
@@ -62,17 +65,17 @@ const Answer: React.FC<Props> = (props) => {
                             return <AnswerList
                                 key={item.id}
                                 text={item.description}
-                                name={`${item.user.first_name} ${item.user.last_name}`}/>
+                                name={`${item.user.first_name} ${item.user.last_name}`} />
                         })
                     }
                 </div>
                 {
                     props.isAuth
-                        ? <Comment placeholder={'Введите ваш ответ............'} onAdd={sendText} value={text} setValue={(e:any) => setText(e.target.value)} btn={'Отправить ответ'}/>
+                        ? <Comment placeholder={'Введите ваш ответ............'} onAdd={sendText} value={text} setValue={(e: any) => setText(e.target.value)} btn={'Отправить ответ'} />
                         : <NotAuth />
                 }
             </Wrapper>
-            <Footer/>
+            <Footer />
         </>
     )
 }
@@ -86,7 +89,7 @@ const AnswerList = (props: AnswerListProps) => {
 
         <div className={css.wrapper}>
             <div className={css.imgWrapper}>
-                <img src={noPicture} alt="avatar"/>
+                <img src={noPicture} alt="avatar" />
             </div>
             <div className={css.textWrapper}>
                 <div className={css.name}>{props.name}</div>
@@ -99,18 +102,18 @@ const AnswerList = (props: AnswerListProps) => {
 type CommentProps = {
     btn: string
     value: string
-    setValue: (e:any) => void
+    setValue: (e: any) => void
     onAdd: () => void
     placeholder: string
 }
-export const Comment = (props:CommentProps) => {
+export const Comment = (props: CommentProps) => {
     return (
-        <div className={css.wrapper} style={{marginBottom: '100px'}}>
+        <div className={css.wrapper} style={{ marginBottom: '100px' }}>
             <div className={css.imgWrapper}>
-                <img src={noPicture} alt="avatar"/>
+                <img src={noPicture} alt="avatar" />
             </div>
             <div>
-                <textarea value={props.value} onChange={props.setValue} className={css.placeholder} placeholder={props.placeholder}/>
+                <textarea value={props.value} onChange={props.setValue} className={css.placeholder} placeholder={props.placeholder} />
                 <MainButton onClick={props.onAdd}>{props.btn}</MainButton>
             </div>
         </div>
