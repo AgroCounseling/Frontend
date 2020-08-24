@@ -193,8 +193,8 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                     <div className={css.personName}>{user?.first_name + ' ' + user?.last_name}</div>
                 </div>
                 <div>
-                    <button>A</button>
-                    <button>B</button>
+                    {/*<button>A</button>*/}
+                    {/*<button>B</button>*/}
                 </div>
             </div>
             <div ref={messageId} className={css.messages}>
