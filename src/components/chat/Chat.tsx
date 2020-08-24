@@ -206,11 +206,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                                     item?.image ? <img width={'50px'} src={item.image} alt="#"/> : null
                                 }
                                 {
-                                    item?.video ? <video width="400" controls>
-                                        <source src={item.video} type="video/mp4"/>
-                                        <source src={item.video} type="video/ogg"/>
-                                        Your browser does not support HTML video.
-                                    </video> : null
+                                    item?.video ? <video src={item.video} />: null
                                 }
                                 <div>{item.message}</div>
                             </div>
