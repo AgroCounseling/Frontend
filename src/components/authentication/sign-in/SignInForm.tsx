@@ -122,7 +122,7 @@ export const SignIn = WithAuthRedirect(() => {
                                     Пароль
                                     <Input
                                         onBlur={handleBlur}
-                                        name={t("password")}
+                                        name={"password"}
                                         value={values.password}
                                         onChange={(e) => {
                                             handleChange(e)
