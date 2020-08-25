@@ -155,7 +155,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 setVideo(null)
                 setImg(null)
                 setAudio(null)
-                setOpenImgModal(false)
+                setOpenImgModal(false);
                 scrollToBottom()
             })
     }
@@ -198,8 +198,8 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                     <div className={css.personName}>{user?.first_name + ' ' + user?.last_name}</div>
                 </div>
                 <div>
-                    <button>A</button>
-                    <button>B</button>
+                    {/*<button>A</button>*/}
+                    {/*<button>B</button>*/}
                 </div>
             </div>
             <div ref={messageId} className={css.messages}>
@@ -230,11 +230,13 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                         }} accept="image/*" type="file"
                             style={{ display: 'none' }} />
                         <img src={imgIcon} alt="imgIcon" />
-                    </label><label>
+                    </label>
+                    <label>
                         <input onChange={(e: any) => setVideo(e.target.files[0])} accept="Video/*" type="file"
                             style={{ display: 'none' }} />
                         <img src={videoImg} alt="imgIcon" />
-                    </label><label>
+                    </label>
+                    <label>
                         <input onChange={(e: any) => setAudio(e.target.files[0])} accept="Audio/*" type="file"
                             style={{ display: 'none' }} />
                         <img src={audioImg} alt="imgIcon" />
