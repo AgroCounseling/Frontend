@@ -20,7 +20,7 @@ const Modal = () => {
   return (
     <>
       {close ? null : (
-        <div className={"overlay"}>
+        <div className={"overlay orange"}>
           <div className={"dialog"}>
             <div className="text-right">
               <button
@@ -39,7 +39,6 @@ const Modal = () => {
                     edit={true}
                     size={70}
                     value={star}
-
                     setStar={setStar}
                   />
                 </div>

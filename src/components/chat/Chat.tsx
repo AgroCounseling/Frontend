@@ -4,6 +4,8 @@ import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
 import imgIcon from "./../.../../../assets/icons/Image-512.webp";
+import audioImg from "./../../assets/icons/high-volume.png";
+import videoImg from "./../../assets/icons/23.Videos-512.png"
 import Api from "./../../api/Api";
 import { Time } from "../functions/time";
 import { useDispatch } from "react-redux";
@@ -113,6 +115,8 @@ type MessageProps = {
 const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const dispatch = useDispatch()
     const { t } = useTranslation();
+    const [downloadImg, setDownloadImg] = useState('');
+    const [openImgModal, setOpenImgModal] = useState(false);
 
     const [inp, setInp] = useState('')
     const [data, setData] = useState<any>(null)
@@ -151,6 +155,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 setVideo(null)
                 setImg(null)
                 setAudio(null)
+                setOpenImgModal(false);
                 scrollToBottom()
             })
     }
@@ -218,19 +223,23 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
             {
                 open ? <div className={css.open}>
                     <label>
-                        <input onChange={(e: any) => setImg(e.target.files[0])} accept="image/*" type="file"
+                        <input onChange={(e: any) => {
+                            setImg(e.target.files[0]);
+                            setDownloadImg(URL.createObjectURL(e.target.files[0]));
+                            setOpenImgModal(true);
+                        }} accept="image/*" type="file"
                             style={{ display: 'none' }} />
                         <img src={imgIcon} alt="imgIcon" />
                     </label>
                     <label>
                         <input onChange={(e: any) => setVideo(e.target.files[0])} accept="Video/*" type="file"
                             style={{ display: 'none' }} />
-                        <img src={imgIcon} alt="imgIcon" />
+                        <img src={videoImg} alt="imgIcon" />
                     </label>
                     <label>
                         <input onChange={(e: any) => setAudio(e.target.files[0])} accept="Audio/*" type="file"
                             style={{ display: 'none' }} />
-                        <img src={imgIcon} alt="imgIcon" />
+                        <img src={audioImg} alt="imgIcon" />
                     </label>
                 </div> : ""
             }
@@ -244,6 +253,26 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                     <img src={send} alt="send" />
                 </span>
             </form>
+            {
+                openImgModal ? <div className={"overlay"}>
+                    <div className={"dialog p-1"}>
+                        <div>
+                            <img src={downloadImg} alt="downloadImg" className="downloadImg" />
+                            <textarea placeholder={t('postMessage')} value={inp} onChange={(e) => setInp(e.target.value)}
+                                className="textarea" />
+                            <div className="btnBlock">
+                                <button
+                                    className="send-btn"
+                                    onClick={() => setOpenImgModal(false)}
+                                >
+                                    Отмена
+                  </button>
+                                <button className="green-btn" onClick={submit}>Отправить</button>
+                            </div>
+                        </div>
+
+                    </div></div> : null
+            }
         </div>
     )
 }
