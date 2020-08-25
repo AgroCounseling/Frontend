@@ -221,11 +221,13 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                         <input onChange={(e: any) => setImg(e.target.files[0])} accept="image/*" type="file"
                             style={{ display: 'none' }} />
                         <img src={imgIcon} alt="imgIcon" />
-                    </label><label>
+                    </label>
+                    <label>
                         <input onChange={(e: any) => setVideo(e.target.files[0])} accept="Video/*" type="file"
                             style={{ display: 'none' }} />
                         <img src={imgIcon} alt="imgIcon" />
-                    </label><label>
+                    </label>
+                    <label>
                         <input onChange={(e: any) => setAudio(e.target.files[0])} accept="Audio/*" type="file"
                             style={{ display: 'none' }} />
                         <img src={imgIcon} alt="imgIcon" />
