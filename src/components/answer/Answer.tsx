@@ -71,7 +71,7 @@ const Answer: React.FC<Props> = (props) => {
                 </div>
                 {
                     props.isAuth
-                        ? <Comment placeholder={'Введите ваш ответ............'} onAdd={sendText} value={text} setValue={(e: any) => setText(e.target.value)} btn={'Отправить ответ'} />
+                        ? <Comment placeholder={`${t('inputAnswer')}............`} onAdd={sendText} value={text} setValue={(e: any) => setText(e.target.value)} btn={t('postAnswer')} />
                         : <NotAuth />
                 }
             </Wrapper>
