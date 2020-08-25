@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import user from '../../img/user.png'
 import css from './header.module.css'
 import {connect, useDispatch} from "react-redux";

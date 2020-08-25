@@ -2,11 +2,6 @@ import React, {useEffect, useState} from "react";
 import "./language.css";
 import { useTranslation } from "react-i18next";
 
-
-const clicked = {
-
-}
-
 function Language() {
   const { i18n } = useTranslation();
   const [click, setClick] = useState(false);
@@ -34,7 +29,7 @@ function Language() {
       setClick(false);
     }
 
-    if (lng === 'ru') {
+    if (lng === 'ru' || lng === 'ru-RU') {
       rus.style.backgroundColor = "#ECBF2C";
       rus.style.color = "#fff";
       rus.disabled = true;
