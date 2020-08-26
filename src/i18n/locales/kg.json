@@ -21,8 +21,8 @@
    "specialty": "Адистик",
    "education": "Маалымат",
    "back": "Кайтаруу",
-   "save": "Өзгортуну сактоо",
-   "changeData": "Малымат  өзгөртүү",
+   "save": "Өзгөртуну сактоо",
+   "changeData": "Маалымат  өзгөртүү",
    "consultant": "Консультант",
    "articles": "Макалалар",
    "chat": "Чат",
@@ -41,9 +41,9 @@
    "questionText": "Өз сурооңду бер",
    "footerText": "Биз менен байланышыңыз",
    "designed": "Иштеп чыгылган",
-   "selectChatText": "Чатты тандагыз жана жазышыңыз",
+   "selectChatText": "Чатты тандаңыз жана жазышыңыз",
    "singInText": "Кеңеш алуу үчүн катталыңыз",
-   "welcome": "AgroConsulting'ге куш келеңиз!",
+   "welcome": "AgroConsulting'ге куш келиңиз!",
    "saveText": "Тиркемеде калуу",
    "resetPassword": "Паролду эсигизден чыгардызбы?",
    "noAccountText": "Аккаунт жокпу?",
@@ -70,5 +70,7 @@
    "add-document": "Документ тиркөө",
    "noArticles": "Макалалар жок",
    "info": "Маалымат",
-   "postMessage":"Өз билдирүүнүздү кийириңиз"
+   "postMessage": "Өз билдирүүнүздү кийириңиз",
+   "inputAnswer": "Жообугузду жазыңыз",
+   "postAnswer": "Жоопту жөнөтүү"
  }
