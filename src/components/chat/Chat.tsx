@@ -126,6 +126,7 @@ type MessageProps = {
     email: string
 }
 const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
+
     const dispatch = useDispatch()
     let [audioURL, isRecording, startRecording, stopRecording, audioData]: any = useRecorder();
     const { t } = useTranslation();
@@ -143,16 +144,17 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const [video, setVideo] = useState<any>(null)
     const [audio, setAudio] = useState<any>(null)
     const [picture, setPicture] = useState('')
-    const [access, setAccess] = useState(true)
+    const [access, setAccess] = useState(false)
     let time: any;
+    let minutes: any;
+    let access2:any;
     const messageId: any = useRef(null)
-
     const Send = async (req: any) => dispatch(checkToken(() => req))
 
     const scrollToBottom = () => {
-        const scrollHeight = messageId.current.scrollHeight;
-        const height = messageId.current.clientHeight;
-        messageId.current.scrollTop = scrollHeight - height;
+        const scrollHeight = messageId?.current?.scrollHeight;
+        const height = messageId?.current?.clientHeight;
+        if(messageId.current) messageId.current.scrollTop = scrollHeight - height
     }
 
     const submit = (e: any) => {
@@ -185,23 +187,24 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     }
 
     const getRoom = (scroll?: boolean) => {
-        // console.log(time >= new Date())
-        if (new Date(time) <= new Date()) {
-            console.log("Times up")
-            setAccess(false)
-            Api.editStatus(id, {
-                access: true,
-                time: 0
-            }).then((res: any) => console.log(res))
-        } else {
-            setAccess(true)
-            console.log('access')
+        if(time) {
+            if (new Date(time).getTime() + (minutes * 60 * 100) <= new Date().getTime() && access2) {
+                Send(Api.editStatus(id, {
+                    access: false,
+                    time: 0
+                })).then((res: any) => {
+                    console.log(res)
+                })
+            }
         }
         Send(Api.getRooms(id))
             .then((res: any) => {
+                setAccess(res.data.access)
                 setData({ ...res.data })
+                access2 = res.data.access
                 // setTime(res.data.timestamp)
                 time = res.data.timestamp
+                minutes = res.data.time
                 setMessages(res.data.messages)
                 if (+res.data.first.id === +props.userId) {
                     setUser(res.data.second)
@@ -220,8 +223,8 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     }, [id])
 
     useEffect(() => {
-        let a = setInterval(() => getRoom(), 5000)
-        return () => clearInterval(a)
+        let interval = setInterval(() => getRoom(), 5000)
+        return () => clearInterval(interval)
     }, [id])
     const showImg = (str: string) => {
         setPicture(str)
@@ -243,7 +246,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 </div>
             </div>
             {
-                true ? <>
+                access ? <>
                     <div ref={messageId} className={css.messages}>
                         {
                             messages
@@ -407,7 +410,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                             </div>
                         </div> : null
                     }
-                </> : <div>not access</div>
+                </> : <div>Ваше время истекло!</div>
 
             }
         </div>
