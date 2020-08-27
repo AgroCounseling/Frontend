@@ -369,3 +369,23 @@
     width: 100%;
     height: 100%;
 }
+
+.audio {
+    width: 250px;
+}
+
+.audioBlock {
+    display: flex;
+    align-items: center;
+}
+
+.writeDown {
+    height: 30px;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.stopDown {
+    height: 30px;
+    padding: 5px;
+}
