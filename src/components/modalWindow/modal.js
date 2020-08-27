@@ -3,29 +3,35 @@ import React, { useState } from "react";
 import Api from "./../../api/Api";
 import "./modal.css";
 import Stars from "../Consultant/Stars";
+import {checkToken} from "../../state/authReducer";
+import {useDispatch} from "react-redux";
 
-const Modal = () => {
+const Modal = (props) => {
   const [close, setClose] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [star, setStar] = useState("");
   const [starsBlockStatus, setStarsBlockStatus] = useState(null);
-
+  const dispatch = useDispatch()
+  const Send = async (req) => dispatch(checkToken(() => req))
   const postReview = () => {
-    Api.createReviews({
-      consultant: 1,
+    Send(Api.createReviews({
+      consultant: props.id,
       text: feedback,
-    }).then((item) => console.log("item", item));
+    })).then((item) => {
+      props.setClose(!props.closed)
+      console.log("item", item)
+    });
   };
 
   return (
     <>
-      {close ? null : (
+      {!props.closed ? null : (
         <div className={"overlay orange"}>
           <div className={"dialog"}>
             <div className="text-right">
               <button
                 className={"btn btn-danger modal-close"}
-                onClick={() => setClose(true)}
+                onClick={() => props.setClose(!props.closed)}
               >
                 X
               </button>

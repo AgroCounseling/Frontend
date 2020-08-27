@@ -14,6 +14,7 @@ import videoImg from "./../../assets/icons/23.Videos-512.png"
 import close from '../../img/close.png'
 import audioMessage from "./../../assets/icons/uuu2.png";
 import useRecorder from "./useRecorder";
+import Modal from "../modalWindow/modal";
 
 type ChatType = {
     id: number
@@ -91,8 +92,6 @@ type UserProps = {
     messages: string
 }
 const User = (props: UserProps) => {
-
-
     return (
         <div className={props.current === props.id ? css.activeUser + ' ' + css.personWrapper : css.personWrapper}
              onClick={() => {
@@ -111,11 +110,15 @@ const User = (props: UserProps) => {
                     {/*Отвечать моментально считается необязательным в бизнес-переписке, в конце концов, электронная почта*/}
                     {/*– это не мессенджер. Но лучше не задерживайте ответ дольше, чем на 24 часа.*/}
                 </div>
-                <span className={css.count}>
-                    <span>
-                        {props.messages}
-                    </span>
-                </span>
+                {
+                    props.messages
+                        ? <span className={css.count}>
+                            <span>
+                                {props.messages}
+                            </span>
+                        </span>
+                        : null
+                }
             </div>
         </div>
     )
@@ -130,6 +133,10 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
     const dispatch = useDispatch()
     let [audioURL, isRecording, startRecording, stopRecording, audioData]: any = useRecorder();
     const {t} = useTranslation();
+
+    const [isModal, setIsModal] = useState(false)
+    const [open, setOpen] = useState(false);
+
     const [downloadImg, setDownloadImg] = useState('');
     const [downloadVideo, setDownloadVideo] = useState('');
     const [openImgModal, setOpenImgModal] = useState(false);
@@ -187,6 +194,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
     }
 
     const getRoom = (scroll?: boolean) => {
+        let data = JSON.parse(localStorage.getItem('userData') as string)
         if (time) {
             if (new Date(time).getTime() + (minutes * 60 * 100) <= new Date().getTime() && access2) {
                 Send(Api.editStatus(id, {
@@ -194,6 +202,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                     time: 0
                 })).then((res: any) => {
                     console.log(res)
+                    if(data.status_client)setIsModal(true)
                 })
             }
         }
@@ -230,9 +239,9 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
         setPicture(str)
     }
 
-    const [open, setOpen] = useState(false);
     return (
         <div className={css.message__wrapper}>
+            <Modal closed={isModal} id={id} setClose={(e:boolean)=>setIsModal(e)}/>
             <div className={css.chatHeader}>
                 <div>
                     <div className={css.avaWrapper}>
