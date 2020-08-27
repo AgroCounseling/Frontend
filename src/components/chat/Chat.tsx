@@ -178,6 +178,10 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
         if(new Date(time) <= new Date()){
             console.log("Times up")
             setAccess(false)
+            Api.editStatus(id, {
+                access: true,
+                time: 0
+            }).then((res:any)=> console.log(res))
         }else{
             setAccess(true)
             console.log('access')

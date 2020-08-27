@@ -29,7 +29,7 @@ const getLng = () => {
 
 export default {
     signIn: (data: any) => http.post(`${getLng()}/api/token/`, data),
-    googleAuth: (data: any) => http_g.post(`${getLng()}/auth/convert-token`, data),
+    googleAuth: (data: any) => http_g.post(`ru/auth/convert-token`, data),
     googleRefresh: (data: any) => http_g.post(`${getLng()}/auth/token`, data),
     signInWithRefresh: () => http.post(`${getLng()}/api/token/refresh/`, {
         "refresh": getRefreshToken()
@@ -77,6 +77,11 @@ export default {
     getTypes: () => http.get(`${getLng()}/api/types/`),
     getSubTypes: () => http.get(`${getLng()}/api/subtypes/`),
     getVotesUser: (id: number) => http.get(`${getLng()}/api/votes/self/${id}`, {
+        headers: {
+            "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
+        }
+    }),
+    editStatus: (id: number, data:any) => http.put(`${getLng()}/api/rooms/edit/${id}`, data, {
         headers: {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
