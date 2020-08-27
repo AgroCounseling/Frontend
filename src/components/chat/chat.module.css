@@ -302,7 +302,7 @@
 .open img {
     width: 30px;
     margin: 5px;
-    
+
     height: 30px;
 }
 
@@ -310,17 +310,20 @@
     cursor: pointer;
 }
 
-.fileWrapper{
+.fileWrapper {
     width: 250px;
 }
-.fileWrapper>img{
+
+.fileWrapper>img {
     width: 100%;
     cursor: pointer;
 }
-.fileWrapper>video{
+
+.fileWrapper>video {
     width: 100%;
 }
-.modalImg{
+
+.modalImg {
     display: block;
     position: fixed;
     z-index: 99;
@@ -328,14 +331,16 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.3);
     padding: 4%;
 }
-.modalImg>img{
+
+.modalImg>img {
     max-height: 100%;
     width: auto;
 }
-.close{
+
+.close {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -343,6 +348,24 @@
     height: 25px;
     cursor: pointer;
 }
-.close>img{
+
+.close>img {
     width: 100%;
+}
+
+.audioMessage {
+    top: 5px;
+    cursor: pointer;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    right: 50px;
+    padding: 5px;
+    padding-top: 0;
+}
+
+.audioMessage img {
+    width: 100%;
+    height: 100%;
 }
