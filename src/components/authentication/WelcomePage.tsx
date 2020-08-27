@@ -15,7 +15,7 @@ const WelcomePage = () => {
                     {t('IamConsultant')}
                 </Link>
                 <Link className={css.btns} to={'/sign-up-client'}>
-                    {t('IamConsultant')}
+                    {t('IamCustomer')}
                 </Link>
             </BtnsWrapper>
         </AuthWrapper>
