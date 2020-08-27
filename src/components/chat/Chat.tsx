@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState} from "react";
 import css from "./chat.module.css";
 import { Time } from "../functions/time";
 import { useDispatch } from "react-redux";
@@ -142,11 +142,12 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const [video, setVideo] = useState<any>(null)
     const [audio, setAudio] = useState<any>(null)
     const [picture, setPicture] = useState('')
+    const [access, setAccess] = useState(true)
+    let time: any;
     const messageId: any = useRef(null)
 
-    const Send = async (req: any) => {
-        return dispatch(checkToken(() => req))
-    }
+    const Send = async (req: any) => dispatch(checkToken(() => req))
+
     const scrollToBottom = () => {
         const scrollHeight = messageId.current.scrollHeight;
         const height = messageId.current.clientHeight;
@@ -177,11 +178,20 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
             })
     }
 
-
     const getRoom = (scroll?: boolean) => {
+        // console.log(time >= new Date())
+        if(new Date(time) <= new Date()){
+            console.log("Times up")
+            setAccess(false)
+        }else{
+            setAccess(true)
+            console.log('access')
+        }
         Send(Api.getRooms(id))
             .then((res: any) => {
-                setData(res.data)
+                setData({...res.data})
+                // setTime(res.data.timestamp)
+                time = res.data.timestamp
                 setMessages(res.data.messages)
                 if (+res.data.first.id === +props.userId) {
                     setUser(res.data.second)
@@ -222,27 +232,33 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                     {/*<button>B</button>*/}
                 </div>
             </div>
+            {
+                access ? <>
             <div ref={messageId} className={css.messages}>
                 {
                     messages
                         ? messages?.map((item: any) => <div key={item.id}
                             className={item.user === props.userId ? css.myMessageWrapper : css.messageWrapper}>
                             <div className={item.user === props.userId ? css.myMessage : css.message}>
-                                <div className={css.fileWrapper}>
-                                    {
-                                        item?.image ? <>
-                                            <img
-                                                onClick={() => showImg(item.image)}
-                                                onBlur={() => showImg('')}
-                                                src={item.image}
-                                                alt="#"
-                                            />
-                                        </> : null
-                                    }
-                                    {
-                                        item?.video ? <video src={item.video} controls /> : null
-                                    }
-                                </div>
+                                {
+                                    item?.image || item?.video || item?.audio ?
+                                        <div className={css.fileWrapper}>
+                                            {
+                                                item?.image ? <>
+                                                    <img
+                                                        onClick={() => showImg(item.image)}
+                                                        onBlur={() => showImg('')}
+                                                        src={item.image}
+                                                        alt="#"
+                                                    />
+                                                </> : null
+                                            }
+                                            {
+                                                item?.video ? <video src={item.video} controls/> : null
+                                            }
+                                        </div>
+                                        : null
+                                }
                                 <div>{item.message}</div>
                             </div>
                         </div>)
@@ -288,7 +304,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 <input placeholder={t('postMessage')} value={inp} onChange={(e) => setInp(e.target.value)}
                     type="text" />
                 <label className={css.plus}>
-                    <img src={plus} alt="+" onClick={() => setOpen(true)} />
+                    <img src={plus} alt="+" onClick={() => setOpen(!open)}/>
                 </label>
 
                 <span className={css.audioMessage} onClick={() => setOpenAudioModal(true)}>
