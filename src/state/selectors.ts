@@ -7,3 +7,5 @@ export const isPending = (state: GlobalStateType) => state.app.initialise
 export const getCategories = (state: GlobalStateType) => state.app.categories
 
 export const getSpecialties = (state: GlobalStateType) => state.app.specialties
+
+export const getLng = (state: GlobalStateType) => state.app.language

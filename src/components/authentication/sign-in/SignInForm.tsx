@@ -51,7 +51,7 @@ export const SignIn = WithAuthRedirect(() => {
     const responseFacebook = async (response: any) => {
         const newDate = {
             ...data,
-            facebook: "google-oauth2",
+            backend: "facebook",
             token: response.accessToken
         }
         let res = await dispatch(googleAuth(newDate))
