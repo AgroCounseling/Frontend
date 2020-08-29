@@ -140,7 +140,18 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                 }
                 api.signUpConsultant(formData)
                     .then(async (res) => {
-                        history.push('sign-in')
+                        if (res) {
+                            Swal.fire({
+                                showConfirmButton: true,
+                                icon: 'success',
+                                width: 500,
+                                title: `${t('successRegister')}`,
+                                timer: 2000,
+                                confirmButtonColor: '#32b482',
+                                // confirmButtonText: "ок",
+                            });
+                            history.push('sign-in')
+                        }
                     }, (error: any) => {
                         setError(error.response?.data?.user?.email[0])
                         console.log(error.response.data)

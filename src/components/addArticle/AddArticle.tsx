@@ -162,7 +162,7 @@ const AddArticle: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.title}>{t("type")}</div>
                     <Select onChange={(e: any) => setType(e)}
-                        noOptionsMessage={() => NoOption('Нет видов')}
+                        noOptionsMessage={() => NoOption(t('noType'))}
                         value={type}
                         styles={selectStyle}
                         placeholder={t("selectCategoryText")}
