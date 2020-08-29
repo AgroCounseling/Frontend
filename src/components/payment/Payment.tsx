@@ -22,7 +22,7 @@ const Payment = () => {
     return (
         <div className={css.wrapper}>
             <div className={css.firstWrapper}>
-                <Modal />
+                {/*<Modal />*/}
                 <span>
                     <img src={payment} alt="Payment" />
                 </span>
