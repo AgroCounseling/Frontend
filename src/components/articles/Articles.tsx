@@ -426,7 +426,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                 <div>
                     <div className={css.filterCategory}>{t('subCategory')}</div>
                     <Select
-                        noOptionsMessage={() => NoOption('Нет подкатегорий')}
+                        noOptionsMessage={() => NoOption(t('noSubCategoryText'))}
                         styles={selectStyle}
                         placeholder={t('selectCategoryText')}
                         options={props.subCategories}

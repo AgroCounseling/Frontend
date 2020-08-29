@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { GlobalStateType } from "../../../state/root-reducer";
 import { getSpecialties } from "../../../state/selectors";
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
 const customStyles = {
     container: (base: any, state: any) => ({
@@ -33,8 +34,12 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
     const categories = useSelector((state: GlobalStateType) => getSpecialties(state))
     const history = useHistory()
     const [specialization, setSpecialization] = useState<any>(null)
-    const [pic, setPic] = useState<any>([])
+    const [pic, setPic] = useState<any>([{
+        "consultant": 70,
+        // "certificate_image": null
+    }])
     const [options, setOptions] = useState<any>([])
+    const [documentDownload, addDocument] = useState(false);
     const [img, setImg] = useState('')
     const [photo, setPhoto] = useState('')
     const [error, setError] = useState<any>(null)
@@ -75,56 +80,72 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                     first_name: values.name,
                     last_name: values.surname,
                     phone: values.number,
-                    photo: photo
+                    photo: photo,
                 },
                 specialty: specialization.map((item: any) => ({
                     "category": item.value
                 })),
-                certificates: pic.map((item: any) => ({
-                    "certificate_image": item
+                certificates: documentDownload ? pic.map((item: any) => ({
+                    "consultant": 70,
+                    'certificate_image': item
+                })) : pic.map((item: any) => ({
+                    "consultant": 70,
                 })),
                 password1: values.password2,
                 description: '',
                 comment: values.comment,
             }
-            const formData = new FormData()
-            for (let key in data) {
-                // @ts-ignore
-                if (typeof (data[key]) === 'object') {
+
+            if (data.password1 != data.user.password) {
+                Swal.fire({
+                    showConfirmButton: true,
+                    icon: 'error',
+                    width: 500,
+                    title: `${t('errorPassword')}`,
+                    timer: 2000,
+                    confirmButtonColor: '#32b482',
+                    // confirmButtonText: "ок",
+                });
+            } else {
+                const formData = new FormData()
+                for (let key in data) {
                     // @ts-ignore
-                    for (let subKey in data[key]) {
+                    if (typeof (data[key]) === 'object') {
                         // @ts-ignore
-                        console.log(data[key].length)
-                        // debugger
-                        // @ts-ignore
-                        if (data[key].length === undefined) {
+                        for (let subKey in data[key]) {
                             // @ts-ignore
-                            formData.append(`${key}.${subKey}`, data[key][subKey]);
-                        } else { // @ts-ignore
-                            if (typeof (data[key][subKey]) === 'object') {
-                                // @ts-ignore
-                                for (let subKey2 in data[key][subKey]) {
-                                    // @ts-ignore
-                                    formData.append(`${key}[${subKey}]${subKey2}`, data[key][subKey][subKey2]);
-                                }
-                            } else {
+                            console.log(data[key].length)
+                            // debugger
+                            // @ts-ignore
+                            if (data[key].length === undefined) {
                                 // @ts-ignore
                                 formData.append(`${key}.${subKey}`, data[key][subKey]);
+                            } else { // @ts-ignore
+                                if (typeof (data[key][subKey]) === 'object') {
+                                    // @ts-ignore
+                                    for (let subKey2 in data[key][subKey]) {
+                                        // @ts-ignore
+                                        formData.append(`${key}[${subKey}]${subKey2}`, data[key][subKey][subKey2]);
+                                    }
+                                } else {
+                                    // @ts-ignore
+                                    formData.append(`${key}.${subKey}`, data[key][subKey]);
+                                }
                             }
                         }
+                    } else {
+                        // @ts-ignore
+                        formData.append(key, data[key]);
                     }
-                } else {
-                    // @ts-ignore
-                    formData.append(key, data[key]);
                 }
+                api.signUpConsultant(formData)
+                    .then(async (res) => {
+                        history.push('sign-in')
+                    }, (error: any) => {
+                        setError(error.response?.data?.user?.email[0])
+                        console.log(error.response.data)
+                    })
             }
-            api.signUpConsultant(formData)
-                .then(async (res) => {
-                    history.push('sign-in')
-                }, (error: any) => {
-                    setError(error.response?.data?.user?.email[0])
-                    console.log(error.response.data)
-                })
         },
     })
 
@@ -208,7 +229,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             type="password" />
                     </Label>
                     <Label>
-                    {t('comments')}
+                        {t('comments')}
                         <Input
                             required
                             name={'comment'}
@@ -217,7 +238,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                             type="text" />
                     </Label>
                     <Label>
-                    {t('spes')}
+                        {t('spes')}
                         <Select
                             isMulti
                             value={specialization}
@@ -234,7 +255,10 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                         <label className={css.file}>
                             <input type="file"
                                 multiple={true}
-                                onChange={fileSelectHandler}
+                                onChange={e => {
+                                    fileSelectHandler(e);
+                                    addDocument(true);
+                                }}
                             />
                             <div className={css.diploma}>
                                 <span>

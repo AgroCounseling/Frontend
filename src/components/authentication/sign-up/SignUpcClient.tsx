@@ -60,6 +60,7 @@ export const RegisterFormClient = WithAuthRedirect(() => {
             client.append('password', values.password)
             client.append('password1', values.password2)
             client.append('first_name', values.name)
+            client.append('certificates', 'null');
             client.append('last_name', values.surname)
             if(pic) {
                 client.append('photo', pic)

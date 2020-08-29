@@ -7,8 +7,10 @@ import mail from '../../img/email.png'
 import api from "../../api/Api";
 import Modal from "./../../components/modalWindow/modal";
 import { PhonesWrapper } from "../Styles";
+import { useTranslation } from "react-i18next";
 
 const Payment = () => {
+    const { t } = useTranslation();
     const [data, setData] = useState<any>(null)
     useEffect(() => {
         api.getContact()
@@ -27,8 +29,8 @@ const Payment = () => {
                     <img src={payment} alt="Payment" />
                 </span>
                 <div className={css.title}>
-                    Краткая инструкция к получению <br />
-                    доступа к консультации
+                    {t('ins')} <br />
+                    {t('dostup')}
                 </div>
             </div>
             <div className={css.secondWrapper}>
@@ -37,7 +39,7 @@ const Payment = () => {
                         <img src={phone} alt="phone" />
                     </span>
                     <div className={css.text}>
-                        Свяжитесь по номеру <br />
+                        {t('telChat')}<br />
                         <PhonesWrapper>
                             {
                                 data?.phones.map((item: any) => <a key={item.phone} href={`tel:${item?.phone}`}>
@@ -53,7 +55,7 @@ const Payment = () => {
                         <img src={card} alt="phone" />
                     </span>
                     <div className={css.text}>
-                        Получите данные для оплаты
+                        {t('paymentData')}
                     </div>
                 </div>
                 <div className={css.block}>
@@ -61,7 +63,7 @@ const Payment = () => {
                         <img src={mail} alt="phone" />
                     </span>
                     <div className={css.text}>
-                        Получите доступ к чату и консультации
+                        {t('dostupText')}
                     </div>
                 </div>
             </div>

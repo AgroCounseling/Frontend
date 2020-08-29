@@ -19,6 +19,7 @@ import { MainButton } from "../Styles";
 import { useTranslation } from "react-i18next";
 import ModalWrapper from "../../utils/modalWindow";
 import { NoOption } from "../../utils/NoElement";
+import Swal from "sweetalert2";
 
 
 type Props = {
@@ -96,6 +97,18 @@ const AddArticle: React.FC<Props> = (props) => {
             additions: [],
         },
         onSubmit: (values: any) => {
+            if (!category) {
+                Swal.fire({
+                    showConfirmButton: true,
+                    icon: 'error',
+                    width: 500,
+                    title: `${t('selectCategory')}`,
+                    timer: 2000,
+                    confirmButtonColor: '#32b482',
+                    // confirmButtonText: "ок",
+                });
+            }
+
             createArticle({
                 ...values,
                 category: category.value,
@@ -130,8 +143,9 @@ const AddArticle: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.title}>{t("category")}</div>
                     <Select onChange={(e) => setCategory(e)}
-                        noOptionsMessage={() => NoOption('Нет категорий')}
+                        noOptionsMessage={() => NoOption(t('noCategoryText'))}
                         value={category}
+                        required
                         styles={selectStyle}
                         placeholder={t("selectCategoryText")}
                         options={categoriesList} />
@@ -139,7 +153,7 @@ const AddArticle: React.FC<Props> = (props) => {
                 <div>
                     <div className={css.title}>{t("subCategory")}</div>
                     <Select onChange={(e: any) => setSubCategory(e)}
-                        noOptionsMessage={() => NoOption('Нет подкатегорий')}
+                        noOptionsMessage={() => NoOption(t('noSubCategoryText'))}
                         value={subCategory}
                         styles={selectStyle}
                         placeholder={t("selectCategoryText")}
@@ -161,6 +175,7 @@ const AddArticle: React.FC<Props> = (props) => {
                     <input
                         type={'text'}
                         className={css.title__input}
+                        required
                         value={formik.values.title}
                         onChange={formik.handleChange}
                         name={'title'}
