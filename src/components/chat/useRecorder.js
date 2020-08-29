@@ -40,7 +40,7 @@ const useRecorder = () => {
     setIsRecording(false);
   };
 
-  return [audioURL, isRecording, startRecording, stopRecording, audioData];
+  return [audioURL, isRecording, startRecording, stopRecording, audioData, setAudioData];
 };
 
 async function requestRecorder() {

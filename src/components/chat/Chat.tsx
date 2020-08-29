@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import css from "./chat.module.css";
-import {Time} from "../functions/time";
-import {useDispatch} from "react-redux";
-import {checkToken} from "../../state/authReducer";
-import {useTranslation} from "react-i18next";
+import { Time } from "../functions/time";
+import { useDispatch } from "react-redux";
+import { checkToken } from "../../state/authReducer";
+import { useTranslation } from "react-i18next";
 import Api from "./../../api/Api";
 import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
@@ -19,9 +19,9 @@ import Modal from "../modalWindow/modal";
 type ChatType = {
     id: number
 }
-const Chat: React.FC<ChatType> = ({id}) => {
+const Chat: React.FC<ChatType> = ({ id }) => {
     const dispatch = useDispatch()
-    const {t} = useTranslation();
+    const { t } = useTranslation();
     const checkRequest = async (req: any) => {
         return dispatch(checkToken(() => req))
     }
@@ -31,12 +31,12 @@ const Chat: React.FC<ChatType> = ({id}) => {
     const getFriends = () => {
         checkRequest(Api.getRooms())
             .then((res: any) => {
-                    let data = res.data.map((item: any) => {
-                        item.user = +item.first.id !== +id ? "first" : "second";
-                        return item;
-                    })
-                    setRooms(data);
-                }
+                let data = res.data.map((item: any) => {
+                    item.user = +item.first.id !== +id ? "first" : "second";
+                    return item;
+                })
+                setRooms(data);
+            }
             );
     }
     useEffect(() => {
@@ -50,7 +50,7 @@ const Chat: React.FC<ChatType> = ({id}) => {
         <div className={css.chatWrapper}>
             <div>
                 <div className={css.searchWrapper}>
-                    <input type="text" placeholder={t('search')}/>
+                    <input type="text" placeholder={t('search')} />
                 </div>
                 <div className={css.userList}>
                     {
@@ -63,14 +63,14 @@ const Chat: React.FC<ChatType> = ({id}) => {
                             setEmail={setEmail}
                             email={item[item.user].email}
                             time={item.timestamp} image={item[item.user].photo}
-                            name={item[item.user].first_name + ' ' + item[item.user].last_name}/>)
+                            name={item[item.user].first_name + ' ' + item[item.user].last_name} />)
                     }
                 </div>
             </div>
             <div>
                 {
                     current
-                        ? <MessageBlock userId={id} id={current} email={email}/>
+                        ? <MessageBlock userId={id} id={current} email={email} />
                         : <div>{t('selectChatText')}</div>
                 }
             </div>
@@ -94,13 +94,13 @@ type UserProps = {
 const User = (props: UserProps) => {
     return (
         <div className={props.current === props.id ? css.activeUser + ' ' + css.personWrapper : css.personWrapper}
-             onClick={() => {
-                 props.setCurrent(props.id);
-                 props.setEmail(props.email);
-             }}>
+            onClick={() => {
+                props.setCurrent(props.id);
+                props.setEmail(props.email);
+            }}>
             <div className={css.person}>
                 <div className={css.person}>
-                    <img src={props.image ? props.image : noPic} alt="#" className={css.personImg}/>
+                    <img src={props.image ? props.image : noPic} alt="#" className={css.personImg} />
                     <div className={css.personName}>{props.name}</div>
                 </div>
                 <div className={css.peronTime}>{Time(props.time)}</div>
@@ -128,11 +128,11 @@ type MessageProps = {
     userId: number
     email: string
 }
-const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
+const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
 
     const dispatch = useDispatch()
-    let [audioURL, isRecording, startRecording, stopRecording, audioData]: any = useRecorder();
-    const {t} = useTranslation();
+    let [audioURL, isRecording, startRecording, stopRecording, audioData, setAudioData]: any = useRecorder();
+    const { t } = useTranslation();
 
     const [isModal, setIsModal] = useState(false)
     const [open, setOpen] = useState(false);
@@ -144,13 +144,14 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
     const [openVideoModal, setOpenVideoModal] = useState(false);
 
     const [inp, setInp] = useState('')
-    const [data, setData] = useState<any>(null)
+    const [userData, setData] = useState<any>(null)
     const [user, setUser] = useState<any>(null)
     const [messages, setMessages] = useState<any>([])
     const [img, setImg] = useState<any>(null)
     const [video, setVideo] = useState<any>(null)
     const [audio, setAudio] = useState<any>(null)
     const [picture, setPicture] = useState('')
+    const [endTime, setEndTime] = useState(false);
     const [access, setAccess] = useState(false)
     let time: any;
     let minutes: any;
@@ -173,6 +174,9 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
         if (audioData) { // @ts-ignore
             newForm.append('audio', audioData)
         }
+        if (audio) { // @ts-ignore
+            newForm.append('audio', audio)
+        }
 
         Send(Api.sendMessage(props.email, newForm))
             .then((res: any) => {
@@ -185,6 +189,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 setVideo(null)
                 setImg(null)
                 setAudio(null)
+                setAudioData(null)
                 setOpenAudioModal(false);
                 setOpenImgModal(false);
                 setOpenVideoModal(false);
@@ -194,22 +199,35 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
     }
 
     const getRoom = (scroll?: boolean) => {
-        let data = JSON.parse(localStorage.getItem('userData') as string)
-        if (time) {
-            if (new Date(time).getTime() + (minutes * 60 * 100) <= new Date().getTime() && access2) {
-                Send(Api.editStatus(id, {
-                    access: false,
-                    time: 0
-                })).then((res: any) => {
-                    console.log(res)
-                    if(data.status_client)setIsModal(true)
-                })
-            }
-        }
+        let data = JSON.parse(localStorage.getItem('userData') as string);
+
+        // if (time) {
+        //     if (new Date(time).getTime() + (minutes * 60 * 100) <= new Date().getTime() && access2) {
+        //         Send(Api.editStatus(id, {
+        //             access: false,
+        //         })).then((res: any) => {
+        //             console.log(res)
+        //             if (data.status_client) setIsModal(true)
+        //         })
+        //     }
+
+        // }
         Send(Api.getRooms(id))
             .then((res: any) => {
                 setAccess(res.data.access)
-                setData({...res.data})
+                setData({ ...res.data });
+                if ((new Date() <= new Date(res.data.times_rooms))) {
+                    setEndTime(true);
+                } else {
+                    setEndTime(false);
+                    Send(Api.editStatus(id, {
+                        access: false,
+                        time: 0
+                    })).then((res: any) => {
+                        console.log(res)
+                        if (data.status_client) setIsModal(true)
+                    })
+                }
                 access2 = res.data.access
                 // setTime(res.data.timestamp)
                 time = res.data.timestamp
@@ -227,13 +245,17 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 console.log(error)
             })
     }
+
+    console.log('data', userData);
     useEffect(() => {
         getRoom(true)
     }, [id])
 
     useEffect(() => {
+
+
         let interval = setInterval(() => getRoom(), 5000)
-        return () => clearInterval(interval)
+        return () => clearInterval(interval);
     }, [id])
     const showImg = (str: string) => {
         setPicture(str)
@@ -241,11 +263,11 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
 
     return (
         <div className={css.message__wrapper}>
-            <Modal closed={isModal} id={id} setClose={(e:boolean)=>setIsModal(e)}/>
+            <Modal closed={isModal} id={id} setClose={(e: boolean) => setIsModal(e)} />
             <div className={css.chatHeader}>
                 <div>
                     <div className={css.avaWrapper}>
-                        <img src={user?.photo ? user.photo : noPic} alt="#"/>
+                        <img src={user?.photo ? user.photo : noPic} alt="#" />
                     </div>
                     <div className={css.personName}>{user?.first_name + ' ' + user?.last_name}</div>
                 </div>
@@ -258,7 +280,7 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 {
                     messages
                         ? messages?.map((item: any) => <div key={item.id}
-                                                            className={item.user === props.userId ? css.myMessageWrapper : css.messageWrapper}>
+                            className={item.user === props.userId ? css.myMessageWrapper : css.messageWrapper}>
                             <div className={item.user === props.userId ? css.myMessage : css.message}>
                                 {
                                     item?.image || item?.video || item?.audio ?
@@ -274,11 +296,11 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                                                 </> : null
                                             }
                                             {
-                                                item?.video ? <video src={item.video} controls/> : null
+                                                item?.video ? <video src={item.video} controls /> : null
                                             }
                                             {
                                                 item?.audio ?
-                                                    <audio src={item.audio} controls className={css.audio}/> : null
+                                                    <audio src={item.audio} controls className={css.audio} /> : null
                                             }
                                         </div>
                                         : null
@@ -291,8 +313,8 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 {
                     picture
                         ? <div className={css.modalImg}>
-                            <span onClick={() => setPicture('')} className={css.close}><img src={close} alt="X"/></span>
-                            <img src={picture} alt="#"/>
+                            <span onClick={() => setPicture('')} className={css.close}><img src={close} alt="X" /></span>
+                            <img src={picture} alt="#" />
                         </div>
                         : null
                 }
@@ -305,8 +327,8 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                             setDownloadImg(URL.createObjectURL(e.target.files[0]));
                             setOpenImgModal(true);
                         }} accept="image/*" type="file"
-                               style={{display: 'none'}}/>
-                        <img src={imgIcon} alt="imgIcon"/>
+                            style={{ display: 'none' }} />
+                        <img src={imgIcon} alt="imgIcon" />
                     </label>
                     <label>
                         <input onChange={(e: any) => {
@@ -314,32 +336,31 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                             setDownloadVideo(URL.createObjectURL(e.target.files[0]));
                             setOpenVideoModal(true);
                         }} accept="Video/*" type="file"
-                               style={{display: 'none'}}/>
-                        <img src={videoImg} alt="imgIcon"/>
+                            style={{ display: 'none' }} />
+                        <img src={videoImg} alt="imgIcon" />
                     </label>
-                    <label>
+                    {/* <label>
                         <input onChange={(e: any) => setAudio(e.target.files[0])} accept="Audio/*" type="file"
-                               style={{display: 'none'}}/>
-                        <img src={audioImg} alt="imgIcon"/>
-                    </label>
+                            style={{ display: 'none' }} />
+                        <img src={audioImg} alt="imgIcon" />
+                    </label> */}
                 </div> : ""
             }
             {
-                access
-                    ? <form onSubmit={submit} className={css.message__input}>
-                        <input placeholder={t('postMessage')} value={inp} onChange={(e) => setInp(e.target.value)}
-                               type="text"/>
-                        <label className={css.plus}>
-                            <img src={plus} alt="+" onClick={() => setOpen(!open)}/>
-                        </label>
+                endTime ? <form onSubmit={submit} className={css.message__input}>
+                    <input placeholder={t('postMessage')} value={inp} onChange={(e) => setInp(e.target.value)}
+                        type="text" />
+                    <label className={css.plus}>
+                        <img src={plus} alt="+" onClick={() => setOpen(!open)} />
+                    </label>
 
-                        <span className={css.audioMessage} onClick={() => setOpenAudioModal(true)}>
-                            <img src={audioMessage} alt="audioMessage"/>
-                        </span>
-                        <span onClick={submit} className={css.send}>
-                            <img src={send} alt="send"/>
-                        </span>
-                    </form>
+                    <span className={css.audioMessage} onClick={() => setOpenAudioModal(true)}>
+                        <img src={audioMessage} alt="audioMessage" />
+                    </span>
+                    <span onClick={submit} className={css.send}>
+                        <img src={send} alt="send" />
+                    </span>
+                </form>
                     : <div className={css.closed}>Ваше время истекло.</div>
 
             }
@@ -347,14 +368,23 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 openImgModal ? <div className={"overlay"}>
                     <div className={"dialog p-1"}>
                         <div>
-                            <img src={downloadImg} alt="downloadImg" className="downloadImg"/>
+                            <img src={downloadImg} alt="downloadImg" className="downloadImg" />
                             <textarea placeholder={t('postMessage')} value={inp}
-                                      onChange={(e) => setInp(e.target.value)}
-                                      className="textarea"/>
+                                onChange={(e) => setInp(e.target.value)}
+                                className="textarea" />
                             <div className="btnBlock">
                                 <button
                                     className="send-btn"
-                                    onClick={() => setOpenImgModal(false)}
+                                    onClick={() => {
+                                        setVideo(null)
+                                        setImg(null)
+                                        setAudio(null)
+                                        setAudioData(null)
+                                        setOpenAudioModal(false);
+                                        setOpenImgModal(false);
+                                        setOpenVideoModal(false);
+                                        setDownloadImg('');
+                                    }}
                                 >
                                     Отмена
                                 </button>
@@ -369,15 +399,24 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                 openVideoModal ? <div className={"overlay"}>
                     <div className={"dialog p-1"}>
                         <div>
-                            <video width="400" controls src={downloadVideo}/>
+                            <video width="400" controls src={downloadVideo} />
 
                             <textarea placeholder={t('postMessage')} value={inp}
-                                      onChange={(e) => setInp(e.target.value)}
-                                      className="textarea"/>
+                                onChange={(e) => setInp(e.target.value)}
+                                className="textarea" />
                             <div className="btnBlock">
                                 <button
                                     className="send-btn"
-                                    onClick={() => setOpenVideoModal(false)}
+                                    onClick={() => {
+                                        setVideo(null)
+                                        setImg(null)
+                                        setAudio(null)
+                                        setAudioData(null)
+                                        setOpenAudioModal(false);
+                                        setOpenImgModal(false);
+                                        setOpenVideoModal(false);
+                                        setDownloadImg('');
+                                    }}
                                 >
                                     Отмена
                                 </button>
@@ -393,26 +432,35 @@ const MessageBlock: React.FC<MessageProps> = ({id, ...props}) => {
                     <div className={"dialog p-1"}>
                         <div>
                             <div className={css.audioBlock}>
-                                <audio src={audioURL} controls/>
+                                <audio src={audioURL} controls />
                                 <button onClick={startRecording}
-                                        disabled={isRecording}
-                                        className={css.writeDown}>
+                                    disabled={isRecording}
+                                    className={css.writeDown}>
                                     Записать
                                 </button>
                                 <button onClick={stopRecording}
-                                        disabled={!isRecording}
-                                        className={css.stopDown}>
+                                    disabled={!isRecording}
+                                    className={css.stopDown}>
                                     Остановит
                                 </button>
                             </div>
 
                             <textarea placeholder={t('postMessage')} value={inp}
-                                      onChange={(e) => setInp(e.target.value)}
-                                      className="textarea"/>
+                                onChange={(e) => setInp(e.target.value)}
+                                className="textarea" />
                             <div className="btnBlock">
                                 <button
                                     className="send-btn"
-                                    onClick={() => setOpenAudioModal(false)}
+                                    onClick={() => {
+                                        setVideo(null)
+                                        setImg(null)
+                                        setAudio(null)
+                                        setAudioData(null)
+                                        setOpenAudioModal(false);
+                                        setOpenImgModal(false);
+                                        setOpenVideoModal(false);
+                                        setDownloadImg('');
+                                    }}
                                 >
                                     Отмена
                                 </button>

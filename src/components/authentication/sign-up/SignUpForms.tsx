@@ -37,12 +37,12 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
     const [pic, setPic] = useState<any>([{
         "consultant": 70,
         // "certificate_image": null
-    }])
+    }]);
     const [options, setOptions] = useState<any>([])
     const [documentDownload, addDocument] = useState(false);
-    const [img, setImg] = useState('')
-    const [photo, setPhoto] = useState('')
-    const [error, setError] = useState<any>(null)
+    const [img, setImg] = useState('');
+    const [photo, setPhoto] = useState('');
+    const [error, setError] = useState<any>(null);
     console.log(pic)
     const fileSelectHandler = (e: any) => {
         const arr = Array.from(e.target.files)
