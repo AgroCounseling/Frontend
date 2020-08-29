@@ -6,18 +6,25 @@ const SET_CATEGORIES = "app/SET_CATEGORIES"
 const SET_SPECIALTIES = "app/SET_SPECIALTIES"
 const SET_SLIDER = "app/SET_SLIDER"
 const SET_SEARCH = "app/SET_SEARCH"
+const SET_LANGUAGE = "app/SET_LANGUAGE"
 
 const initialState = {
     initialise: true,
     categories: [],
     specialties: [],
     slider: [],
-    search: ''
+    search: '',
+    language: localStorage.getItem('i18nextLng')
 }
 type InitialStateType = typeof initialState
 
 export const appReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
+        case SET_LANGUAGE:
+            return {
+                ...state,
+                language: action.lng
+            }
         case SET_CATEGORIES:
             return {
                 ...state,
@@ -54,6 +61,12 @@ export const appReducer = (state = initialState, action: any): InitialStateType 
 export const initialise = () => {
     return {
         type: INITIALIZE_SUCCEED
+    }
+}
+export const setLng = (lng:string) => {
+    return {
+        type: SET_LANGUAGE,
+        lng
     }
 }
 export const setCategories = (categories: any) => {

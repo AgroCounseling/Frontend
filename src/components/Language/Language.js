@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
 import "./language.css";
 import { useTranslation } from "react-i18next";
+import {useDispatch} from "react-redux";
+import {setLng} from "../../state/appReducer";
 
 function Language() {
   const { i18n } = useTranslation();
   const [click, setClick] = useState(false);
+  const dispatch = useDispatch()
   // const [lang, setLang] = useState("ru");
   const lng = localStorage.getItem('i18nextLng')
   useEffect(()=>{
@@ -49,6 +52,7 @@ function Language() {
   }, [lng])
   const changeLang = (lang) => {
     setClick(true);
+    dispatch(setLng(lang))
     i18n.changeLanguage(lang);
 
     const kg = document.getElementById("kg");

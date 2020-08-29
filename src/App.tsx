@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import './App.css'
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom"
 import { initialiseApp } from "./state/appReducer";
-import { connect } from "react-redux";
+import {connect, useSelector} from "react-redux";
 import { GlobalStateType } from "./state/root-reducer";
-import { isAuth, isPending } from "./state/selectors";
+import {getLng, isAuth, isPending} from "./state/selectors";
 import Header from "./components/header/Header";
 import AuthPage from "./components/authentication/AuthPage";
 import { RegisterFormConsultant } from "./components/authentication/sign-up/SignUpForms";
@@ -33,6 +33,7 @@ type OwnProps = {
 
 const App = (props: OwnProps) => {
     const { initialiseApp } = props
+    const lng = useSelector((state:GlobalStateType) => getLng(state))
     const [pending, setPending] = useState(true)
     const allPromiseRejection = (promiseRejectionEvent: any) => {
         alert(promiseRejectionEvent)
@@ -43,7 +44,7 @@ const App = (props: OwnProps) => {
         // return () => {
         //     window.removeEventListener('unhandledrejection', allPromiseRejection)
         // }
-    }, [initialiseApp])
+    }, [initialiseApp, lng])
     setTimeout(() => {
         setPending(false)
     }, 1000)
