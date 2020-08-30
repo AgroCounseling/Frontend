@@ -20,6 +20,7 @@ const Consultant: React.FC<Props> = (props) => {
 
     const [pending, setPending] = useState(true)
     const [user, setUser] = useState<any>(null)
+    console.log(user)
     const [specialties, setSpecialties] = useState<any>([])
     useEffect(() => {
         api.getUser(params.id)
@@ -43,14 +44,14 @@ const Consultant: React.FC<Props> = (props) => {
                             user.reviews.map((item: any) => <Answer key={item.id} name={item.name}
                                                                     answer={item.text}
                                                                     date={''}
-                                                                    stars={user.ratings.map((i: any) => item.id === i.id ? i.star.value : false)}/>)
+                                                                    stars={item.star?.value}/>)
                         }
                     </span>
                 </div>
                 <div>
                     <div className={css.user}>
                         <div className={css.imgWrapper}>
-                            <img src={noPicture} alt="NoPicture"/>
+                            <img src={user?.user?.photo ? user.user.photo : noPicture } alt="NoPicture"/>
                         </div>
                         <div className={css.person}>
                             <div className={css.nameWrapper}>
@@ -82,14 +83,15 @@ type AnswerProps = {
     date: string
 }
 const Answer: React.FC<AnswerProps> = (props) => {
-    console.log(props.stars[0])
+    console.log(props.stars)
     return (
         <div className={css.answerWrapper}>
             <div className={css.answerName}>{props.name}</div>
             <div className={css.answer}>{props.answer}</div>
             <div className={css.stars}>
                 {
-                    props.stars[0] ? <Stars edit={true} color={'#ffd700'} size={24} value={props.stars[0]}/> : null
+                    props.stars ? <Stars edit={true} color={'#ffd700'} size={24} value={props.stars}/>
+                    :<Stars edit={true} color={'#ffd700'} size={24} value={4}/>
                 }
                 <div>{props.date}</div>
             </div>

@@ -9,7 +9,7 @@ import send from '../../img/Mask.png';
 import plus from '../../img/plus.png';
 import noPic from "../../img/noPicture.png";
 import imgIcon from "./../.../../../assets/icons/Image-512.webp";
-import audioImg from "./../../assets/icons/high-volume.png";
+// import audioImg from "./../../assets/icons/high-volume.png";
 import videoImg from "./../../assets/icons/23.Videos-512.png"
 import close from '../../img/close.png'
 import audioMessage from "./../../assets/icons/uuu2.png";
