@@ -5,7 +5,7 @@ import { AxiosResponse } from "axios";
 import Select from "react-select";
 import { Link, useParams, useHistory, Switch, Route, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories, isAuth } from "../../state/selectors";
+import {getCategories, getLng, isAuth} from "../../state/selectors";
 import { GlobalStateType } from "../../state/root-reducer";
 import Pagination from "../pagination/Pagination";
 import { ArticleSearch } from "../Styles";
@@ -25,6 +25,7 @@ const Articles: React.FC<Props> = (props) => {
     const params: any = useParams()
     const history = useHistory()
     const { path, url } = useRouteMatch();
+    const lng = useSelector((state:GlobalStateType) => getLng(state))
 
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const categoriesList = categories.map((item: any) => {
@@ -50,6 +51,7 @@ const Articles: React.FC<Props> = (props) => {
     const [subType, setSubType] = useState<any>(null)
 
     useEffect(() => {
+        setPending(true)
         api.getArticles(
             search, page, +params.id === 0 ? null : params.id,
             subCategory ? subCategory.value : null,
@@ -60,7 +62,7 @@ const Articles: React.FC<Props> = (props) => {
                 setPagination(Math.ceil(res.data.count / res.data.limit))
                 setPending(false)
             })
-    }, [page, params, search, subCategory, type, subType])
+    }, [page, params, search, subCategory, type, subType, lng])
 
     const getNew = () => {
         // history.push(url)
@@ -239,6 +241,33 @@ type ArticleProps = {
     newUrl?: string
 }
 export const Article: React.FC<ArticleProps> = (props) => {
+    let text:any = React.createRef()
+    let a:any = props?.description
+    let htmlObject:any = document.createElement('div');
+    htmlObject.innerHTML = a
+    let i = 0
+    for (let item of htmlObject.children) {
+        if(item.tagName === "IMG"){
+            htmlObject.children[i].remove()
+        }
+        i++
+    }
+    useEffect(()=>{
+        let i = 0
+        for (let item of text.current.children) {
+            if(!item.children.length){
+                text.current.children[i].remove()
+            }
+            i++
+        }
+    }, [text])
+    useEffect(()=>{
+        text.current.append(htmlObject)
+        return ()=> {
+            htmlObject.innerHTML = null
+            a = null
+        }
+    }, [a])
     const { url } = useRouteMatch();
     const { t } = useTranslation();
 
@@ -257,7 +286,9 @@ export const Article: React.FC<ArticleProps> = (props) => {
                 <div className={css.title}>
                     {props.title}
                 </div>
-                <div className={css.text}><Interweave content={props.description} /></div>
+                <div className={css.text} id={'text'} ref={text}>
+                    {/*<Interweave content={props?.description} />*/}
+                </div>
             </div>
         </Link>
     )
@@ -267,13 +298,12 @@ type DetailArticleProps = {
     setGoBack?: any
 }
 export const DetailArticle = (props: DetailArticleProps) => {
-
     const params: any = useParams()
     const dispatch = useDispatch()
     const history = useHistory()
     const auth = useSelector((state: GlobalStateType) => isAuth(state))
     const { t } = useTranslation();
-
+    const lng = useSelector((state:GlobalStateType) => getLng(state))
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [article, setArticle] = useState<any>({})
     const [pending, setPending] = useState(true)
@@ -297,7 +327,6 @@ export const DetailArticle = (props: DetailArticleProps) => {
     const checkLike = async (data: any) => {
         return dispatch(checkToken(() => api.putLike(article.id, data)))
     }
-
     const putLike = () => {
         if (auth) {
             if (voted) {
@@ -337,6 +366,22 @@ export const DetailArticle = (props: DetailArticleProps) => {
             })
     }, [params.article])
 
+    useEffect(()=>{
+        let text:any = document.getElementById('text')
+        let htmlObject:any = document.createElement('div');
+        htmlObject.innerHTML = article.text;
+        text?.append(htmlObject)
+        return () => {
+            let j = 0
+            console.log(text?.children)
+            if(text?.children){
+                for(let i of text?.children){
+                    text?.children[j].remove()
+                    j++
+                }
+            }
+        }
+    })
     if (pending) {
         return <div><Preloader /></div>
     }
@@ -350,8 +395,8 @@ export const DetailArticle = (props: DetailArticleProps) => {
             <div className={css.title}>
                 {article.title}
             </div>
-            <div className={css.ArticleText}>
-                <Interweave content={article.text} />
+            <div className={css.ArticleText}  id={'text'}>
+                {/*<Interweave content={article.text} />*/}
                 {
                     article.additions.map((item: any) => {
                         return <div key={item.id}>
