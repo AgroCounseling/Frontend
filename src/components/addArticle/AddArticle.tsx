@@ -168,6 +168,7 @@ const AddArticle: React.FC<Props> = (props) => {
                         placeholder={t("selectCategoryText")}
                         options={types} />
                 </div>
+
             </div>
             <div className={css.text_wrapper}>
                 <div>

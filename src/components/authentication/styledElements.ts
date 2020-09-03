@@ -1,10 +1,14 @@
 import styled from 'styled-components'
-
+import {device} from '../../device-size/DeviceSize'
 
 export const AuthWrapper = styled.div`
     background: linear-gradient(to bottom, #BFC3CF , #ffffff );
-    height: 100vh;
+    min-height: 100vh;
     position:relative;
+    
+    @media ${device.tablet} { 
+       padding: 20px 0;
+    }
 `
 
 export const Button = styled.button`
@@ -72,25 +76,25 @@ export const WelcomeTitle = styled.div`
     color: rgba(33, 51, 54, 0.8);
 `
 
-export const Btns = styled.div`
-    text-align: center;
-    background: #B7BFD5;
-    border-radius: 10px;
-    width: 270px;
-    border: none;
-    
-    &>a{
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 29px;
-        text-decoration: none;
-        color: #FFFFFF;
-        width: 100%;
-        
-    }
-    
-`
+// export const Btns = styled.div`
+//     text-align: center;
+//     background: #B7BFD5;
+//     border-radius: 10px;
+//     width: 270px;
+//     border: none;
+//
+//     &>a{
+//         font-style: normal;
+//         font-weight: normal;
+//         font-size: 18px;
+//         line-height: 29px;
+//         text-decoration: none;
+//         color: #FFFFFF;
+//         width: 100%;
+//
+//     }
+//
+// `
 export const BtnsWrapper = styled.div`
     margin-top: 80px;
     display: flex;

@@ -127,3 +127,35 @@
 .cancel{
     margin-right: 20px ;
 }
+
+
+@media screen and (max-width: 996px) {
+    .consultant, .name{
+        font-size: 23px;
+    }
+    .linksWrapper>a, .linksWrapperEdit>div{
+        font-size: 28px;
+        padding: 30px 90px 10px 90px;
+    }
+    .nameWrapper2{
+        width: 70%;
+        padding: 0 8%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .consultant{
+        font-size: 18px;
+    }
+    .linksWrapper>a, .linksWrapperEdit>div{
+        font-size: 20px;
+        padding: 30px 30px 10px 30px;
+    }
+    .nameWrapper2{
+        width: 90%;
+        padding: 0 8%;
+    }
+    .changePhoto{
+        display: flex;
+        text-align: center;
+    }
+}
