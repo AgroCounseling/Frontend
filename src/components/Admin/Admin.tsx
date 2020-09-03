@@ -229,8 +229,8 @@ const Admin = () => {
                                     {
                                         data.status_client ? null :
                                             <div className={css.consultant}>{t("consultant")} | {
-                                                specialty.map((item: any) => <span
-                                                    key={item.value}> {item.label + ', '} </span>)
+                                                specialty.map((item: any, index:number) => <span
+                                                    key={item.value}> {index+1 !== specialty.length ? item.label + ', ' : item.label} </span>)
                                             }</div>
                                     }
                                 </div>

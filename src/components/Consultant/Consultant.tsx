@@ -59,7 +59,7 @@ const Consultant: React.FC<Props> = (props) => {
                                 <Stars color={'red'} edit={false} size={44} value={user.middle_star}/>
                             </div>
                             <div className={css.specialty}>{t('specialty')}: {
-                                specialties.map((item: any) => <span key={item.id}> {item.title}, </span>)
+                                specialties.map((item: any, index:number) => <span key={item.id}> {index+1 !== specialties.length ? item.title + ', ' : item.title} </span>)
                             }</div>
                         </div>
                     </div>
