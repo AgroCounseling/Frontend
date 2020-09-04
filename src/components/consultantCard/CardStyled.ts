@@ -36,7 +36,9 @@ export const CardWrapper = styled.div`
         text-align: left;
         padding: 5px 10px;
         height: 105px;
-        
+        @media (max-width: 500px) { 
+            height: 80px;
+    }
         &>span{
         font-style: italic;
         font-weight: normal;
@@ -65,6 +67,9 @@ export const Ava = styled.div`
 
 export const Description = styled.div`
     height: 65px;
+    @media (max-width: 500px) { 
+        margin: 10px 0px;
+        }
     font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
     margin: 35px 0;
     padding: 0 15px;
@@ -100,6 +105,10 @@ export const ConnectButton = styled.button`
     font-style: normal;
     font-weight: bold;
     font-size: 16px;
+    @media (max-width: 500px) { 
+        margin-top: 0;
+        line-height: 220.9%;
+    }
     line-height: 300.9%;
     cursor: pointer;
     position:absolute;

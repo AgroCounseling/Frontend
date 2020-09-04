@@ -1,12 +1,15 @@
-.wrapper{
+.wrapper {
     position: relative;
     height: 100%;
 }
-.feedBackWrapper{
+
+.feedBackWrapper {
     display: grid;
     grid-template-columns: 230px 1fr;
 }
-.feedBack{
+
+
+.feedBack {
     /*position: absolute;*/
     /*top: -200px;*/
     /*bottom: 0;*/
@@ -17,52 +20,62 @@
     z-index: -1;
 
 }
-.feedBack>span{
+
+.feedBack>span {
     margin-top: 200px;
 }
-.user{
+
+.user {
     margin: 200px 10% 50px 0%;
     min-height: 150px;
     background: rgba(236, 191, 44, 0.8);
     position: relative;
 }
-.imgWrapper{
+
+.imgWrapper {
     position: absolute;
     top: -100%;
     left: -13%;
     width: 250px;
     height: 250px;
 }
-.imgWrapper>img{
+
+.imgWrapper>img {
     border-radius: 50%;
     width: 100%;
     height: 100%;
 }
-.person{
+
+.person {
     padding: 0 20px 0 150px;
 }
-.name{
+
+.name {
     font-weight: bold;
     font-size: 36px;
     line-height: 207.9%;
 
     color: rgba(33, 51, 54, 0.8);
 }
-.specialty{
+
+.specialty {
     font-weight: bold;
     font-size: 20px;
     color: #213336;
 }
-.textWrapper{
+
+.textWrapper {
     margin-left: 250px;
 }
-.education{
+
+.education {
     font-weight: 500;
     font-size: 33px;
     color: #ECBF2C;
     margin-left: 55px;
 }
-.text{
+
+.text {
     margin: 20px;
     font-weight: normal;
     font-size: 20px;
@@ -70,18 +83,20 @@
     color: rgba(33, 51, 54, 0.8);
 }
 
-.answerWrapper{
+.answerWrapper {
     padding: 0 10px;
     margin: 15px 0;
 }
-.answerName{
+
+.answerName {
     font-weight: 500;
     font-size: 16px;
     line-height: 27px;
 
     color: #213336;
 }
-.answer{
+
+.answer {
     margin: 5px 2px;
     font-weight: 500;
     font-size: 14px;
@@ -89,7 +104,8 @@
 
     color: #213336;
 }
-.stars{
+
+.stars {
     font-weight: 500;
     font-size: 14px;
     line-height: 22px;
@@ -97,11 +113,60 @@
     display: flex;
     justify-content: space-between;
 }
-.nameWrapper{
+
+.nameWrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.footerWrapper{
+
+.footerWrapper {
     margin-top: auto;
+}
+
+
+
+@media (max-width: 500px) {
+    .feedBackWrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        
+    }
+
+    .feedBack {
+        /*position: absolute;*/
+        /*top: -200px;*/
+        /*bottom: 0;*/
+        /*left: 0;*/
+        width: 100%;
+        padding-top: 70px;
+        background: #FFFAEA;
+    }
+
+    .user {
+        margin-right: 20px;
+        margin-left: 20px;
+        min-height: 120px;
+    }
+
+    .imgWrapper {
+        width: 90px;
+        height: 90px;
+        left: 0;
+        top: -55%;
+    }
+
+    .person {
+        padding: 0 15px;
+    }
+
+    .nameWrapper .name {
+        color: #fff;
+        font-size: 24px;
+        margin-left: 70px;
+    }
+
+    .specialty {
+        font-size: 16px;
+    }
 }

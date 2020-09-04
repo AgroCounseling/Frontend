@@ -1,23 +1,40 @@
-.arrows{
+.arrows {
     padding-bottom: 25px;
 }
-.roadImgWrapper{
-}
-.roadImg{
+
+.roadImgWrapper {}
+
+
+/* @media  (max-width: 996px) {
+    .flexDis {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+} */
+
+
+
+.roadImg {
     height: 150px !important;
     display: flex;
     margin: auto;
     align-items: center;
     justify-content: center;
 }
-.roadImg>img{
+
+
+
+.roadImg>img {
     max-height: 100%;
 }
-.cardsWrapper{
+
+.cardsWrapper {
     padding: 80px 40px;
     display: block;
 }
-.cardsWrapper>div{
+
+.cardsWrapper>div {
     text-align: center;
     justify-content: center;
     display: grid !important;
@@ -25,7 +42,9 @@
     grid-row-gap: 4em;
     grid-template-columns: repeat(auto-fit, 320px);
 }
-.prev, .next{
+
+.prev,
+.next {
     border: none;
     -webkit-border-radius: 50px;
     -moz-border-radius: 50px;
@@ -35,34 +54,41 @@
     text-align: center;
     cursor: pointer;
 }
-.listWrapper{
+
+.listWrapper {
     position: relative;
 }
-.prev>img, .next>img{
+
+.prev>img,
+.next>img {
     border-radius: 50%;
     padding: 10px;
     margin: 0 auto;
     background: rgba(170, 139, 37, 0.5);
 }
-.prev{
+
+.prev {
     margin-right: 10px;
     position: absolute;
     left: 20px;
     top: 50%;
     transform: translate(0, -50%);
 }
-.next{
+
+.next {
     margin-left: 10px;
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
     right: 25px;
 }
-.consultant{
+
+.consultant {
     text-align: center;
     margin: 30px 0 70px 0;
 }
-.header{
+
+.header {
     font-style: normal;
     font-weight: bold;
     font-size: 33px;
@@ -70,10 +96,12 @@
     color: #AA8B25;
     margin: 35px 0;
 }
-.imageWrapper{
+
+.imageWrapper {
     text-align: center;
 }
-.linksWrapper{
+
+.linksWrapper {
     position: relative;
     justify-content: center;
     display: grid;
@@ -81,15 +109,18 @@
     padding: 0 13%;
     grid-template-columns: repeat(2, 1fr);
 }
-.linksWrapper>button{
+
+.linksWrapper>button {
     position: absolute;
     top: 0;
     left: 0;
 }
-.links{
+
+.links {
     position: relative;
 }
-.links>div{
+
+.links>div {
     position: absolute;
     bottom: 4px;
     left: 0;
@@ -97,13 +128,78 @@
     padding: 15px 0;
     background: rgba(170, 139, 37, 0.5);
 }
-.links>div>span{
+
+.links>div>span {
     font-style: normal;
     font-weight: bold;
     font-size: 30px;
     /*line-height: 207.9%;*/
     color: #FFFFFF;
 }
-.links>img{
+
+.links>img {
     width: 100%;
+}
+
+@media (max-width: 996px) {
+    .links>div>span {
+        font-size: 20px;
+    }
+
+    .roadImg {
+        height: 80px !important;
+    }
+
+    .arrows {
+        height: 50px !important;
+    }
+}
+
+
+.table {
+    display: none;
+}
+
+
+
+@media (max-width: 500px) {
+    .roadImg {
+        height: 40px !important;
+    }
+
+    .imageWrapper img {
+        height: 80px;
+    }
+
+    .pt {
+        padding-top: 70px;
+        margin-left: 25px;
+    }
+
+    .prev>img,
+    .next>img {
+        padding: 2px;
+    }
+
+    .table {
+        display: flex;
+    }
+
+    .header {
+        font-size: 20px;
+        margin: 20px 0px;
+    }
+
+    .links>div>span {
+        font-size: 14px;
+    }
+
+    .links>div {
+        padding: 0 0;
+    }
+
+
+    .arrows {
+        height: 20px !important;
+    }
 }
