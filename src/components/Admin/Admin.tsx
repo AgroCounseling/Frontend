@@ -46,7 +46,7 @@ const Admin = () => {
                 last_name: lastName,
                 phone: user.phone,
             },
-            specialty: specialty.map((item: any) => ({ category: item.value })),
+            // specialty: specialty.map((item: any) => ({ category: item.value })),
             title: '',
             description: description
         }
@@ -60,8 +60,6 @@ const Admin = () => {
                 // @ts-ignore
                 for (let subKey in dat[key]) {
                     // @ts-ignore
-                    console.log(dat[key].length)
-                    // debugger
                     // @ts-ignore
                     if (dat[key].length === undefined) {
                         // @ts-ignore
@@ -134,7 +132,7 @@ const Admin = () => {
                 setName(r.data.results[0].first_name)
                 setLastName(r.data.results[0].last_name)
             } else {
-                setAll([...r.data.results[0].specialty])
+                // setAll([...r.data.results[0].specialty])
                 setUser(r.data.results[0].user)
                 setName(r.data.results[0].user.first_name)
                 setLastName(r.data.results[0].user.last_name)

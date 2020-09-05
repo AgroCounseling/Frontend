@@ -224,7 +224,6 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                         access: false,
                         time: 0
                     })).then((res: any) => {
-                        console.log(res)
                         if (data.status_client) setIsModal(true)
                     })
                 }
@@ -246,7 +245,6 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
             })
     }
 
-    console.log('data', userData);
     useEffect(() => {
         getRoom(true)
     }, [id])
