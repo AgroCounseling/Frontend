@@ -139,20 +139,32 @@ const List = (props: ListType) => {
             <DescriptionWrapper>
                 {
                     props.index % 2 === 0
+
                         ? <>
-                            <div>
+                            <div className={css.pt}>
                                 <Title>{props.title}</Title>
                                 <Description>{props.description}</Description>
                             </div>
                             <div className={css.imageWrapper}>
                                 <img src={props.url ? props.url : grass} alt="grass" />
                             </div>
+                            {/* </div> */}
+                            {/* <div className={css.table}>
+                                <div className={css.imageWrapper}>
+                                    <img src={props.url ? props.url : grass} alt="grass" />
+                                </div>
+                                <div>
+                                    <Title>{props.title}</Title>
+                                    {console.log('props', props)}
+                                    <Description>{props.description}</Description>
+                                </div>
+                            </div> */}
                         </>
                         : <>
                             <div className={css.imageWrapper}>
                                 <img src={props.url ? props.url : grass} alt="grass" />
                             </div>
-                            <div>
+                            <div className={css.pt}>
                                 <Title>{props.title}</Title>
                                 <Description>{props.description}</Description>
                             </div>
@@ -186,6 +198,7 @@ const RoadMap = () => {
     const { t } = useTranslation();
 
     return <MapsWrapper>
+
         <div className={css.roadImgWrapper}>
             <div className={css.roadImg}>
                 <img src={choose} alt="Choose" />
