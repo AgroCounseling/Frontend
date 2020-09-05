@@ -23,12 +23,14 @@ const Admin = () => {
     const initialise = async () => {
         return dispatch(checkToken(api.getProfile))
     }
+
     const specialties = useSelector((state: GlobalStateType) => getSpecialties(state))
 
     const [user, setUser] = useState<any>(null)
     const [pending, setPending] = useState(true)
     const [editing, setEditing] = useState(false)
     const [name, setName] = useState('')
+    console.log(name)
     const [lastName, setLastName] = useState('')
     const [img, setImg] = useState<string | null>(null)
     const [pic, setPic] = useState<string | null>(null)
@@ -38,7 +40,9 @@ const Admin = () => {
     const [description, setDescription] = useState('')
 
     const data = JSON.parse(localStorage.getItem('userData') as string)
-
+    const initialiseSpeciality = async (name:string) => {
+        return dispatch(checkToken(()=>api.getSpeciality(name)))
+    }
     const setProfile = async () => {
         const dat: any = {
             user: {
@@ -49,6 +53,9 @@ const Admin = () => {
             // specialty: specialty.map((item: any) => ({ category: item.value })),
             title: '',
             description: description
+        }
+        const specialties:any = {
+            specialty: specialty.map((item: any) => ({ category: item.value })),
         }
         if (pic) {
             dat.user.photo = pic
@@ -91,7 +98,8 @@ const Admin = () => {
             newUser.append('photo', pic)
         }
         if (data.status_consultant) {
-            return dispatch(checkToken(() => api.setProfile(user.first_name, formData)))
+                dispatch(checkToken(() => api.setProfile(user.first_name, formData)))
+                dispatch(checkToken(() => api.setSpeciality(user.first_name, specialties)))
         }
         if (data.status_client) {
             return dispatch(checkToken(() => api.setProfile(user.first_name, newUser)))
@@ -138,6 +146,9 @@ const Admin = () => {
                 setLastName(r.data.results[0].user.last_name)
                 setDescription(r.data.results[0].description)
             }
+            initialiseSpeciality(r.data.results[0].user.first_name).then((res:any)=>{
+                setAll([...res.data.specialty])
+            })
             setPending(false)
         })
     }, [])
