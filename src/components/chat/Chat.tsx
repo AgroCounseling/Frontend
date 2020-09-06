@@ -106,43 +106,41 @@ const User = (props: UserProps) => {
                 <div className={css.peronTime}>{Time(props.time)}</div>
             </div>
             <div className={css.textWrapper}>
-                <div>
-                    {/*Отвечать моментально считается необязательным в бизнес-переписке, в конце концов, электронная почта*/}
-                    {/*– это не мессенджер. Но лучше не задерживайте ответ дольше, чем на 24 часа.*/}
-                </div>
-                {
-                    props.messages
-                        ? <span className={css.count}>
-                            <span>
-                                {props.messages}
-                            </span>
-                        </span>
-                        : null
-                }
+                <div> </div>
+                {/*{*/}
+                {/*    props.messages*/}
+                {/*        ? <span className={css.count}>*/}
+                {/*            <span>*/}
+                {/*                {props.messages}*/}
+                {/*            </span>*/}
+                {/*        </span>*/}
+                {/*        : null*/}
+                {/*}*/}
             </div>
         </div>
     )
 }
+
 type MessageProps = {
     id: number
     userId: number
     email: string
 }
 const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
+    const messageId: any = useRef(null)
+    const Send = async (req: any) => dispatch(checkToken(() => req))
 
     const dispatch = useDispatch()
     let [audioURL, isRecording, startRecording, stopRecording, audioData, setAudioData]: any = useRecorder();
-    const { t } = useTranslation();
 
+    const { t } = useTranslation();
     const [isModal, setIsModal] = useState(false)
     const [open, setOpen] = useState(false);
-
     const [downloadImg, setDownloadImg] = useState('');
     const [downloadVideo, setDownloadVideo] = useState('');
     const [openImgModal, setOpenImgModal] = useState(false);
     const [openAudioModal, setOpenAudioModal] = useState(false);
     const [openVideoModal, setOpenVideoModal] = useState(false);
-
     const [inp, setInp] = useState('')
     const [userData, setData] = useState<any>(null)
     const [user, setUser] = useState<any>(null)
@@ -151,20 +149,15 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const [video, setVideo] = useState<any>(null)
     const [audio, setAudio] = useState<any>(null)
     const [picture, setPicture] = useState('')
-    const [endTime, setEndTime] = useState(false);
-    const [access, setAccess] = useState(false)
+    const [endTime, setEndTime] = useState(false)
     let time: any;
     let minutes: any;
     let access2: any;
-    const messageId: any = useRef(null)
-    const Send = async (req: any) => dispatch(checkToken(() => req))
-
     const scrollToBottom = () => {
         const scrollHeight = messageId?.current?.scrollHeight;
         const height = messageId?.current?.clientHeight;
         if (messageId.current) messageId.current.scrollTop = scrollHeight - height
     }
-
     const submit = (e: any) => {
         e.preventDefault()
         const newForm = new FormData()
@@ -198,23 +191,30 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
             })
     }
 
+    useEffect(()=>{
+        setIsModal(false)
+        setOpen(false)
+        setDownloadImg('')
+        setDownloadVideo('')
+        setOpenImgModal(false)
+        setOpenAudioModal(false)
+        setOpenVideoModal(false)
+        setInp('')
+        setData(null)
+        setUser(null)
+        setMessages([])
+        setImg(null)
+        setVideo(null)
+        setAudio(null)
+        setPicture('')
+        setEndTime(false)
+    }, [id])
     const getRoom = (scroll?: boolean) => {
         let data = JSON.parse(localStorage.getItem('userData') as string);
-
-        // if (time) {
-        //     if (new Date(time).getTime() + (minutes * 60 * 100) <= new Date().getTime() && access2) {
-        //         Send(Api.editStatus(id, {
-        //             access: false,
-        //         })).then((res: any) => {
-        //             console.log(res)
-        //             if (data.status_client) setIsModal(true)
-        //         })
-        //     }
-
-        // }
         Send(Api.getRooms(id))
             .then((res: any) => {
-                setAccess(res.data.access)
+                let time = res.data.time
+                // setAccess(res.data.access)
                 setData({ ...res.data });
                 if ((new Date() <= new Date(res.data.times_rooms))) {
                     setEndTime(true);
@@ -224,7 +224,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                         access: false,
                         time: 0
                     })).then((res: any) => {
-                        if (data.status_client) setIsModal(true)
+                        if (data.status_client && time !== 0) setIsModal(true)
                     })
                 }
                 access2 = res.data.access
@@ -250,15 +250,12 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     }, [id])
 
     useEffect(() => {
-
-
         let interval = setInterval(() => getRoom(), 5000)
         return () => clearInterval(interval);
     }, [id])
     const showImg = (str: string) => {
         setPicture(str)
     }
-
     return (
         <div className={css.message__wrapper}>
             <Modal closed={isModal} id={id} setClose={(e: boolean) => setIsModal(e)} />
