@@ -76,27 +76,16 @@ export const WelcomeTitle = styled.div`
     color: rgba(33, 51, 54, 0.8);
 `
 
-// export const Btns = styled.div`
-//     text-align: center;
-//     background: #B7BFD5;
-//     border-radius: 10px;
-//     width: 270px;
-//     border: none;
-//
-//     &>a{
-//         font-style: normal;
-//         font-weight: normal;
-//         font-size: 18px;
-//         line-height: 29px;
-//         text-decoration: none;
-//         color: #FFFFFF;
-//         width: 100%;
-//
-//     }
-//
-// `
 export const BtnsWrapper = styled.div`
     margin-top: 80px;
     display: flex;
     justify-content: space-around;
+    
+    @media ${device.tablet} { 
+       display: grid;
+       
+       &>a{
+        margin: 10px 0;
+       }
+    }
 `
