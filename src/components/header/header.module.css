@@ -84,11 +84,13 @@
 .uerWrapper>img {
     height: 100%;
 }
-.form{
+
+.form {
     display: flex;
     position: relative;
 }
-.search{
+
+.search {
     position: absolute;
     right: 10px;
     top: 5px;
@@ -98,6 +100,72 @@
     cursor: pointer;
     background: #fff url('https://image.flaticon.com/icons/svg/93/93642.svg') no-repeat center center;
 }
-.search:focus{
+
+.search:focus {
     outline: none;
+}
+
+.navbarIcon {
+    display: none;
+}
+
+@media (max-width: 500px) {
+
+    .form {
+        display: none;
+    }
+
+    .navbarIcon {
+        display: flex;
+        cursor: pointer;
+        height: 60px !important;
+    }
+
+    .lastChildWrapper {
+        display: none;
+    }
+
+    .mobileWrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .forum {
+        margin-right: 0;
+    }
+    .enter {
+        margin-top: 10px;
+    }
+
+    .mt10 {
+        margin-top: 10px;
+    }
+
+    .register {
+        margin: 0;
+        height: 30px;
+        background: #ECBF2C;
+        border-radius: 10px;
+        color: #FFFFFF;
+        padding: 5px 10px;
+        text-decoration: none;
+        max-width: 160px;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .enter {
+        height: 30px;
+        padding: 18px 10px;
+        max-width: 70px;
+    }
+
+}
+
+
+.wrapper {
+    display: flex;
+    justify-content: space-between;
 }

@@ -139,34 +139,36 @@
         /*bottom: 0;*/
         /*left: 0;*/
         width: 100%;
-        padding-top: 70px;
+        padding-top: 20px;
         background: #FFFAEA;
     }
 
     .user {
-        margin-right: 20px;
-        margin-left: 20px;
+        margin-right: 15px;
+        margin-left: 15px;
         min-height: 120px;
     }
 
     .imgWrapper {
         width: 90px;
         height: 90px;
-        left: 0;
+        left: -15px;
         top: -55%;
     }
 
     .person {
         padding: 0 15px;
+        padding-right: 0px;
     }
 
     .nameWrapper .name {
         color: #fff;
-        font-size: 24px;
-        margin-left: 70px;
+        font-size: 20px;
+        margin-left: 40px;
     }
 
     .specialty {
         font-size: 16px;
     }
+
 }

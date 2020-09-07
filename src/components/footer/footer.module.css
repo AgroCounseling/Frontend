@@ -4,6 +4,7 @@
     display: flex;
     justify-content: space-between;
     text-align: left;
+    margin-top: auto;
 }
 .wrapper>div{
     display: flex;
@@ -55,4 +56,55 @@
 }
 .logoWrapper>div>img{
     height: 100%;
+}
+
+@media (max-width: 500px) {
+    .logoWrapper img  {
+        width: 60px;
+        height: 50px;
+    }
+    .footerLogo {
+        width: 40px;
+        height: 40px !important;
+    }
+
+    .logoWrapper>div:first-child{
+        height: 40px;
+    }
+    .logoWrapper{
+        display: flex;
+        flex-direction: column;
+        margin:10px;
+    }
+
+
+    .agroLogo {
+        width: 120px !important;
+        height: 60px !important;
+        margin-bottom: 30px;
+    }
+    .logoWrapper div {
+        margin-top: 10px;
+    }
+
+    .wrapper {
+        padding: 10px;
+    }
+
+    .centerText {
+        margin-top: 30px !important;
+    }
+
+    .wrapper >div:first-child{
+        font-size: 14px;
+    }
+
+    .wrapper>div:last-child{
+        font-size: 14px;
+        margin-left: 20px;
+    }
+
+    .title {
+        font-size: 15px;
+    }
 }

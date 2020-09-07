@@ -1,5 +1,8 @@
 .wrapper {
     overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .articlesWrapper {
@@ -7,6 +10,7 @@
     grid-template-columns: 300px 1fr;
     grid-gap: 1em;
 }
+
 
 .navBar {
     /*text-align: center;*/
@@ -100,17 +104,18 @@
     display: -webkit-box;
     display: block;
 }
-.ArticleText>div{
+
+.ArticleText>div {
     width: 80%;
 }
-.ArticleText>div>img{
+
+.ArticleText>div>img {
     /*width: 100%;*/
     max-height: 510px !important;
     margin-top: 20px;
 }
-.date {
-    color: #000000;
-}
+
+
 
 .likes {
     margin-top: 100px;
@@ -169,6 +174,9 @@
     margin-right: 10px;
 }
 
+.date {
+    color: #000000;
+}
 .count {
     height: 50px;
     /*font-size: 23px;*/
@@ -190,4 +198,87 @@
     border: 2px solid #0a66b7 !important;
     border-left: none !important;
     color: #0a66b7;
+}
+
+
+@media (max-width: 500px) {
+    .articlesWrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navBar {
+        /*text-align: center;*/
+        padding-left: 20px;
+        min-height: auto;
+        border-right: 1px solid #EBEBE9;
+    }
+
+
+    .filterCategory {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 27px;
+        width: 100%;
+    }
+
+    .date {
+        color: #000000;
+        font-size: 14px;
+    }
+
+    .NoSelectSubType {
+        display: none;
+    }
+
+    .newPopular {
+        display: none;
+    }
+
+    .filterWrapper {
+        display: flex;
+    }
+
+    /* .filterWrapper div {
+        width: 100%;
+    } */
+    .width100 {
+        width: 100%;
+    }
+
+    .article {
+        background: rgba(112, 124, 151, 0.15);
+        border-radius: 0 0 6px 6px;
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .category {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 20px;
+        margin-right: 0;
+        color: #64A928;
+    }
+
+    .name {
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 20px;
+        margin-right: 0;
+        color: #213336;
+    }
+
+    .header {
+        display: grid;
+        grid-template-columns: 2.5fr 1fr 1.2fr;
+        grid-gap: 1em;
+    }
+
+}
+.text>div {
+    font-size: 18
+    px;
+    margin-top: 5px;
 }

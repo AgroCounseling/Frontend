@@ -1,24 +1,25 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import css from "../auth.module.css";
 import chooseIcon from "../../../img/choose-icon.png";
-import {Button, Input, Label} from "../styledElements";
-import {Link, useParams} from "react-router-dom";
+import { Button, Input, Label } from "../styledElements";
+import { Link, useParams } from "react-router-dom";
 import google from "../../../img/google.png";
 import facebook from "../../../img/facebook.png";
-import {WithAuthRedirect} from "../../../hocs/AuthHoc";
-import {useFormik} from "formik";
+import { WithAuthRedirect } from "../../../hocs/AuthHoc";
+import { useFormik } from "formik";
 import api from './../../../api/Api'
-import {useHistory} from 'react-router-dom'
-import {googleAuth} from "../../../state/authReducer";
-import {useDispatch} from "react-redux";
+import { useHistory } from 'react-router-dom'
+import { googleAuth } from "../../../state/authReducer";
+import { useDispatch } from "react-redux";
 import GoogleLogin from "react-google-login";
-import {data} from "../sign-in/SignInForm";
+import { data } from "../sign-in/SignInForm";
 import FacebookLogin from "react-facebook-login";
+import { useTranslation } from "react-i18next";
 
 
 
-const validate:any = (values:any, props:any) => {
-    const errors:any = {};
+const validate: any = (values: any, props: any) => {
+    const errors: any = {};
 
     if (!values.email) {
         errors.email = 'Required';
@@ -36,12 +37,14 @@ const validate:any = (values:any, props:any) => {
 };
 
 export const RegisterFormClient = WithAuthRedirect(() => {
+    const { t } = useTranslation();
+
     const [pic, setPic] = useState<any>(null)
     const [img, setImg] = useState<any>(null)
     const [error, setError] = useState<any>(null)
     const history = useHistory()
 
-    const fileSelectHandler = (e:any) => {
+    const fileSelectHandler = (e: any) => {
         setPic(e.target.files[0])
     }
     const formik = useFormik({
@@ -54,7 +57,7 @@ export const RegisterFormClient = WithAuthRedirect(() => {
             number: '',
         },
         validate,
-        onSubmit: async (values:any) => {
+        onSubmit: async (values: any) => {
             const client = new FormData()
             client.append('email', values.email)
             client.append('password', values.password)
@@ -62,18 +65,18 @@ export const RegisterFormClient = WithAuthRedirect(() => {
             client.append('first_name', values.name)
             client.append('certificates', 'null');
             client.append('last_name', values.surname)
-            if(pic) {
+            if (pic) {
                 client.append('photo', pic)
             }
             client.append('phone', values.number)
 
             api.signUpClient(client)
-                .then((res:any)=> {
-                        console.log(res)
-                        alert('Вы успешно зарегистрировались!!!')
-                        return history.push('/sign-in')
-                    },
-                    (error:any)=> {
+                .then((res: any) => {
+                    console.log(res)
+                    alert(`${t('successRegister')}`)
+                    return history.push('/sign-in')
+                },
+                    (error: any) => {
                         // alert('Что то пошло не так, Попробуйте позже!!!')
                         console.log(error.response.data.email[0])
                         setError(error.response.data.email[0])
@@ -83,16 +86,16 @@ export const RegisterFormClient = WithAuthRedirect(() => {
     return (
         <form onSubmit={formik.handleSubmit}>
             <div className={css.registration}>
-                Зарегистрируйтесь, чтобы получить доступ к консультации
+                {t('singInText')}
             </div>
             <div>
                 <label>
                     <div className={css.choosePic}>
-                        <input type="file" onChange={(e:any)=>{
+                        <input type="file" onChange={(e: any) => {
                             const reader = new FileReader();
-                            if(e.target.files.length) {
+                            if (e.target.files.length) {
                                 reader.readAsDataURL(e.target.files[0])
-                            }else{
+                            } else {
                                 setImg('')
                             }
                             reader.onload = (e: any) => {
@@ -100,19 +103,19 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                                 setImg(newUrl[1])
                             }
                             fileSelectHandler(e)
-                        }}/>
-                        <img src={img ? "data:image/jpg;base64," + img : chooseIcon} alt="#"/>
+                        }} />
+                        <img src={img ? "data:image/jpg;base64," + img : chooseIcon} alt="#" />
                     </div>
                 </label>
                 <div className={css.form}>
                     <Label>
-                        Имя
+                        {t('name')}
                         <Input
                             required
                             name={'name'}
                             onChange={formik.handleChange}
                             value={formik.values.name}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
                         Фамилия
@@ -121,19 +124,19 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                             name={'surname'}
                             onChange={formik.handleChange}
                             value={formik.values.surname}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
                         Email
                         <Input
                             required
                             name={'email'}
-                            onChange={(e)=>{
+                            onChange={(e) => {
                                 setError(null)
                                 formik.handleChange(e)
                             }}
                             value={formik.values.email}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
                         Номер
@@ -142,31 +145,32 @@ export const RegisterFormClient = WithAuthRedirect(() => {
                             name={'number'}
                             onChange={formik.handleChange}
                             value={formik.values.number}
-                            type="text"/>
+                            type="text" />
                     </Label>
                     <Label>
-                        Пароль
+                        {t('password')}
                         <Input
                             required
                             name={'password'}
                             onChange={formik.handleChange}
                             value={formik.values.password}
-                            type="password"/>
+                            type="password" />
                     </Label>
                     <Label>
-                        Подтвердите пароль
+                        {t('confirm-password')}
+
                         <Input
                             required
                             name={'password2'}
                             onChange={formik.handleChange}
                             value={formik.values.password2}
-                            type="password"/>
+                            type="password" />
                     </Label>
                 </div>
                 <div className={css.errorSignUp}>{
                     error ? error : null
                 }</div>
-                <Registration btn={'Зарегистрироваться'}/>
+                <Registration btn={t('register')} />
             </div>
         </form>
     )
@@ -176,6 +180,8 @@ type BtnProps = {
     btn: string
 }
 const Registration = (props: BtnProps) => {
+    const { t } = useTranslation();
+
     const dispatch = useDispatch()
     const history = useHistory()
     const params = useParams()
@@ -201,7 +207,7 @@ const Registration = (props: BtnProps) => {
             <div className={css.loginWith}>
                 <span>
                     или <span>  </span>
-                    <Link className={css.enter} to={'/sign-in'}>Войти</Link>
+                    <Link className={css.enter} to={'/sign-in'}>{t('singIn')}</Link>
                 </span>
                 <div>
                     <GoogleLogin
@@ -213,8 +219,8 @@ const Registration = (props: BtnProps) => {
                         cookiePolicy={'single_host_origin'}
                         render={renderProps => (
                             <span className={css.links}>
-                                                <img onClick={renderProps.onClick} src={google} alt="G"/>
-                                            </span>
+                                <img onClick={renderProps.onClick} src={google} alt="G" />
+                            </span>
                         )}
                     />
                     <label>
@@ -227,7 +233,7 @@ const Registration = (props: BtnProps) => {
                             buttonStyle={{
                                 display: 'none'
                             }}
-                        /><img src={facebook} alt="F"/>
+                        /><img src={facebook} alt="F" />
                     </label>
                 </div>
             </div>

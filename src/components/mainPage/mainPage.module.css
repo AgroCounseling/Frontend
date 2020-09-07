@@ -181,6 +181,14 @@
         padding: 2px;
     }
 
+    .next {
+        right: 5px;
+    }
+
+    .prev {
+        left: 5px;
+    }
+
     .table {
         display: flex;
     }
