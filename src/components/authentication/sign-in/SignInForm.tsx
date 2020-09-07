@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import css from "../auth.module.css";
 import { Button, Input, Label } from "../styledElements";
-import { Link, useHistory, useParams } from "react-router-dom";
+import { Link, useHistory, useParams, useLocation } from "react-router-dom";
 import google from '../../../img/google.png'
 import facebook from '../../../img/facebook.png'
 import { useDispatch } from "react-redux";
@@ -31,10 +31,13 @@ export const data = {
 
 export const SignIn = WithAuthRedirect(() => {
     const { t } = useTranslation();
-
     const dispatch = useDispatch()
     const history = useHistory()
     const params = useParams()
+    const useQuery = () => {
+        return new URLSearchParams(useLocation().search)
+    }
+    const query = useQuery()
     const [error, setError] = useState<any>(false)
     const responseGoogle = async (response: any) => {
         const newDate = {
@@ -43,8 +46,7 @@ export const SignIn = WithAuthRedirect(() => {
             token: response.wc.access_token
         }
         let res = await dispatch(googleAuth(newDate))
-        // @ts-ignore
-        if (res && !params.id) {
+        if (res && query.get('back')) {
             history.goBack()
         }
     }
@@ -55,8 +57,7 @@ export const SignIn = WithAuthRedirect(() => {
             token: response.accessToken
         }
         let res = await dispatch(googleAuth(newDate))
-        // @ts-ignore
-        if (res && !params.id) {
+        if (res && query.get('back')) {
             history.goBack()
         }
     }
@@ -70,8 +71,7 @@ export const SignIn = WithAuthRedirect(() => {
             onSubmit={async (values, { setSubmitting }) => {
                 setSubmitting(true);
                 let res = await dispatch(authFunction(values.email, values.password))
-                // @ts-ignore
-                if (res && !params.id) {
+                if (res && query.get('back')) {
                     history.goBack()
                 }
                 setError(!res)

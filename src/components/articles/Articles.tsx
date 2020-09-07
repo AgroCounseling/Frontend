@@ -353,7 +353,7 @@ export const DetailArticle = (props: DetailArticleProps) => {
                 })
             }
         } else {
-            history.push('/sign-in')
+            history.push('/sign-in?back=true')
         }
     }
 
@@ -373,7 +373,6 @@ export const DetailArticle = (props: DetailArticleProps) => {
         text?.append(htmlObject)
         return () => {
             let j = 0
-            console.log(text?.children)
             if (text?.children) {
                 for (let i of text?.children) {
                     text?.children[j].remove()

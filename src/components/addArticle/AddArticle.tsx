@@ -30,7 +30,6 @@ const AddArticle: React.FC<Props> = (props) => {
     const { t } = useTranslation();
     const dispatch = useDispatch()
     const history = useHistory()
-    console.log(history)
     const [editor, setEditor] = useState<any>(EditorState.createEmpty())
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const categoriesList = categories.map((item: any) => {
@@ -48,7 +47,6 @@ const AddArticle: React.FC<Props> = (props) => {
     const [types, setTypes] = useState<any>([])
     const [type, setType] = useState<any>([])
     // const [subType, setSubType] = useState(null)
-    console.log(typesList)
     const [visible, setVisible] = useState(false)
     const onModal = () => setVisible(!visible)
 
@@ -65,7 +63,6 @@ const AddArticle: React.FC<Props> = (props) => {
     }, [])
     useEffect(() => {
         const arr = subCategoriesList.filter((item: any) => category.value === +item.category ? item : null)
-        console.log(arr)
         setSubCategories(arr)
     }, [category])
     useEffect(() => {
@@ -119,7 +116,6 @@ const AddArticle: React.FC<Props> = (props) => {
                 .then((res) => {
                     // history.go()
                     setVisible(true)
-                    console.log(res)
                 })
         },
     });

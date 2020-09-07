@@ -12,7 +12,7 @@ const NotAuth = () => {
                 <img src="https://image.flaticon.com/icons/svg/890/890163.svg" alt="lock" />
             </div>
             <div>{t('signInAnswer')}</div>
-            <Link to={'/sign-in'}>{t('signInNoAuth')}</Link>
+            <Link to={'/sign-in?back=true'}>{t('signInNoAuth')}</Link>
         </div>
     )
 }

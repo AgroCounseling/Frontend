@@ -72,13 +72,11 @@ export const RegisterFormClient = WithAuthRedirect(() => {
 
             api.signUpClient(client)
                 .then((res: any) => {
-                    console.log(res)
                     alert(`${t('successRegister')}`)
                     return history.push('/sign-in')
                 },
                     (error: any) => {
                         // alert('Что то пошло не так, Попробуйте позже!!!')
-                        console.log(error.response.data.email[0])
                         setError(error.response.data.email[0])
                     })
         },

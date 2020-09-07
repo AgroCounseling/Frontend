@@ -25,7 +25,7 @@ const Header = (props: any) => {
             isAuth: false
         })
         localStorage.removeItem('userData')
-        history.push('/sign-in/1')
+        // history.push('/sign-in')
     }
     const submit = (e: any) => {
         e.preventDefault()
@@ -59,7 +59,7 @@ const Header = (props: any) => {
                                 </Link>
                             </>
                             : <>
-                                <Link to={'/sign-in/1'} className={css.enter}>{t("singIn")}</Link>
+                                <Link to={'/sign-in'} className={css.enter}>{t("singIn")}</Link>
                                 <Link to={'/sign-up'} className={css.register}>{t("register")}</Link>
                             </>
                     }
@@ -83,7 +83,7 @@ const Header = (props: any) => {
                             </Link>
                         </>
                         : <>
-                            <Link to={'/sign-in/1'} className={css.enter}>{t("singIn")}</Link>
+                            <Link to={'/sign-in'} className={css.enter}>{t("singIn")}</Link>
                             <Link to={'/sign-up'} className={css.register}>{t("register")}</Link>
                         </>
                 }

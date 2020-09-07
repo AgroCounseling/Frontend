@@ -42,8 +42,7 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
     const [documentDownload, addDocument] = useState(false);
     const [img, setImg] = useState('');
     const [photo, setPhoto] = useState('');
-    const [error, setError] = useState<any>(null);
-    console.log(pic)
+    const [error, setError] = useState<any>(null)
     const fileSelectHandler = (e: any) => {
         const arr = Array.from(e.target.files)
         setPic([...arr])
@@ -114,9 +113,6 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                         // @ts-ignore
                         for (let subKey in data[key]) {
                             // @ts-ignore
-                            console.log(data[key].length)
-                            // debugger
-                            // @ts-ignore
                             if (data[key].length === undefined) {
                                 // @ts-ignore
                                 formData.append(`${key}.${subKey}`, data[key][subKey]);
@@ -154,7 +150,6 @@ export const RegisterFormConsultant = WithAuthRedirect(() => {
                         }
                     }, (error: any) => {
                         setError(error.response?.data?.user?.email[0])
-                        console.log(error.response.data)
                     })
             }
         },

@@ -112,7 +112,6 @@ const Admin = () => {
         e.preventDefault()
         setProfile()
             .then((res) => {
-                console.log(res)
                 onEdit()
             })
     }
