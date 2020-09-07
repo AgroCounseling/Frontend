@@ -66,11 +66,11 @@ const Search = () => {
                         {
                             forum?.map((item: any, index: number) => {
                                 if (index === forum.length - 1) {
-                                    return <Question noAnswer={true} comment_count={item.comment_count} key={item.id}
+                                    return <Question img={item.user.photo} noAnswer={true} comment_count={item.comment_count} key={item.id}
                                         id={item.id}
                                         title={item.title} last={true} />
                                 }
-                                return <Question noAnswer={true} comment_count={item.comment_count} key={item.id}
+                                return <Question img={item.user.photo} noAnswer={true} comment_count={item.comment_count} key={item.id}
                                     id={item.id}
                                     title={item.title} />
                             })

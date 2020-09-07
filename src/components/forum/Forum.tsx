@@ -140,10 +140,10 @@ const Forum: React.FC<Props> = (props) => {
                     {
                         questions.map((item: any, index: number) => {
                             if (index === questions.length - 1) {
-                                return <Question comment_count={item.comment_count} key={item.id} id={item.id}
+                                return <Question img={item.user.photo} comment_count={item.comment_count} key={item.id} id={item.id}
                                     title={item.title} last={true} />
                             }
-                            return <Question comment_count={item.comment_count} key={item.id} id={item.id}
+                            return <Question img={item.user.photo} comment_count={item.comment_count} key={item.id} id={item.id}
                                 title={item.title} />
                         })
                     }
@@ -161,6 +161,7 @@ type QuestionProps = {
     title: string
     id: number
     comment_count: number
+    img: string
 }
 
 export const Question = (props: QuestionProps) => {
@@ -172,7 +173,7 @@ export const Question = (props: QuestionProps) => {
             }}>
                 <ImageWrapper>
                     <Text>
-                        <img src={noPicture} alt="#" />
+                        <img src={props.img ? props.img : noPicture} alt="#" />
                     </Text>
                     <span>{props.title}</span>
                 </ImageWrapper>

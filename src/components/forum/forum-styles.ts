@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {device} from "../../device-size/DeviceSize";
 
 export const FilterWrapper = styled.div`
     display: flex;
@@ -36,18 +37,6 @@ export const QuestionWrappers = styled.div`
     border: 1px solid #98A1A3;
     border-radius: 8px;
 `
-export const FilterBy = styled.label`
-    display: flex;
-    align-items: center;
-    margin: 15px 0;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 207.9%;
-    color: #4D5C5E;
-    text-decoration: underline;
-    cursor: pointer;
-`
-
 export const AnswerWrapper = styled.div`
     display: flex;
     align-items: center;
@@ -56,9 +45,9 @@ export const AnswerWrapper = styled.div`
 `
 
 export const ImageWrapper = styled.div`
-    display: flex;
+    display: grid;
     align-items: center;
-    
+    grid-template-columns: 80px 1fr;
     &>span{
         font-style: normal;
         font-weight: 500;
@@ -66,6 +55,13 @@ export const ImageWrapper = styled.div`
         line-height: 207%;
         color: #4D5B5C;
         text-decoration: none;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        
+        @media ${device.tablet} { 
+          font-size: 16px;
+        }
     }
 `
 
@@ -104,4 +100,13 @@ export const Answers = styled.div`
 export const Search = styled.div`
     display: flex;
     justify-content: space-between;
+    
+    @media ${device.tablet} { 
+      flex-direction: column-reverse;
+      
+      &>a>button{
+        margin: 10px 0 !important;
+        width: 100% !important;
+      }
+    }
 `
