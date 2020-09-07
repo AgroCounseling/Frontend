@@ -32,10 +32,10 @@ const Footer = () => {
             <div>
                 <div className={css.logoWrapper}>
                     <div>
-                        <img src={logo} alt="AgroConsulting" />
+                        <img src={logo} alt="AgroConsulting" className={css.footerLogo} />
                     </div>
                     <div>
-                        <img src={agro} alt="AgroConsulting" />
+                        <img src={agro} alt="AgroConsulting" className={css.agroLogo}/>
                     </div>
                 </div>
                 <div className={css.centerText}>

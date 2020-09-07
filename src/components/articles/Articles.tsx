@@ -5,7 +5,7 @@ import { AxiosResponse } from "axios";
 import Select from "react-select";
 import { Link, useParams, useHistory, Switch, Route, useRouteMatch } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {getCategories, getLng, isAuth} from "../../state/selectors";
+import { getCategories, getLng, isAuth } from "../../state/selectors";
 import { GlobalStateType } from "../../state/root-reducer";
 import Pagination from "../pagination/Pagination";
 import { ArticleSearch } from "../Styles";
@@ -25,7 +25,7 @@ const Articles: React.FC<Props> = (props) => {
     const params: any = useParams()
     const history = useHistory()
     const { path, url } = useRouteMatch();
-    const lng = useSelector((state:GlobalStateType) => getLng(state))
+    const lng = useSelector((state: GlobalStateType) => getLng(state))
 
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const categoriesList = categories.map((item: any) => {
@@ -241,29 +241,29 @@ type ArticleProps = {
     newUrl?: string
 }
 export const Article: React.FC<ArticleProps> = (props) => {
-    let text:any = React.createRef()
-    let a:any = props?.description
-    let htmlObject:any = document.createElement('div');
+    let text: any = React.createRef()
+    let a: any = props?.description
+    let htmlObject: any = document.createElement('div');
     htmlObject.innerHTML = a
     let i = 0
     for (let item of htmlObject.children) {
-        if(item.tagName === "IMG"){
+        if (item.tagName === "IMG") {
             htmlObject.children[i].remove()
         }
         i++
     }
-    useEffect(()=>{
+    useEffect(() => {
         let i = 0
         for (let item of text.current.children) {
-            if(!item.children.length){
+            if (!item.children.length) {
                 text.current.children[i].remove()
             }
             i++
         }
     }, [text])
-    useEffect(()=>{
+    useEffect(() => {
         text.current.append(htmlObject)
-        return ()=> {
+        return () => {
             htmlObject.innerHTML = null
             a = null
         }
@@ -303,7 +303,7 @@ export const DetailArticle = (props: DetailArticleProps) => {
     const history = useHistory()
     const auth = useSelector((state: GlobalStateType) => isAuth(state))
     const { t } = useTranslation();
-    const lng = useSelector((state:GlobalStateType) => getLng(state))
+    const lng = useSelector((state: GlobalStateType) => getLng(state))
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [article, setArticle] = useState<any>({})
     const [pending, setPending] = useState(true)
@@ -366,16 +366,16 @@ export const DetailArticle = (props: DetailArticleProps) => {
             })
     }, [params.article])
 
-    useEffect(()=>{
-        let text:any = document.getElementById('text')
-        let htmlObject:any = document.createElement('div');
+    useEffect(() => {
+        let text: any = document.getElementById('text')
+        let htmlObject: any = document.createElement('div');
         htmlObject.innerHTML = article.text;
         text?.append(htmlObject)
         return () => {
             let j = 0
             console.log(text?.children)
-            if(text?.children){
-                for(let i of text?.children){
+            if (text?.children) {
+                for (let i of text?.children) {
                     text?.children[j].remove()
                     j++
                 }
@@ -395,7 +395,7 @@ export const DetailArticle = (props: DetailArticleProps) => {
             <div className={css.title}>
                 {article.title}
             </div>
-            <div className={css.ArticleText}  id={'text'}>
+            <div className={css.ArticleText} id={'text'}>
                 {/*<Interweave content={article.text} />*/}
                 {
                     article.additions.map((item: any) => {
@@ -446,7 +446,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
             <div className={css.newPopular}>
                 {
                     props.goBack
-                        ? <div onClick={() => {
+                        ? <div className={css.noMobile} onClick={() => {
                             history.goBack()
                             props.setGoBack()
                         }}>{t('back')}</div>
@@ -457,7 +457,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                 }
             </div>
             <div className={css.filterWrapper}>
-                <div>
+                <div className={css.width100}>
                     <div className={css.filterCategory}>{t("category")}</div>
                     <Select value={props.categoryVal} onChange={(e: any) => {
                         history.push(`/articles/${e.value}`)
@@ -468,7 +468,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                         placeholder={t('selectCategoryText')}
                         options={props.category} />
                 </div>
-                <div>
+                <div className={css.width100}>
                     <div className={css.filterCategory}>{t('subCategory')}</div>
                     <Select
                         noOptionsMessage={() => NoOption(t('noSubCategoryText'))}
@@ -479,7 +479,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                         onChange={props.setSubCategory}
                     />
                 </div>
-                <div>
+                <div className={css.width100}>
                     <div className={css.filterCategory}>{t('type')}</div>
                     <Select
                         noOptionsMessage={() => NoOption(t('noType'))}
@@ -490,7 +490,7 @@ export const ArticleNavBar: React.FC<ArticleNavBarProps> = (props) => {
                         onChange={props.setTypes}
                     />
                 </div>
-                <div>
+                <div className={css.NoSelectSubType}>
                     <div className={css.filterCategory}>{t("selectSubType")}</div>
                     <Select
                         noOptionsMessage={() => NoOption(t("NoSelectSubType"))}

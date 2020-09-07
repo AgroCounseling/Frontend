@@ -8,6 +8,9 @@ export const HeaderWrapper = styled.div`
     // right: 0;
     z-index: 2;
     height: 63px;
+    @media (max-width: 500px) {
+        min-height: 63px;
+    }
     background: #fff;
     padding: 0 25px ;
     display: flex;
