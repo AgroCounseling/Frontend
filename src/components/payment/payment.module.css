@@ -17,7 +17,6 @@
     padding: 50px 14%;
     display: grid;
     grid-template-columns: 2fr 6fr;
-
     grid-gap: 10em;
     text-align: right;
 }
@@ -32,4 +31,18 @@
 .text>a{
     font-size: 24px;
     color: rgba(33, 51, 54, 0.8);
+}
+
+@media screen and (max-width: 768px) {
+    .title{
+        font-size: 22px;
+    }
+    .block{
+        grid-template-columns: 1fr;
+        grid-gap: 1em;
+        text-align: center;
+    }
+    .text{
+        text-align: center;
+    }
 }
