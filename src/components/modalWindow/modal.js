@@ -7,6 +7,7 @@ import {checkToken} from "../../state/authReducer";
 import {useDispatch} from "react-redux";
 
 const Modal = (props) => {
+
   const [close, setClose] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [star, setStar] = useState("");
@@ -15,11 +16,11 @@ const Modal = (props) => {
   const Send = async (req) => dispatch(checkToken(() => req))
   const postReview = () => {
     Send(Api.createReviews({
-      consultant: props.id,
+      consultant: props.userId,
       text: feedback,
-    })).then((item) => {
+      star: star
+    }, props.userId)).then((item) => {
       props.setClose(!props.closed)
-      console.log("item", item)
     });
   };
 

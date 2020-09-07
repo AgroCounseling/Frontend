@@ -150,6 +150,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const [audio, setAudio] = useState<any>(null)
     const [picture, setPicture] = useState('')
     const [endTime, setEndTime] = useState(false)
+
     let time: any;
     let minutes: any;
     let access2: any;
@@ -170,7 +171,6 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
         if (audio) { // @ts-ignore
             newForm.append('audio', audio)
         }
-
         Send(Api.sendMessage(props.email, newForm))
             .then((res: any) => {
                 let a = {
@@ -216,14 +216,13 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 let time = res.data.time
                 let isAccess = res.data.access
                 setEndTime(!isAccess)
-                console.log(res.data)
                 // setAccess(res.data.access)
                 setData({ ...res.data });
                 if ((new Date() <= new Date(res.data.times_rooms))) {
                     setEndTime(true);
                 } else {
                     setEndTime(false);
-                    if (data.status_client && isAccess) {
+                    if (data.status_client && res.data.access) {
                         setIsModal(true)
                     }
                     Send(Api.editStatus(id, {
@@ -262,7 +261,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     }
     return (
         <div className={css.message__wrapper}>
-            <Modal closed={isModal} id={id} setClose={(e: boolean) => setIsModal(e)} />
+            <Modal closed={isModal} userId={user?.id} id={id} setClose={(e: boolean) => setIsModal(e)} />
             <div className={css.chatHeader}>
                 <div>
                     <div className={css.avaWrapper}>
@@ -338,21 +337,15 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                             style={{ display: 'none' }} />
                         <img src={videoImg} alt="imgIcon" />
                     </label>
-                    {/* <label>
-                        <input onChange={(e: any) => setAudio(e.target.files[0])} accept="Audio/*" type="file"
-                            style={{ display: 'none' }} />
-                        <img src={audioImg} alt="imgIcon" />
-                    </label> */}
                 </div> : ""
             }
             {
                 endTime ? <form onSubmit={submit} className={css.message__input}>
-                    <input placeholder={t('postMessage')} value={inp} onChange={(e) => setInp(e.target.value)}
+                    <input autoFocus={true} placeholder={t('postMessage')} value={inp} onChange={(e) => setInp(e.target.value)}
                         type="text" />
                     <label className={css.plus}>
                         <img src={plus} alt="+" onClick={() => setOpen(!open)} />
                     </label>
-
                     <span className={css.audioMessage} onClick={() => setOpenAudioModal(true)}>
                         <img src={audioMessage} alt="audioMessage" />
                     </span>

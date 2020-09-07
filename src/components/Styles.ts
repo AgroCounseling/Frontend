@@ -1,4 +1,5 @@
 import styled  from 'styled-components'
+import {device} from "../device-size/DeviceSize";
 
 
 export const Wrapper = styled.div`
@@ -16,6 +17,10 @@ export const Header = styled.div`
     color: ${(props)=> props.color ? props.color  : '#64A928'};
     
     border-bottom: 2px solid #4D5C5E; 
+    
+     @media ${device.tablet} {
+        font-size: 26px;
+     }
 `
 
 export const MainButton  = styled.button`

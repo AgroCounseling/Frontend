@@ -110,7 +110,7 @@ export default {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
     }),
-    createReviews: (data: any) => http.post(`${getLng()}/api/reviews/create/`, data, {
+    createReviews: (data: any, id: number) => http.post(`${getLng()}/api/reviews/create/${id}/`, data, {
         headers: {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
