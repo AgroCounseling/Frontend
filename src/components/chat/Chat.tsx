@@ -207,29 +207,33 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
         setVideo(null)
         setAudio(null)
         setPicture('')
-        setEndTime(false)
+        // setEndTime(false)
     }, [id])
     const getRoom = (scroll?: boolean) => {
         let data = JSON.parse(localStorage.getItem('userData') as string);
         Send(Api.getRooms(id))
             .then((res: any) => {
                 let time = res.data.time
+                let isAccess = res.data.access
+                setEndTime(!isAccess)
+                console.log(res.data)
                 // setAccess(res.data.access)
                 setData({ ...res.data });
                 if ((new Date() <= new Date(res.data.times_rooms))) {
                     setEndTime(true);
                 } else {
                     setEndTime(false);
+                    if (data.status_client && isAccess) {
+                        setIsModal(true)
+                    }
                     Send(Api.editStatus(id, {
                         access: false,
                         time: 0
                     })).then((res: any) => {
-                        if (data.status_client && time !== 0) setIsModal(true)
+                        // setEndTime(false)
                     })
                 }
                 access2 = res.data.access
-                // setTime(res.data.timestamp)
-                time = res.data.timestamp
                 minutes = res.data.time
                 setMessages(res.data.messages)
                 if (+res.data.first.id === +props.userId) {

@@ -141,16 +141,19 @@ const Admin = () => {
                 setUser(r.data.results[0])
                 setName(r.data.results[0].first_name)
                 setLastName(r.data.results[0].last_name)
+                initialiseSpeciality(r.data.results[0].first_name).then((res: any) => {
+                    setAll([...res.data.specialty])
+                })
             } else {
                 // setAll([...r.data.results[0].specialty])
                 setUser(r.data.results[0].user)
                 setName(r.data.results[0].user.first_name)
                 setLastName(r.data.results[0].user.last_name)
                 setDescription(r.data.results[0].description)
+                initialiseSpeciality(r.data.results[0].user.first_name).then((res: any) => {
+                    setAll([...res.data.specialty])
+                })
             }
-            initialiseSpeciality(r.data.results[0].user.first_name).then((res: any) => {
-                setAll([...res.data.specialty])
-            })
             setPending(false)
         })
     }, [pending])
