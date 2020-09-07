@@ -60,6 +60,16 @@ export default {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
     }),
+    setSpeciality: (name: string, data: any) => http.put(`${getLng()}/api/specialty/edit/${name}/`, data, {
+        headers: {
+            "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
+        }
+    }),
+    getSpeciality: (name: string) => http.get(`${getLng()}/api/specialty/edit/${name}`, {
+        headers: {
+            "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
+        }
+    }),
     getConsultants: (id: string | number, page: number | string = 1) => http.get(`${getLng()}/api/specialty/${id}/consultants/?page=${page}`),
     getCategory: () => http.get(`${getLng()}/api/categories/`),
     getSubCategory: () => http.get(`${getLng()}/api/subcategories/`),

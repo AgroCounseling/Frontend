@@ -1,28 +1,29 @@
-import React, { useEffect, useState } from 'react'
-import { WithNotAuthRedirect } from "../../hocs/AuthHoc";
+import React, {useEffect, useState} from 'react'
+import {WithNotAuthRedirect} from "../../hocs/AuthHoc";
 import css from './admin.module.css'
-import { MainButton, Yellow } from "../Styles";
+import {MainButton, Yellow} from "../Styles";
 import api from '../../api/Api'
-import { checkToken } from "../../state/authReducer";
-import { useDispatch, useSelector } from "react-redux";
+import {checkToken} from "../../state/authReducer";
+import {useDispatch, useSelector} from "react-redux";
 import Preloader from "../preloader/Preloader";
 import noPic from '../../img/noPicture.png'
-import { useRouteMatch, Switch, Route, Redirect, NavLink } from 'react-router-dom';
+import {useRouteMatch, Switch, Route, Redirect, NavLink} from 'react-router-dom';
 import Chat from "../chat/Chat";
 import AddArticle from "../addArticle/AddArticle";
 import Select from "react-select";
-import { selectStyle } from "../../utils/SelectStyle";
-import { GlobalStateType } from "../../state/root-reducer";
-import { getSpecialties } from "../../state/selectors";
-import { useTranslation } from "react-i18next";
+import {selectStyle} from "../../utils/SelectStyle";
+import {GlobalStateType} from "../../state/root-reducer";
+import {getSpecialties} from "../../state/selectors";
+import {useTranslation} from "react-i18next";
 
 const Admin = () => {
-    const { path, url } = useRouteMatch();
-    const { t } = useTranslation();
+    const {path, url} = useRouteMatch();
+    const {t} = useTranslation();
     const dispatch = useDispatch()
     const initialise = async () => {
         return dispatch(checkToken(api.getProfile))
     }
+
     const specialties = useSelector((state: GlobalStateType) => getSpecialties(state))
 
     const [user, setUser] = useState<any>(null)
@@ -38,7 +39,9 @@ const Admin = () => {
     const [description, setDescription] = useState('')
 
     const data = JSON.parse(localStorage.getItem('userData') as string)
-
+    const initialiseSpeciality = async (name: string) => {
+        return dispatch(checkToken(() => api.getSpeciality(name)))
+    }
     const setProfile = async () => {
         const dat: any = {
             user: {
@@ -50,6 +53,9 @@ const Admin = () => {
             title: '',
             description: description
         }
+        const specialties: any = {
+            specialty: specialty.map((item: any) => ({category: item.value})),
+        }
         if (pic) {
             dat.user.photo = pic
         }
@@ -59,7 +65,6 @@ const Admin = () => {
             if (typeof (dat[key]) === 'object') {
                 // @ts-ignore
                 for (let subKey in dat[key]) {
-                    // @ts-ignore
                     // @ts-ignore
                     if (dat[key].length === undefined) {
                         // @ts-ignore
@@ -91,7 +96,12 @@ const Admin = () => {
             newUser.append('photo', pic)
         }
         if (data.status_consultant) {
-            return dispatch(checkToken(() => api.setProfile(user.first_name, formData)))
+            let res:any = await dispatch(checkToken(() => api.setProfile(user.first_name, formData)))
+            setUser(res.data.user)
+            setName(res.data.user.first_name)
+            setLastName(res.data.user.last_name)
+            setDescription(res.data.description)
+            dispatch(checkToken(() => api.setSpeciality(res.data.user.first_name, specialties)))
         }
         if (data.status_client) {
             return dispatch(checkToken(() => api.setProfile(user.first_name, newUser)))
@@ -131,23 +141,29 @@ const Admin = () => {
                 setUser(r.data.results[0])
                 setName(r.data.results[0].first_name)
                 setLastName(r.data.results[0].last_name)
+                initialiseSpeciality(r.data.results[0].first_name).then((res: any) => {
+                    setAll([...res.data.specialty])
+                })
             } else {
                 // setAll([...r.data.results[0].specialty])
                 setUser(r.data.results[0].user)
                 setName(r.data.results[0].user.first_name)
                 setLastName(r.data.results[0].user.last_name)
                 setDescription(r.data.results[0].description)
+                initialiseSpeciality(r.data.results[0].user.first_name).then((res: any) => {
+                    setAll([...res.data.specialty])
+                })
             }
             setPending(false)
         })
-    }, [])
+    }, [pending])
     const onEdit = () => setEditing(!editing)
     if (pending) {
-        return <Preloader />
+        return <Preloader/>
     }
     return (
         <div className={css.wrapper}>
-            <Yellow />
+            <Yellow/>
             {
                 editing
                     ? <form onSubmit={submit}>
@@ -158,7 +174,7 @@ const Admin = () => {
                             <div className={css.user}>
                                 <span>
                                     <img src={img ? "data:image/jpg;base64," + img : user.photo ? user.photo : noPic}
-                                        alt="ava" />
+                                         alt="ava"/>
                                 </span>
                                 <label>
                                     <input onChange={(e: any) => {
@@ -173,14 +189,14 @@ const Admin = () => {
                                             setImg(newUrl[1])
                                         }
                                         setPic(e.target.files[0])
-                                    }} type={'file'} className={css.file} />
+                                    }} type={'file'} className={css.file}/>
                                     <span className={css.changePhoto}>{t("changeFoto")}</span>
                                 </label>
                             </div>
                             <div className={css.nameWrapper + ' ' + css.nameWrapper1}>
                                 <div className={css.fio}>
-                                    <input type="text" value={name} onChange={(e: any) => setName(e.target.value)} />
-                                    <input type="text" value={lastName} onChange={(e: any) => setLastName(e.target.value)} />
+                                    <input type="text" value={name} onChange={(e: any) => setName(e.target.value)}/>
+                                    <input type="text" value={lastName} onChange={(e: any) => setLastName(e.target.value)}/>
                                 </div>
                                 <div>
                                     {
@@ -192,7 +208,7 @@ const Admin = () => {
                                                     placeholder={t("specialty")}
                                                     options={options}
                                                     isMulti
-                                                    styles={selectStyle} />
+                                                    styles={selectStyle}/>
                                             </div>
                                     }
                                 </div>
@@ -202,7 +218,7 @@ const Admin = () => {
                             {
                                 data.status_client ? null : <>
                                     <div className={css.name}>{t("education")}</div>
-                                    <textarea value={description} onChange={(e: any) => setDescription(e.target.value)} />
+                                    <textarea value={description} onChange={(e: any) => setDescription(e.target.value)}/>
                                 </>
                             }
                         </div>
@@ -217,7 +233,7 @@ const Admin = () => {
                         <div className={css.userWrapper}>
                             <div className={css.user}>
                                 <span>
-                                    <img src={user.photo ? user.photo : noPic} alt="ava" />
+                                    <img src={user.photo ? user.photo : noPic} alt="ava"/>
                                 </span>
                                 <button onClick={onEdit}>{t("changeData")}</button>
                             </div>
@@ -227,8 +243,8 @@ const Admin = () => {
                                     {
                                         data.status_client ? null :
                                             <div className={css.consultant}>{t("consultant")} | {
-                                                specialty.map((item: any, index:number) => <span
-                                                    key={item.value}> {index+1 !== specialty.length ? item.label + ', ' : item.label} </span>)
+                                                specialty.map((item: any, index: number) => <span
+                                                    key={item.value}> {index + 1 !== specialty.length ? item.label + ', ' : item.label} </span>)
                                             }</div>
                                     }
                                 </div>
@@ -243,12 +259,12 @@ const Admin = () => {
                         </div>
                         <Switch>
                             <Route exact path={`${path}/articles`}>
-                                <AddArticle last_name={lastName} name={name} />
+                                <AddArticle last_name={lastName} name={name}/>
                             </Route>
                             <Route exact path={`${path}/chat`}>
-                                <Chat id={user.id} />
+                                <Chat id={user.id}/>
                             </Route>
-                            <Redirect to={`${path}/chat`} />
+                            <Redirect to={`${path}/chat`}/>
                         </Switch>
                     </>}
         </div>
