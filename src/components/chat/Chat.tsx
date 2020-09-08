@@ -132,7 +132,6 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
 
     const dispatch = useDispatch()
     let [audioURL, isRecording, startRecording, stopRecording, audioData, setAudioData]: any = useRecorder();
-
     const { t } = useTranslation();
     const [isModal, setIsModal] = useState(false)
     const [open, setOpen] = useState(false);
@@ -183,10 +182,10 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 setImg(null)
                 setAudio(null)
                 setAudioData(null)
-                setOpenAudioModal(false);
-                setOpenImgModal(false);
-                setOpenVideoModal(false);
-                setDownloadImg('');
+                setOpenAudioModal(false)
+                setOpenImgModal(false)
+                setOpenVideoModal(false)
+                setDownloadImg('')
                 scrollToBottom()
             })
     }
