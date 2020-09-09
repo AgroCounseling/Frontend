@@ -135,8 +135,16 @@
     .forum {
         margin-right: 0;
     }
+
     .enter {
         margin-top: 10px;
+        width: 80px;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        height: 30px;
+        padding: 18px 10px;
+        justify-content: center;
     }
 
     .mt10 {
@@ -154,12 +162,6 @@
         max-width: 160px;
         text-align: center;
         margin-top: 10px;
-    }
-
-    .enter {
-        height: 30px;
-        padding: 18px 10px;
-        max-width: 70px;
     }
 
 }

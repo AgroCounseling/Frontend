@@ -11,7 +11,8 @@ export const MapsWrapper = styled.div`
         grid-template-columns: 1fr 1fr 1fr 1fr 2fr;
     }
     @media  (max-width: 500px) {
-        grid-template-columns: 1fr 1fr 1fr 1fr 4fr;
+        grid-template-columns: 1fr 0.5fr 1fr 0.5fr 10fr;
+        padding: 30px 10px;
     }
     /* @media  (max-width: 996px) {
         

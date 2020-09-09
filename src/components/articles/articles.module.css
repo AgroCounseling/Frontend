@@ -236,15 +236,26 @@
         display: none;
     }
 
-    .filterWrapper {
-        display: flex;
+
+    .submit, .submit2 {
+        left: 30px;
+        top: 15px;
     }
+    
+    .submit2 {
+        left: 70px;
+        top: 16px;
+    }
+    /* .filterWrapper {
+        display: flex;
+    } */
 
     /* .filterWrapper div {
         width: 100%;
     } */
     .width100 {
         width: 100%;
+        margin: 10px 0 !important;
     }
 
     .article {
@@ -276,6 +287,10 @@
         grid-gap: 1em;
     }
 
+    .filterCategory {
+        margin-left: 0px;
+        margin-top: 10px;
+    }
 }
 .text>div {
     font-size: 18

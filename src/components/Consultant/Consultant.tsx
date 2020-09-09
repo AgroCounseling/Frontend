@@ -56,7 +56,7 @@ const Consultant: React.FC<Props> = (props) => {
                         <div className={css.person}>
                             <div className={css.nameWrapper}>
                                 <div className={css.name}>{user.user.first_name} {user.user.last_name}</div>
-                                <Stars color={'red'} edit={false} size={33} value={user.middle_star} />
+                                <Stars color={'red'} edit={false} size={32} value={user.middle_star} />
                             </div>
                             <div className={css.specialty}>{t('specialty')}: {
                                 specialties.map((item: any, index: number) => <span key={item.id}> {index + 1 !== specialties.length ? item.title + ', ' : item.title} </span>)
