@@ -11,6 +11,7 @@ type OwnProps = {}
 const NavBar = (props: OwnProps) => {
     const categories = useSelector((state: GlobalStateType) => getCategories(state))
     const [menuList, setMenuList] = useState<any>(null)
+    const [invisibleLength, setInvisibleLength] = useState(0)
 
     let button = document.getElementById('menu-toggler');
 
@@ -29,7 +30,7 @@ const NavBar = (props: OwnProps) => {
         let listElements = Array.from(document.querySelectorAll('.el')),
             invisibleElements = getInvisible(listElements),
             mList: any = document.getElementById('menu-list');
-
+        setInvisibleLength(invisibleElements.length)
         invisibleElements?.forEach(function (item: any) {
             mList?.appendChild(item);
         })
@@ -61,7 +62,7 @@ const NavBar = (props: OwnProps) => {
     }
 
     return (
-        <NavBarWrapper>
+        <NavBarWrapper invisibleLength={invisibleLength}>
             <div id={'list'}>
                 {
                     categories.map((item: any) => <Link className={'el'} key={item.id} to={`articles/${item.id}`}>

@@ -22,7 +22,7 @@ code {
     height: auto !important;
     margin: 0 !important;
     overflow: visible !important;
-    width: 150px !important;
+    width: auto !important;
 }
 #menu-list {
     margin: 0;

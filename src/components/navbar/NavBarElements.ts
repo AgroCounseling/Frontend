@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const NavBarWrapper = styled.div`
+export const NavBarWrapper:any = styled.div`
       padding: 15px 40px;
       position:relative;
       display: flex;
@@ -9,7 +9,7 @@ export const NavBarWrapper = styled.div`
         margin: 0;
         position:relative;
         display: flex;
-        justify-content: space-around;
+        justify-content: ${(props:any)=> props.invisibleLength ? 'space-between' : 'space-around'} ;
         align-items: center;
         width: calc(100% - 100px);
         white-space: nowrap;
