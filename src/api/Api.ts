@@ -123,6 +123,3 @@ export default {
     getContact: () => http.get(`${getLng()}/api/contact-info/`),
     getContent: (str: string) => http.get(`${getLng()}/api/text?search=${str}`),
 }
-
-
-export const ApiToken = {}

@@ -59,13 +59,13 @@ export const PhonesWrapper = styled.div`
   display: grid;
   
   &>a{
-    color: #0d1c2e;
+    color: rgba(33, 51, 54, 0.8);
         font-size: 24px;
   }
   &>div{
     display: flex;
     &>a{
-    color: #0d1c2e;
+    color: rgba(33, 51, 54, 0.8);
     }
   }
 `
