@@ -1,4 +1,4 @@
-.wrapper{
+.wrapper {
     background: #ECBF2C;
     padding: 25px 10%;
     display: flex;
@@ -6,26 +6,32 @@
     text-align: left;
     margin-top: auto;
 }
-.wrapper>div{
+
+.wrapper>div {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     /*grid-gap: 8px;*/
 }
-.wrapper>div>div{
+
+.wrapper>div>div {
     margin: 5px 0;
 }
-.last_footer>div{
+
+.last_footer>div {
     display: flex;
     align-items: center;
 }
-.last_footer>div>a{
+
+.last_footer>div>a {
     color: black;
 }
-.last_footer>div>img{
+
+.last_footer>div>img {
     margin-right: 10px;
 }
-.title{
+
+.title {
     font-weight: bold;
     font-size: 18px;
     line-height: 207.9%;
@@ -35,7 +41,8 @@
     color: #66510C;
     padding: 0 15px 5px 0;
 }
-.centerText{
+
+.centerText {
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
@@ -44,37 +51,43 @@
 
     color: rgba(102, 81, 12, 0.4);
 }
-.logoWrapper{
+
+.logoWrapper {
     display: flex;
     align-items: center;
 }
-.logoWrapper>div:first-child{
+
+.logoWrapper>div:first-child {
     height: 100px;
 }
-.logoWrapper>div:last-child{
+
+.logoWrapper>div:last-child {
     height: 35px;
 }
-.logoWrapper>div>img{
+
+.logoWrapper>div>img {
     height: 100%;
 }
 
 @media (max-width: 500px) {
-    .logoWrapper img  {
+    .logoWrapper img {
         width: 60px;
         height: 50px;
     }
+
     .footerLogo {
         width: 40px;
         height: 40px !important;
     }
 
-    .logoWrapper>div:first-child{
+    .logoWrapper>div:first-child {
         height: 40px;
     }
-    .logoWrapper{
+
+    .logoWrapper {
         display: flex;
         flex-direction: column;
-        margin:10px;
+        margin: 10px;
     }
 
 
@@ -83,6 +96,7 @@
         height: 60px !important;
         margin-bottom: 30px;
     }
+
     .logoWrapper div {
         margin-top: 10px;
     }
@@ -95,16 +109,43 @@
         margin-top: 30px !important;
     }
 
-    .wrapper >div:first-child{
+    .wrapper>div:first-child {
         font-size: 14px;
     }
 
-    .wrapper>div:last-child{
+    .wrapper>div:last-child {
         font-size: 14px;
-        margin-left: 20px;
+        margin-left: 15px;
     }
 
     .title {
         font-size: 15px;
+    }
+}
+
+@media (max-width: 400px) {
+    .wrapper {
+        padding: 5px;
+    }
+
+    .logoWrapper {
+        display: flex;
+        flex-direction: column;
+        margin: 5px;
+    }
+
+    .logoWrapper img {
+        width: 50px;
+        height: 40px;
+    }
+
+    .wrapper>div:last-child {
+        margin-left: 10px;
+    }
+
+    .agroLogo {
+        width: 100px !important;
+        height: 60px !important;
+        margin-bottom: 30px;
     }
 }

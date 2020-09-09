@@ -130,7 +130,7 @@
     .feedBackWrapper {
         display: flex;
         flex-direction: column-reverse;
-        
+
     }
 
     .feedBack {
@@ -171,4 +171,28 @@
         font-size: 16px;
     }
 
+}
+
+@media (max-width: 430px) {
+    .imgWrapper {
+        width: 80px;
+        height: 80px;
+        left: -15px;
+        top: -55%;
+    }
+
+    .user {
+        margin-right: 10px;
+        margin-left: 10px;
+        min-height: 110px;
+    }
+
+    .nameWrapper {
+        display: inline-block;
+    }
+    .nameWrapper div {
+        color: #fff;
+        font-size: 20px;
+        margin-left: 30px;
+    }
 }
