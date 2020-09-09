@@ -73,11 +73,11 @@ const Header = (props: any) => {
 
             </HeaderWrapper>
             {isOpen ? <div className={css.mobileWrapper}>
-                <Link to={'/forum'} className={css.forum}>Форум</Link>
+                <Link to={'/forum'} className={`${css.forum} ${css.enter} `}>Форум</Link>
                 {
                     props.isAuth
                         ? <>
-                            <div onClick={Logout} className={css.forum}>{t("logOff")}</div>
+                            <div onClick={Logout} className={`${css.enter}`}>{t("logOff")}</div>
                             <Link to={'/admin'} className={css.uerWrapper}>
                                 <img src={user} alt="user" />
                             </Link>
@@ -88,9 +88,9 @@ const Header = (props: any) => {
                         </>
                 }
                 <div className={css.mt10}>
-                <Language />
+                    <Language />
                 </div>
-               
+
             </div>
                 : null}</>
     )
