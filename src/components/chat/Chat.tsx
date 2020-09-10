@@ -48,10 +48,10 @@ const Chat: React.FC<ChatType> = ({ id }) => {
     }, [id])
     return (
         <div className={css.chatWrapper}>
-            <div>
-                <div className={css.searchWrapper}>
-                    <input type="text" placeholder={t('search')} />
-                </div>
+            <div className={current ? css.none : ''}>
+                {/*<div className={css.searchWrapper}>*/}
+                {/*    /!*<input type="text" placeholder={t('search')} />*!/*/}
+                {/*</div>*/}
                 <div className={css.userList}>
                     {
                         rooms.map((item: any) => <User
@@ -67,10 +67,10 @@ const Chat: React.FC<ChatType> = ({ id }) => {
                     }
                 </div>
             </div>
-            <div>
+            <div className={!current ? css.none : ''}>
                 {
                     current
-                        ? <MessageBlock userId={id} id={current} email={email} />
+                        ? <MessageBlock setCurrent={(e:number)=>setCurrent(e)} userId={id} id={current} email={email} />
                         : <div>{t('selectChatText')}</div>
                 }
             </div>
@@ -125,6 +125,7 @@ type MessageProps = {
     id: number
     userId: number
     email: string
+    setCurrent: (e:number) => void
 }
 const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const messageId: any = useRef(null)
@@ -269,8 +270,9 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                     <div className={css.personName}>{user?.first_name + ' ' + user?.last_name}</div>
                 </div>
                 <div>
-                    {/*<button>A</button>*/}
-                    {/*<button>B</button>*/}
+                    <div className={css.back} onClick={()=>props.setCurrent(0)}>
+                        <img src="https://www.flaticon.com/svg/static/icons/svg/507/507257.svg" alt="Back"/>
+                    </div>
                 </div>
             </div>
             <div ref={messageId} className={css.messages}>
@@ -390,7 +392,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 openVideoModal ? <div className={"overlay"}>
                     <div className={"dialog p-1"}>
                         <div>
-                            <video width="400" controls src={downloadVideo} />
+                            <video className={'video'} controls src={downloadVideo} />
 
                             <textarea placeholder={t('postMessage')} value={inp}
                                 onChange={(e) => setInp(e.target.value)}

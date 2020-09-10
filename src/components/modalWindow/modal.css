@@ -139,3 +139,18 @@
     display: flex;
     justify-content: space-between;
 }
+.video{
+    width: 400px;
+}
+@media screen and (max-width: 768px) {
+    .overlay{
+        padding: 0;
+    }
+    .dialog .downloadImg {
+        width: 300px;
+        height: auto;
+    }
+    .video{
+        width: 300px;
+    }
+}
