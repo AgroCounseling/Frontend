@@ -29,7 +29,7 @@ const Footer = () => {
                 <Link style={{ color: "#000000" }} to={'/forum'}>Форум</Link>
                 <Link style={{ color: "#000000" }} to={'/add-question'}>{t("questionText")}</Link>
             </div>
-            <div>
+            <div className={css.mobileOrder2}>
                 <div className={css.logoWrapper}>
                     <div>
                         <img src={logo} alt="AgroConsulting" className={css.footerLogo} />

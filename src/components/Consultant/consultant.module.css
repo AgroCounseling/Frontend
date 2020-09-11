@@ -133,6 +133,11 @@
 
     }
 
+    .nameWrapper {
+        padding-right: 10px;
+        padding-top: 5px;
+    }
+
     .feedBack {
         /*position: absolute;*/
         /*top: -200px;*/
@@ -156,43 +161,66 @@
         top: -55%;
     }
 
+   
+
     .person {
-        padding: 0 15px;
-        padding-right: 0px;
+        padding: 0 0 5px 15px;
     }
 
     .nameWrapper .name {
         color: #fff;
-        font-size: 20px;
-        margin-left: 40px;
+        font-size: 18px;
+        line-height: 20px;
+        margin-left: 50px;
+    }
+
+    .text {
+        margin: 20px;
+        font-size: 16px;
+        margin-top: 5px;
     }
 
     .specialty {
         font-size: 16px;
     }
 
+    .education {
+        font-size:20px;
+        text-align: center;
+        margin-left: 0;
+    }
 }
 
 @media (max-width: 430px) {
     .imgWrapper {
-        width: 80px;
-        height: 80px;
-        left: -15px;
-        top: -55%;
+        /* width: 80px;
+        height: 80px; */
+        left: -20px;
+        top: -40%;
     }
 
+
     .user {
-        margin-right: 10px;
-        margin-left: 10px;
         min-height: 110px;
+        margin: 150px 25px;
+        margin-bottom: 10px;
     }
 
     .nameWrapper {
         display: inline-block;
+        margin-left: 55px;
     }
-    .nameWrapper div {
+
+    .nameWrapper .name {
+        margin-left: 0;
+    }
+    /* .nameWrapper div {
         color: #fff;
         font-size: 20px;
-        margin-left: 30px;
+        margin-left: 60px;
     }
+
+    .name {
+        margin-left: 60px;
+    } */
 }

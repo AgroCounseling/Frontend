@@ -177,6 +177,7 @@
 .date {
     color: #000000;
 }
+
 .count {
     height: 50px;
     /*font-size: 23px;*/
@@ -223,6 +224,13 @@
         width: 100%;
     }
 
+
+    .title {
+        font-size: 18px;
+        margin-top: 10px;
+        line-height: 25px;
+    }
+
     .date {
         color: #000000;
         font-size: 14px;
@@ -237,15 +245,23 @@
     }
 
 
-    .submit, .submit2 {
+    .submit,
+    .submit2 {
         left: 30px;
         top: 15px;
     }
-    
+
     .submit2 {
         left: 70px;
         top: 16px;
     }
+
+
+    .text>div {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
     /* .filterWrapper {
         display: flex;
     } */
@@ -283,7 +299,7 @@
 
     .header {
         display: grid;
-        grid-template-columns: 2.5fr 1fr 1.2fr;
+        grid-template-columns: 2.2fr 2fr 1.7fr;
         grid-gap: 1em;
     }
 
@@ -291,9 +307,45 @@
         margin-left: 0px;
         margin-top: 10px;
     }
+
+    .ArticleText {
+        margin-top: 0;
+    }
+
+    .ArticleText>div {
+        width: 100%;
+    }
+
+    .likes {
+        font-size: 18px;
+        margin-top: 50px;
+    }
+
+    .imgWrapper {
+        padding: 5px;
+    }
+
+    .imgWrapper img {
+        width: 25px;
+        height: 25px;
+    }
 }
+
+@media (max-width: 380px) {
+    .category {
+        font-size: 16px;
+    }
+
+    .name {
+        font-size: 16px;
+    }
+
+    .header {
+        grid-gap: 0.5em;
+    }
+}
+
 .text>div {
-    font-size: 18
-    px;
+    font-size: 18px;
     margin-top: 5px;
 }

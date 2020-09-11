@@ -74,6 +74,7 @@ const Header = (props: any) => {
             </HeaderWrapper>
             {isOpen ? <div className={css.mobileWrapper}>
                 <Link to={'/forum'} className={`${css.forum} ${css.enter} `}>Форум</Link>
+
                 {
                     props.isAuth
                         ? <>
@@ -81,10 +82,18 @@ const Header = (props: any) => {
                             <Link to={'/admin'} className={css.uerWrapper}>
                                 <img src={user} alt="user" />
                             </Link>
+                            <form onSubmit={submit} className={css.mobileSearch}>
+                                <input value={str} onChange={(e) => setStr(e.target.value)} className={css.searchInput} placeholder={`${t("mainSearchPlaceholderText")}`} type="text" />
+                                <input className={css.search} type={'submit'} value={''} />
+                            </form>
                         </>
                         : <>
                             <Link to={'/sign-in'} className={css.enter}>{t("singIn")}</Link>
                             <Link to={'/sign-up'} className={css.register}>{t("register")}</Link>
+                            <form onSubmit={submit} className={css.mobileSearch}>
+                                <input value={str} onChange={(e) => setStr(e.target.value)} className={css.searchInput} placeholder={`${t("mainSearchPlaceholderText")}`} type="text" />
+                                <input className={css.search} type={'submit'} value={''} />
+                            </form>
                         </>
                 }
                 <div className={css.mt10}>
