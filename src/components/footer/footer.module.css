@@ -143,18 +143,18 @@
         margin: 5px;
     }
 
-    .logoWrapper img {
+    /* .logoWrapper img {
         width: 50px;
         height: 40px;
-    }
+    } */
 
-    .wrapper>div:last-child {
+    /* .wrapper>div:last-child {
         margin-left: 10px;
-    }
+    } */
 
-    .agroLogo {
+    /* .agroLogo {
         width: 100px !important;
         height: 60px !important;
         margin-bottom: 30px;
-    }
+    } */
 }

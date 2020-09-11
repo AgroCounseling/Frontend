@@ -169,6 +169,26 @@
         margin-top: 10px;
         padding-left: 10px;
     }
+
+    .mobileSearch {
+        position: relative;
+    }
+
+    .search {
+        top: 10px;
+        margin-top: 5px;
+        width: 16px;
+    }
+
+    .uerWrapper {
+        margin-right: 0;
+        margin-top: 10px;
+    }
+
+    .searchInput,
+    .enter {
+        background: none;
+    }
 }
 
 
