@@ -86,7 +86,7 @@ export default {
     getSlider: () => http.get(`${getLng()}/api/slider/`),
     getTypes: () => http.get(`${getLng()}/api/types/`),
     getSubTypes: () => http.get(`${getLng()}/api/subtypes/`),
-    getVotesUser: (id: number) => http.get(`${getLng()}/api/votes/self/${id}`, {
+    getVotesUser: (id: number) => http.get(`api/votes/self/${id}`, {
         headers: {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
@@ -96,16 +96,16 @@ export default {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
     }),
-    getArticles: (search: string, page: number, category?: number, subcategory?: number, types?: string, subType?: string) => http.get(`${getLng()}/api/articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
-    getPopularArticles: (search: string, page: number, category?: number, subcategory?: number, types?: string, subType?: string) => http.get(`${getLng()}/api/popular-articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
-    getNewArticles: (search: string, page: number, category?: number, subcategory?: number, types?: string, subType?: string) => http.get(`${getLng()}/api/new-articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
-    getArticle: (id: number | string) => http.get(`${getLng()}/api/articles/${id ? id : ''}`),
-    putLike: (id: number, data: any) => http.post(`${getLng()}/api/votes/create/${id}`, data, {
+    getArticles: (search: string, page: number, category?: number, subcategory?: number, types?: string, subType?: string) => http.get(`api/articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
+    getPopularArticles: (search: string, page: number, category?: number, subcategory?: number, types?: string, subType?: string) => http.get(`api/popular-articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
+    getNewArticles: (search: string, page: number, category?: number, subcategory?: number, types?: string, subType?: string) => http.get(`api/new-articles/?search=${search}&category=${category ? category : ''}&subcategory=${subcategory ? subcategory : ''}&page=${page}&types=${types ? types : ''}&subTypes=${subType ? subType : ''}`),
+    getArticle: (id: number | string) => http.get(`api/articles/${id ? id : ''}`),
+    putLike: (id: number, data: any) => http.post(`api/votes/create/${id}`, data, {
         headers: {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
     }),
-    createArticle: (data: any) => http.post(`${getLng()}/api/articles/create`, data, {
+    createArticle: (data: any) => http.post(`api/articles/create`, data, {
         headers: {
             "Authorization": getTokenType() ? "Bearer " + getToken() : "JWT " + getToken()
         }
