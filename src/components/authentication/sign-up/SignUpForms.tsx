@@ -296,7 +296,7 @@ const Registration = (props: BtnProps) => {
             <Button>{props.btn}</Button>
             <div className={css.loginWith}>
                 <span>
-                    или <span>  </span>
+                {t('orText')}  <span>  </span>
                     <Link className={css.enter} to={'/sign-in'}>{t('singIn')}</Link>
                 </span>
                 <div>
