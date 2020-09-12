@@ -74,6 +74,7 @@ export default {
     getCategory: () => http.get(`${getLng()}/api/categories/`),
     getSubCategory: () => http.get(`${getLng()}/api/subcategories/`),
     getSpecialty: () => http.get(`${getLng()}/api/specialty/`),
+    getConsultantId: (id:number) => http.get(`api/consultant/user/${id}/`),
     getConsultantsList: (page: number = 1) => http.get(`${getLng()}/api/consultants/?page=${page}`),
     getForums: (page: number | string, text?: string, filter?: any) => http.get(`${getLng()}/api/forums/?category=${filter ? filter.value : ''}&page=${page}&search=${text ? text : ''}`),
     getQuestion: (id: number | string) => http.get(`${getLng()}/api/forums/${id}`),
