@@ -150,6 +150,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     const [audio, setAudio] = useState<any>(null)
     const [picture, setPicture] = useState('')
     const [endTime, setEndTime] = useState(false)
+    const [userId, setUserId] = useState(0)
 
     let time: any;
     let minutes: any;
@@ -190,7 +191,12 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
                 scrollToBottom()
             })
     }
-
+    useEffect(()=>{
+        Api.getConsultantId(user?.id)
+            .then((res)=>{
+                setUserId(res.data.id)
+            })
+    }, [user])
     useEffect(()=>{
         setIsModal(false)
         setOpen(false)
@@ -261,7 +267,7 @@ const MessageBlock: React.FC<MessageProps> = ({ id, ...props }) => {
     }
     return (
         <div className={css.message__wrapper}>
-            <Modal closed={isModal} userId={user?.id} id={id} setClose={(e: boolean) => setIsModal(e)} />
+            <Modal closed={isModal} userId={userId} id={id} setClose={(e: boolean) => setIsModal(e)} />
             <div className={css.chatHeader}>
                 <div>
                     <div className={css.avaWrapper}>

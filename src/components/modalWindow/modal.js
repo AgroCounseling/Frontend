@@ -7,6 +7,7 @@ import {checkToken} from "../../state/authReducer";
 import {useDispatch} from "react-redux";
 
 const Modal = (props) => {
+  console.log(props)
   const [close, setClose] = useState(null);
   const [feedback, setFeedback] = useState("");
   const [star, setStar] = useState("");
