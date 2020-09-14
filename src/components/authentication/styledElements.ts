@@ -52,6 +52,7 @@ export const Input = styled.input`
     border: 2px solid rgba(194, 199, 208, 0.5);
     box-sizing: border-box;
     border-radius: 10px;
+    margin-top:5px;
 `
 
 export const Label = styled.label`
