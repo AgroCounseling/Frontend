@@ -26,8 +26,8 @@ const validateFormik = {
 
 export const data = {
     grant_type: "convert_token",
-    client_id: "qJ7cVMs5DPgP9Otg0NEXnQJO3STDnNOc4Xsdc7BU",
-    client_secret: "u2d6EdZaXJdI6sEj8N6C8SecOy7xhDsDx1ttoNGA5Xsi72yYuYDzwyxXoxKpwzPxEpmaUs9I5gfAcU85ISzt2eCmDDbRqBT7WGPN4w8mooTvmcMyrBzQESIhM135unJb",
+    client_id: "lBy4JKEPk4vdSt9pmLfy1RZ7mB2ZTZ6FeKI6IBDR",
+    client_secret: "KtUm5FYu9lOPy0dE9JwMMfAA2vEH05dN4jxvBxWSK8G0CmpEoA6QJhF54RIyBrgh5krdhiQg5IU5jlwZgZiXPCKFklOwwxSiNHgUliqte8xSjqhLhISeh3Pz3jcilg6I",
 }
 
 export const SignIn = WithAuthRedirect(() => {
