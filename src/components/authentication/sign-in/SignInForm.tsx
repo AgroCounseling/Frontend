@@ -16,6 +16,7 @@ import { useTranslation } from "react-i18next";
 
 const validateFormik = {
     email: Yup.string()
+        .email('Введите действующий адрес электронной почты')
         .required('Объязательное поле'),
     password: Yup.string()
         .min(8, 'Минимум 8 символов')
