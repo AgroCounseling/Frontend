@@ -163,7 +163,7 @@ export const SignIn = WithAuthRedirect(() => {
                                     />
                                     <label>
                                         <FacebookLogin
-                                            appId="325647148571013"
+                                            appId="931670963972087"
                                             autoLoad={false}
                                             // fields="name,email,picture"
                                             // onClick={componentClicked}
