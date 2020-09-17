@@ -40,11 +40,11 @@ const Search = () => {
     }
     return (
         <div className={css.wrapper}>
-            <Header>
-                {t('consultants')}
-            </Header>
             {
-                consultants?.length ?
+                consultants?.length ? <>
+                        <Header>
+                            {t('consultants')}
+                        </Header>
                     <div className={css.cardWrapper}>{
                         consultants?.map((item: any) => <ConsultantCard
                             id={item.id}
@@ -57,12 +57,13 @@ const Search = () => {
                             key={item.id}
                         />)
                     }</div>
-                    : <NoElement text={t('noConsultant')} />
+                    </>
+                    : null
             }
-            <Header>Форум</Header>
             {
-                forum?.length ?
-                    <QuestionWrappers>
+                forum?.length ? <>
+                        <Header>Форум</Header>
+                        <QuestionWrappers>
                         {
                             forum?.map((item: any, index: number) => {
                                 if (index === forum.length - 1) {
@@ -76,11 +77,13 @@ const Search = () => {
                             })
                         }
                     </QuestionWrappers>
-                    : <NoElement text={t('noQuestion')} />
+                    </>
+                    : null
             }
-            <Header>Статьи</Header>
             {
-                articles?.length ? articles?.map((item: any) => <Article
+                articles?.length ? <>
+                        <Header>Статьи</Header>
+                        {articles?.map((item: any) => <Article
                     newUrl={'/article-detail'}
                     key={item.id}
                     id={item.id}
@@ -89,9 +92,8 @@ const Search = () => {
                     date={item.pub_date}
                     name={item.user.first_name + ' ' + item.user.last_name}
                     category={item.category}
-                />)
-
-                    : <NoElement text={t('noArticles')} />
+                />)} </>
+                    : null
             }
         </div>
     )
