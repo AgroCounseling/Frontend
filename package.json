@@ -21,7 +21,7 @@
     "@types/redux": "^3.6.0",
     "@types/styled-components": "^5.1.0",
     "@types/yup": "^0.29.4",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "draft-js": "^0.11.6",
     "draftjs-to-html": "^0.9.1",
     "formik": "^2.1.4",
